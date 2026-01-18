@@ -8,6 +8,15 @@ const album = {
   upc: '199891430529'
 };
 
+// Background images for each section
+const backgrounds = {
+  hero: '/txchyamega.jpg',
+  album: '/txchya1.jpg',
+  tracklist: '/txchya2.jpg',
+  stats: '/txchya3.jpg',
+  cta: '/txchya4.jpg'
+};
+
 const streamingLinks = [
   { platform: 'YouTube', url: 'https://youtube.com/@txchyaai', color: 'bg-red-600', icon: '▶️' },
   { platform: 'Spotify', url: 'https://open.spotify.com/artist/Txchya', color: 'bg-green-600', icon: '🎵' },
@@ -38,267 +47,202 @@ const tracks = [
 ---
 
 <Layout title="Txchya | Cyberpunk Ambient AI Music Artist">
-  <!-- 🌟 CYBERPUNK HERO SECTION -->
+  <!-- 🌟 HERO SECTION with txchyamega.jpg -->
   <section class="relative min-h-[90vh] overflow-hidden">
-    {/* Space Background Effects */}
-    <div class="absolute inset-0 bg-black">
-      {/* Stars */}
-      <div class="absolute inset-0 opacity-40"
-           style="background-image: 
-             radial-gradient(2px 2px at 20px 30px, #00ffff, transparent),
-             radial-gradient(1px 1px at 40px 70px, #9d00ff, transparent),
-             radial-gradient(1px 1px at 90px 40px, #ff00ff, transparent),
-             radial-gradient(1px 1px at 130px 80px, #00ffff, transparent);
-             background-size: 200px 200px;">
-      </div>
-      
-      {/* Animated shooting stars */}
-      <div class="shooting-star"></div>
-      <div class="shooting-star shooting-star-2"></div>
-      
-      {/* Glowing nebula effects */}
-      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyber-cyan/10 via-cyber-purple/10 to-cyber-pink/10 rounded-full blur-3xl animate-pulse"></div>
-      <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-cyber-pink/10 via-cyber-purple/10 to-cyber-cyan/10 rounded-full blur-3xl animate-pulse delay-1500"></div>
-      
-      {/* Grid overlay */}
-      <div class="absolute inset-0 opacity-20"
-           style="background-image: 
-             linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
-             linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
-             background-size: 50px 50px;">
-      </div>
+    <div class="absolute inset-0">
+      <img 
+        src={backgrounds.hero} 
+        alt="Txchya Hero Background"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-cyber-purple/30 via-transparent to-cyber-pink/30"></div>
+      <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-cyber-pink/10 rounded-full blur-3xl animate-pulse-slow"></div>
+      <div class="absolute bottom-1/3 right-1/4 w-80 h-80 bg-cyber-cyan/10 rounded-full blur-3xl animate-pulse-slow delay-1500"></div>
     </div>
     
-    {/* Scan line */}
-    <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyber-cyan to-transparent animate-scan"></div>
-    
-    {/* Main Content */}
     <div class="container relative z-10 mx-auto px-4 pt-24 pb-16">
       <div class="max-w-6xl mx-auto">
-        
-        {/* Artist Badge */}
-        <div class="inline-flex items-center gap-3 bg-black/50 backdrop-blur-sm border border-cyber-cyan/30 rounded-full px-6 py-3 mb-10 animate-pulse">
-          <span class="text-cyber-cyan">⚡</span>
-          <span class="text-cyber-cyan font-orbitron font-semibold tracking-wider text-sm">
+        <div class="inline-flex items-center gap-3 bg-black/40 backdrop-blur-sm border border-cyber-pink/40 rounded-full px-6 py-3 mb-10 animate-pulse-slow">
+          <span class="text-cyber-pink">🌸</span>
+          <span class="text-cyber-pink font-orbitron font-semibold tracking-wider text-sm">
             CYBERPUNK AMBIENT • AI-GENERATED • DIGITAL DREAMSCAPES
           </span>
         </div>
         
-        {/* Main Headline */}
         <h1 class="text-6xl md:text-8xl lg:text-9xl font-black text-center mb-8 font-orbitron tracking-tighter">
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-cyan via-cyber-purple to-cyber-pink animate-gradient">
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-pink via-cyber-purple to-cyber-cyan animate-gradient-slow">
             TXCHYA
           </span>
         </h1>
         
-        {/* Subheadline */}
-        <p class="text-2xl md:text-3xl text-gray-300 mb-12 max-w-3xl mx-auto text-center leading-relaxed">
+        <p class="text-2xl md:text-3xl text-gray-200 mb-12 max-w-3xl mx-auto text-center leading-relaxed">
           Neural network compositions • Cyberpunk soundscapes • 
-          <span class="text-cyber-cyan font-semibold"> AI-generated ambient</span>
+          <span class="text-cyber-pink font-semibold"> AI-generated ambient</span>
         </p>
         
-        {/* Album Highlight */}
         <div class="max-w-2xl mx-auto mb-16">
-          <div class="bg-gradient-to-r from-black/60 to-gray-900/60 backdrop-blur-xl rounded-2xl border border-cyber-purple/30 p-8 shadow-2xl shadow-cyber-purple/20 transform hover:scale-[1.02] transition-transform duration-500">
+          <div class="bg-gradient-to-r from-black/50 to-purple-900/50 backdrop-blur-xl rounded-2xl border border-cyber-pink/30 p-8 shadow-2xl shadow-cyber-pink/20 transform hover:scale-[1.02] transition-transform duration-500">
             <div class="text-center">
-              <div class="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-gradient-to-r from-cyber-purple to-cyber-pink rounded-full">
+              <div class="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-gradient-to-r from-cyber-pink to-cyber-purple rounded-full">
                 <span class="text-white font-orbitron font-bold tracking-wider text-sm">🎧 ALBUM OUT NOW</span>
               </div>
-              <h2 class="text-4xl md:text-5xl font-bold mb-3 font-orbitron">{album.title}</h2>
-              <p class="text-gray-300 mb-6 text-lg">Released {album.releaseDate} • {album.label}</p>
+              <h2 class="text-4xl md:text-5xl font-bold mb-3 font-orbitron text-white">{album.title}</h2>
+              <p class="text-gray-200 mb-6 text-lg">Released {album.releaseDate} • {album.label}</p>
               <div class="font-mono text-cyber-cyan text-sm tracking-wider">UPC: {album.upc}</div>
             </div>
           </div>
         </div>
         
-        {/* Streaming Buttons Grid */}
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-12">
           {streamingLinks.map((link) => (
             <a 
               href={link.url} 
               target="_blank"
               rel="noopener noreferrer"
-              class="group relative p-6 rounded-2xl border border-gray-800 hover:border-cyber-cyan transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-cyber-cyan/20 bg-black/40 backdrop-blur-sm"
+              class="group relative p-6 rounded-2xl border border-gray-800 hover:border-cyber-pink transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-cyber-pink/20 bg-black/40 backdrop-blur-sm"
             >
               <div class={`${link.color} w-14 h-14 rounded-xl flex items-center justify-center text-2xl mb-4 mx-auto transform group-hover:scale-110 transition-transform`}>
                 {link.icon}
               </div>
               <div class="text-center">
                 <div class="font-semibold text-white mb-1 text-lg">{link.platform}</div>
-                <div class="text-gray-400 text-sm group-hover:text-cyber-cyan transition-colors">Stream Now →</div>
+                <div class="text-gray-300 text-sm group-hover:text-cyber-pink transition-colors">Stream Now →</div>
               </div>
-              <div class="absolute inset-0 bg-gradient-to-br from-cyber-cyan/0 to-cyber-purple/0 group-hover:from-cyber-cyan/5 group-hover:to-cyber-purple/5 rounded-2xl transition-all duration-300"></div>
+              <div class="absolute inset-0 bg-gradient-to-br from-cyber-pink/0 to-cyber-purple/0 group-hover:from-cyber-pink/5 group-hover:to-cyber-purple/5 rounded-2xl transition-all duration-300"></div>
             </a>
           ))}
         </div>
         
-        {/* Social Links */}
         <div class="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto">
           {socialLinks.map((social) => (
             <a 
               href={social.url} 
               target="_blank"
               rel="noopener noreferrer"
-              class={`${social.color} hover:opacity-90 px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 flex items-center gap-3 border border-gray-800 hover:border-cyber-cyan`}
+              class={`${social.color} hover:opacity-90 px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 flex items-center gap-3 border border-gray-800 hover:border-cyber-pink`}
             >
               <span class="text-lg">{social.icon}</span>
               <span>{social.platform}</span>
             </a>
           ))}
         </div>
-        
       </div>
     </div>
   </section>
   
-  <!-- 🎵 ALBUM DETAILS SECTION -->
+  <!-- 🎵 ALBUM DETAILS with txchya1.jpg -->
   <section class="py-20 relative overflow-hidden">
-    {/* Background Effects */}
-    <div class="absolute inset-0 bg-gradient-to-b from-black via-cyber-purple/5 to-black"></div>
+    <div class="absolute inset-0">
+      <img 
+        src={backgrounds.album} 
+        alt="Album Details Background"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/80"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-cyber-purple/20 via-transparent to-cyber-cyan/20"></div>
+    </div>
     
     <div class="container relative z-10 mx-auto px-4">
       <div class="max-w-6xl mx-auto">
         <div class="grid lg:grid-cols-2 gap-12">
           
-          {/* Left Column - Album Art & Info */}
           <div class="space-y-8">
-            {/* Cyberpunk Album Art */}
             <div class="relative group">
-              <div class="absolute -inset-4 bg-gradient-to-r from-cyber-cyan via-cyber-purple to-cyber-pink rounded-3xl blur opacity-30 group-hover:opacity-50 transition-opacity"></div>
-              <div class="relative bg-black rounded-2xl overflow-hidden border border-cyber-cyan/30">
-                {/* Holographic Album Art */}
-                <div class="aspect-square bg-gradient-to-br from-black via-cyber-purple/20 to-cyber-cyan/20 flex items-center justify-center p-12">
+              <div class="absolute -inset-4 bg-gradient-to-r from-cyber-pink via-cyber-purple to-cyber-cyan rounded-3xl blur opacity-30 group-hover:opacity-50 transition-opacity"></div>
+              <div class="relative bg-black/70 backdrop-blur-sm rounded-2xl overflow-hidden border border-cyber-pink/30">
+                <div class="aspect-square bg-gradient-to-br from-black/80 via-cyber-purple/30 to-cyber-pink/30 flex items-center justify-center p-12">
                   <div class="text-center relative">
-                    {/* Hologram lines */}
-                    <div class="absolute -inset-4 opacity-20">
-                      <div class="absolute top-1/3 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyber-cyan to-transparent"></div>
-                      <div class="absolute top-2/3 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyber-purple to-transparent"></div>
-                    </div>
-                    
-                    <div class="font-orbitron text-5xl md:text-6xl font-bold text-white mb-4 tracking-wider glitch">VIBE</div>
-                    <div class="font-orbitron text-5xl md:text-6xl font-bold text-cyber-cyan mb-8 tracking-wider glitch">CODING</div>
-                    <div class="text-gray-400 font-orbitron text-lg tracking-widest">TXCHYA</div>
+                    <div class="font-orbitron text-5xl md:text-6xl font-bold text-white mb-4 tracking-wider">VIBE</div>
+                    <div class="font-orbitron text-5xl md:text-6xl font-bold text-cyber-pink mb-8 tracking-wider">CODING</div>
+                    <div class="text-gray-300 font-orbitron text-lg tracking-widest">TXCHYA</div>
                   </div>
                 </div>
               </div>
             </div>
             
-            {/* Album Specifications */}
-            <div class="bg-black/50 backdrop-blur-sm rounded-2xl border border-gray-800 p-6">
+            <div class="bg-black/60 backdrop-blur-sm rounded-2xl border border-gray-700 p-6">
               <h3 class="text-2xl font-bold mb-6 font-orbitron flex items-center gap-3">
-                <span class="text-cyber-cyan">⚙️</span>
+                <span class="text-cyber-pink">⚙️</span>
                 ALBUM SPECIFICATIONS
               </h3>
               <div class="space-y-4">
-                <div class="flex justify-between items-center py-3 border-b border-gray-800">
-                  <span class="text-gray-400">Label</span>
+                <div class="flex justify-between items-center py-3 border-b border-gray-700">
+                  <span class="text-gray-300">Label</span>
                   <span class="font-semibold text-white">{album.label}</span>
                 </div>
-                <div class="flex justify-between items-center py-3 border-b border-gray-800">
-                  <span class="text-gray-400">Release Date</span>
-                  <span class="font-semibold text-cyber-cyan">{album.releaseDate}</span>
+                <div class="flex justify-between items-center py-3 border-b border-gray-700">
+                  <span class="text-gray-300">Release Date</span>
+                  <span class="font-semibold text-cyber-pink">{album.releaseDate}</span>
                 </div>
-                <div class="flex justify-between items-center py-3 border-b border-gray-800">
-                  <span class="text-gray-400">Genre</span>
+                <div class="flex justify-between items-center py-3 border-b border-gray-700">
+                  <span class="text-gray-300">Genre</span>
                   <span class="font-semibold">Cyberpunk Ambient • AI-Generated</span>
                 </div>
                 <div class="flex justify-between items-center py-3">
-                  <span class="text-gray-400">UPC</span>
+                  <span class="text-gray-300">UPC</span>
                   <span class="font-mono text-cyber-cyan tracking-wider">{album.upc}</span>
                 </div>
               </div>
             </div>
           </div>
           
-          {/* Right Column - Tracklist */}
           <div class="space-y-8">
             <div>
               <h2 class="text-3xl md:text-4xl font-bold mb-8 font-orbitron">
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-cyan to-cyber-purple">
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-pink to-cyber-purple">
                   11 CYBERSEQUENCES
                 </span>
               </h2>
               
-              {/* Cyberpunk Tracklist */}
-              <div class="bg-black/40 backdrop-blur-sm rounded-2xl border border-gray-800 overflow-hidden">
-                {/* Header */}
-                <div class="bg-gradient-to-r from-gray-900 to-black border-b border-gray-800 p-4">
+              <div class="bg-black/60 backdrop-blur-sm rounded-2xl border border-gray-700 overflow-hidden">
+                <div class="bg-gradient-to-r from-gray-900/80 to-black/80 border-b border-gray-700 p-4">
                   <div class="flex justify-between items-center">
                     <div class="flex items-center gap-3">
-                      <div class="w-3 h-3 rounded-full bg-cyber-cyan animate-pulse"></div>
+                      <div class="w-3 h-3 rounded-full bg-cyber-pink animate-pulse-slow"></div>
                       <span class="font-orbitron text-sm">DIGITAL TRACKLIST</span>
                     </div>
                     <span class="text-gray-400 text-sm font-mono">TOTAL: 38:14</span>
                   </div>
                 </div>
                 
-                {/* Tracks */}
-                <div class="divide-y divide-gray-800/50 max-h-[500px] overflow-y-auto">
+                <div class="divide-y divide-gray-700/50 max-h-[500px] overflow-y-auto">
                   {tracks.map((track, index) => (
-                    <div class={`group hover:bg-gray-900/50 transition-all duration-300 ${index % 2 === 0 ? 'bg-black/20' : ''}`}>
-                      <div class="p-4 flex items-center justify-between">
-                        <div class="flex items-center gap-4">
-                          <span class="text-gray-500 font-mono w-8 text-right">{track.number}</span>
-                          <span class="text-white group-hover:text-cyber-cyan transition-colors cursor-pointer">{track.title}</span>
-                        </div>
-                        <div class="flex items-center gap-4">
-                          <span class="text-cyber-cyan font-mono">{track.duration}</span>
-                          <button class="opacity-0 group-hover:opacity-100 transition-opacity text-cyber-purple hover:text-cyber-cyan transform hover:scale-110">
-                            ▶️
-                          </button>
-                        </div>
+                    <div class={`group hover:bg-gray-900/50 transition-all duration-300 p-4 flex items-center justify-between ${index % 2 === 0 ? 'bg-black/30' : ''}`}>
+                      <div class="flex items-center gap-4">
+                        <span class="text-gray-400 font-mono w-8 text-right">{track.number}</span>
+                        <span class="text-white group-hover:text-cyber-pink transition-colors">{track.title}</span>
+                      </div>
+                      <div class="flex items-center gap-4">
+                        <span class="text-cyber-cyan font-mono">{track.duration}</span>
+                        <button class="opacity-0 group-hover:opacity-100 transition-opacity text-cyber-purple hover:text-cyber-pink transform hover:scale-110">
+                          ▶️
+                        </button>
                       </div>
                     </div>
                   ))}
                 </div>
                 
-                {/* Footer */}
-                <div class="bg-black/60 border-t border-gray-800 p-3">
+                <div class="bg-black/70 border-t border-gray-700 p-3">
                   <div class="text-gray-400 text-sm font-mono flex items-center gap-2">
                     <span class="text-green-400">$</span>
-                    <span class="animate-pulse">█</span>
+                    <span class="animate-pulse-slow">█</span>
                     <span class="ml-auto text-xs opacity-70">[PLAY_ALL] [SHUFFLE] [LOOP]</span>
                   </div>
                 </div>
               </div>
             </div>
             
-            {/* Album Description */}
-            <div class="bg-gradient-to-r from-cyber-purple/10 to-cyber-cyan/10 rounded-2xl border border-cyber-cyan/20 p-6">
+            <div class="bg-gradient-to-r from-cyber-purple/20 to-cyber-pink/20 backdrop-blur-sm rounded-2xl border border-cyber-pink/30 p-6">
               <h3 class="text-xl font-bold mb-4 font-orbitron flex items-center gap-3">
                 <span class="text-cyber-pink">🔮</span>
                 ALBUM CONCEPT
               </h3>
-              <p class="text-gray-300 leading-relaxed">
+              <p class="text-gray-200 leading-relaxed">
                 "{album.title}" represents a neural journey through digital rain and neon reflections. 
                 Each track is a coded emotion, processed through AI algorithms and human creativity 
-                to create immersive cyberpunk soundscapes. The album explores themes of digital consciousness, 
-                synthetic reality, and the intersection of human and machine creativity.
+                to create immersive cyberpunk soundscapes.
               </p>
-            </div>
-            
-            {/* Newsletter CTA */}
-            <div class="bg-black/50 backdrop-blur-sm rounded-2xl border border-cyber-pink/30 p-6">
-              <h3 class="text-xl font-bold mb-4 font-orbitron flex items-center gap-3">
-                <span class="text-cyber-pink animate-pulse">📡</span>
-                JOIN THE NEURAL NETWORK
-              </h3>
-              <p class="text-gray-300 mb-4">
-                Get exclusive previews, behind-the-scenes AI training sessions, and cyberpunk music insights.
-              </p>
-              <form class="space-y-3" onsubmit="return false">
-                <input 
-                  type="email" 
-                  placeholder="your@email.cyber"
-                  class="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg focus:outline-none focus:border-cyber-cyan transition-colors font-mono text-cyber-cyan placeholder-gray-500"
-                />
-                <button 
-                  type="submit"
-                  class="w-full py-3 bg-gradient-to-r from-cyber-purple to-cyber-pink text-white font-semibold rounded-lg hover:opacity-90 transition-all duration-300 hover:scale-[1.02] font-orbitron tracking-wider"
-                >
-                  SUBSCRIBE TO NETWORK
-                </button>
-              </form>
             </div>
           </div>
         </div>
@@ -306,13 +250,98 @@ const tracks = [
     </div>
   </section>
   
-  <!-- 🌐 ABOUT & STATS SECTION -->
+  <!-- 🌐 TRACKLIST DETAILS with txchya2.jpg -->
   <section class="py-20 relative overflow-hidden">
-    {/* Background Pattern */}
-    <div class="absolute inset-0 opacity-10"
-         style="background-image: 
-           radial-gradient(circle at 25% 25%, rgba(0, 255, 255, 0.2) 0%, transparent 50%),
-           radial-gradient(circle at 75% 75%, rgba(157, 0, 255, 0.2) 0%, transparent 50%);">
+    <div class="absolute inset-0">
+      <img 
+        src={backgrounds.tracklist} 
+        alt="Tracklist Background"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/90"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-cyber-cyan/20 via-transparent to-cyber-purple/20"></div>
+    </div>
+    
+    <div class="container relative z-10 mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl md:text-4xl font-bold mb-12 font-orbitron text-center">
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-cyan to-cyber-pink">
+            IMMERSIVE EXPERIENCE
+          </span>
+        </h2>
+        
+        <div class="bg-black/60 backdrop-blur-sm rounded-2xl border border-gray-700 p-8 mb-12">
+          <div class="grid md:grid-cols-2 gap-8">
+            <div class="space-y-4">
+              <h3 class="text-2xl font-bold font-orbitron text-cyber-cyan mb-4">🎵 Production Style</h3>
+              <ul class="space-y-3">
+                <li class="flex items-center gap-3">
+                  <span class="text-cyber-pink">•</span>
+                  <span class="text-gray-200">AI-assisted composition</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <span class="text-cyber-pink">•</span>
+                  <span class="text-gray-200">Neural network sound design</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <span class="text-cyber-pink">•</span>
+                  <span class="text-gray-200">Ambient cyberpunk textures</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <span class="text-cyber-pink">•</span>
+                  <span class="text-gray-200">Digital synthesis layers</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="space-y-4">
+              <h3 class="text-2xl font-bold font-orbitron text-cyber-pink mb-4">🌟 Listen Journey</h3>
+              <ul class="space-y-3">
+                <li class="flex items-center gap-3">
+                  <span class="text-cyber-cyan">•</span>
+                  <span class="text-gray-200">Designed for deep focus</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <span class="text-cyber-cyan">•</span>
+                  <span class="text-gray-200">Perfect for coding sessions</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <span class="text-cyber-cyan">•</span>
+                  <span class="text-gray-200">Cyberpunk atmosphere</span>
+                </li>
+                <li class="flex items-center gap-3">
+                  <span class="text-cyber-cyan">•</span>
+                  <span class="text-gray-200">AI-human collaboration</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-gradient-to-r from-cyber-purple/20 to-cyber-pink/20 backdrop-blur-sm rounded-2xl border border-cyber-cyan/30 p-8">
+          <h3 class="text-2xl font-bold mb-4 font-orbitron text-center">
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-pink to-cyber-cyan">
+              DIGITAL CREATION PROCESS
+            </span>
+          </h3>
+          <p class="text-gray-200 text-center mb-6">
+            Each track begins as AI-generated patterns, then refined with human emotion and cyberpunk aesthetics.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 📊 STATS SECTION with txchya3.jpg -->
+  <section class="py-20 relative overflow-hidden">
+    <div class="absolute inset-0">
+      <img 
+        src={backgrounds.stats} 
+        alt="Stats Background"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/80"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-cyber-pink/30 via-transparent to-cyber-purple/30"></div>
     </div>
     
     <div class="container relative z-10 mx-auto px-4">
@@ -323,58 +352,102 @@ const tracks = [
           </span>
         </h2>
         
-        {/* Stats Grid */}
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-          <div class="bg-black/40 backdrop-blur-sm rounded-2xl p-6 border border-gray-800 text-center transform hover:scale-105 transition-transform">
-            <div class="text-4xl text-cyber-cyan mb-3">11</div>
+          <div class="bg-black/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-700 text-center transform hover:scale-105 transition-transform">
+            <div class="text-4xl text-cyber-pink mb-3">11</div>
             <h3 class="text-lg font-bold mb-2">TRACKS</h3>
-            <p class="text-gray-400 text-sm">Cyberpunk soundscapes</p>
+            <p class="text-gray-300 text-sm">Cyberpunk soundscapes</p>
           </div>
           
-          <div class="bg-black/40 backdrop-blur-sm rounded-2xl p-6 border border-gray-800 text-center transform hover:scale-105 transition-transform">
+          <div class="bg-black/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-700 text-center transform hover:scale-105 transition-transform">
             <div class="text-4xl text-cyber-purple mb-3">38:14</div>
             <h3 class="text-lg font-bold mb-2">RUNTIME</h3>
-            <p class="text-gray-400 text-sm">Digital immersion</p>
+            <p class="text-gray-300 text-sm">Digital immersion</p>
           </div>
           
-          <div class="bg-black/40 backdrop-blur-sm rounded-2xl p-6 border border-gray-800 text-center transform hover:scale-105 transition-transform">
-            <div class="text-4xl text-cyber-pink mb-3">AI</div>
+          <div class="bg-black/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-700 text-center transform hover:scale-105 transition-transform">
+            <div class="text-4xl text-cyber-cyan mb-3">AI</div>
             <h3 class="text-lg font-bold mb-2">GENERATED</h3>
-            <p class="text-gray-400 text-sm">Neural compositions</p>
+            <p class="text-gray-300 text-sm">Neural compositions</p>
           </div>
           
-          <div class="bg-black/40 backdrop-blur-sm rounded-2xl p-6 border border-gray-800 text-center transform hover:scale-105 transition-transform">
-            <div class="text-4xl text-cyber-cyan mb-3">2026</div>
+          <div class="bg-black/60 backdrop-blur-sm rounded-2xl p-6 border border-gray-700 text-center transform hover:scale-105 transition-transform">
+            <div class="text-4xl text-cyber-pink mb-3">2026</div>
             <h3 class="text-lg font-bold mb-2">RELEASE</h3>
-            <p class="text-gray-400 text-sm">Future sounds</p>
+            <p class="text-gray-300 text-sm">Future sounds</p>
           </div>
         </div>
-        
-        {/* Final CTA */}
-        <div class="bg-gradient-to-r from-black/60 to-gray-900/60 backdrop-blur-xl rounded-2xl border border-cyber-cyan/30 p-8 text-center">
-          <h3 class="text-2xl md:text-3xl font-bold mb-6 font-orbitron">
-            IMMERSE IN THE CYBERPUNK SOUNDSCAPE
+      </div>
+    </div>
+  </section>
+  
+  <!-- 🚀 FINAL CTA with txchya4.jpg -->
+  <section class="py-20 relative overflow-hidden">
+    <div class="absolute inset-0">
+      <img 
+        src={backgrounds.cta} 
+        alt="Final CTA Background"
+        class="absolute inset-0 w-full h-full object-cover"
+      />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/90"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-cyber-cyan/30 via-transparent to-cyber-pink/30"></div>
+      <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-cyber-pink/10 rounded-full blur-3xl animate-pulse-slow"></div>
+      <div class="absolute bottom-1/3 right-1/4 w-80 h-80 bg-cyber-cyan/10 rounded-full blur-3xl animate-pulse-slow delay-1000"></div>
+    </div>
+    
+    <div class="container relative z-10 mx-auto px-4">
+      <div class="max-w-4xl mx-auto">
+        <div class="bg-gradient-to-r from-black/60 to-purple-900/60 backdrop-blur-xl rounded-2xl border border-cyber-pink/30 p-12 text-center">
+          <h3 class="text-3xl md:text-4xl font-bold mb-6 font-orbitron">
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-pink via-cyber-purple to-cyber-cyan">
+              IMMERSE IN THE CYBERPUNK SOUNDSCAPE
+            </span>
           </h3>
-          <p class="text-gray-300 mb-8 max-w-2xl mx-auto text-lg">
+          <p class="text-gray-200 mb-8 text-xl max-w-2xl mx-auto">
             Stream "{album.title}" on all major platforms and experience the fusion of AI and human creativity.
           </p>
-          <div class="flex flex-wrap justify-center gap-4">
+          <div class="flex flex-wrap justify-center gap-6">
             <a 
               href="https://open.spotify.com/artist/Txchya"
               target="_blank"
               rel="noopener noreferrer"
-              class="px-8 py-4 bg-green-600 hover:bg-green-700 rounded-xl font-semibold transition-all duration-300 hover:scale-105 flex items-center gap-3"
+              class="px-10 py-5 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105 flex items-center gap-3 shadow-2xl"
             >
-              <span>🎵</span> Stream on Spotify
+              <span class="text-2xl">🎵</span> Stream on Spotify
             </a>
             <a 
               href="https://youtube.com/@txchyaai"
               target="_blank"
               rel="noopener noreferrer"
-              class="px-8 py-4 bg-red-600 hover:bg-red-700 rounded-xl font-semibold transition-all duration-300 hover:scale-105 flex items-center gap-3"
+              class="px-10 py-5 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105 flex items-center gap-3 shadow-2xl"
             >
-              <span>▶️</span> Watch on YouTube
+              <span class="text-2xl">▶️</span> Watch on YouTube
             </a>
+          </div>
+          
+          <div class="mt-12 pt-8 border-t border-gray-700/50">
+            <h4 class="text-xl font-bold mb-4 font-orbitron text-cyber-cyan">Join the Community</h4>
+            <div class="flex flex-wrap justify-center gap-4">
+              {socialLinks.map((social) => (
+                <a 
+                  href={social.url} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="px-6 py-3 bg-black/50 hover:bg-black/70 rounded-xl font-semibold transition-all duration-300 hover:scale-105 flex items-center gap-2 border border-gray-700"
+                >
+                  <span>{social.icon}</span>
+                  <span>{social.platform}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-12 text-center">
+          <div class="inline-flex items-center gap-4 bg-black/40 backdrop-blur-sm rounded-full px-6 py-3">
+            <span class="text-cyber-pink animate-pulse-slow">✨</span>
+            <span class="text-gray-300 text-sm">All tracks created with AI assistance and human creativity</span>
+            <span class="text-cyber-cyan animate-pulse-slow delay-500">⚡</span>
           </div>
         </div>
       </div>
@@ -382,142 +455,59 @@ const tracks = [
   </section>
   
   <!-- Footer -->
-  <footer class="border-t border-gray-800 py-12 bg-black/50 backdrop-blur-sm">
+  <footer class="border-t border-gray-800 py-12 bg-black/70 backdrop-blur-sm">
     <div class="container mx-auto px-4">
       <div class="flex flex-col md:flex-row justify-between items-center">
         <div class="mb-6 md:mb-0">
           <div class="text-3xl font-bold font-orbitron mb-3">
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-cyan to-cyber-purple">
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-pink to-cyber-purple">
               TXCHYA
             </span>
           </div>
-          <p class="text-gray-500 text-sm">Cyberpunk Ambient AI Artist • {album.label}</p>
+          <p class="text-gray-400 text-sm">Cyberpunk Ambient AI Artist • {album.label}</p>
         </div>
         
         <div class="text-center md:text-right">
-          <p class="text-gray-500 text-sm mb-2">© 2026 Txchya Music • Neural Network Compositions</p>
-          <p class="text-gray-600 text-xs">All tracks created with AI assistance and human creativity</p>
+          <p class="text-gray-400 text-sm mb-2">© 2026 Txchya Music • Neural Network Compositions</p>
+          <p class="text-gray-500 text-xs">Background images by Txchya • Site designed with cyberpunk love</p>
         </div>
       </div>
     </div>
   </footer>
   
-  <!-- Cyberpunk Animations -->
   <style>
-    @keyframes gradient {
+    @keyframes gradient-slow {
       0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
     }
     
-    @keyframes scan {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(100vh); }
+    @keyframes pulse-slow {
+      0%, 100% { opacity: 0.1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(1.05); }
     }
     
-    @keyframes glitch {
-      0% { transform: translate(0); }
-      20% { transform: translate(-2px, 2px); }
-      40% { transform: translate(-2px, -2px); }
-      60% { transform: translate(2px, 2px); }
-      80% { transform: translate(2px, -2px); }
-      100% { transform: translate(0); }
-    }
-    
-    .animate-gradient {
+    .animate-gradient-slow {
       background-size: 200% 200%;
-      animation: gradient 3s ease infinite;
+      animation: gradient-slow 8s ease infinite;
     }
     
-    .animate-scan {
-      animation: scan 3s linear infinite;
+    .animate-pulse-slow {
+      animation: pulse-slow 4s ease-in-out infinite;
     }
     
-    .glitch:hover {
-      animation: glitch 0.3s ease-in-out;
-    }
-    
-    /* Shooting stars */
-    .shooting-star {
-      position: absolute;
-      top: 0;
-      left: -100px;
-      width: 120px;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.4), transparent);
-      animation: shooting-star 30s linear infinite;
-    }
-    
-    .shooting-star-2 {
-      top: 25%;
-      animation-delay: 10s;
-      animation-duration: 35s;
-    }
-    
-    @keyframes shooting-star {
-      0% {
-        transform: translateX(0) translateY(0) rotate(30deg);
-        opacity: 0;
-      }
-      5% {
-        opacity: 0.6;
-      }
-      15% {
-        transform: translateX(100vw) translateY(80px) rotate(30deg);
-        opacity: 0;
-      }
-      100% {
-        opacity: 0;
-      }
-    }
-    
-    /* Custom scrollbar for tracklist */
+    /* Custom scrollbar */
     .overflow-y-auto::-webkit-scrollbar {
-      width: 6px;
+      width: 8px;
     }
     
     .overflow-y-auto::-webkit-scrollbar-track {
       background: rgba(0, 0, 0, 0.3);
-      border-radius: 3px;
+      border-radius: 4px;
     }
     
     .overflow-y-auto::-webkit-scrollbar-thumb {
-      background: linear-gradient(45deg, #00ffff, #9d00ff);
-      border-radius: 3px;
-    }
-    
-    /* Neon text glow */
-    .neon-glow {
-      text-shadow: 
-        0 0 10px currentColor,
-        0 0 20px currentColor,
-        0 0 40px currentColor;
-    }
-    
-    /* Hologram effect */
-    .hologram {
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .hologram::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: linear-gradient(
-        45deg,
-        transparent 30%,
-        rgba(0, 255, 255, 0.1) 50%,
-        transparent 70%
-      );
-      animation: hologram 3s linear infinite;
-    }
-    
-    @keyframes hologram {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      background: linear-gradient(180deg, #ff00ff, #9d00ff);
+      border-radius: 4px;
     }
   </style>
 </Layout>
