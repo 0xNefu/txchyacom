@@ -1,16 +1,115 @@
+﻿---
+import Layout from "../layouts/Layout.astro";
 ---
 
----
+<Layout title="Txchya - Cyberpunk Ambient AI Music">
+  <main class="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900">
+    
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-20 text-center">
+      <div class="inline-block mb-6 px-6 py-2 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-full">
+        <span class="text-sm font-semibold">Cyberpunk Ambient Artist • DetroitLoud</span>
+      </div>
+      
+      <h1 class="text-6xl md:text-8xl font-bold mb-6">
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400">
+          TXCHYA
+        </span>
+      </h1>
+      
+      <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto">
+        Cyberpunk Ambient Artist • AI-generated soundscapes • Digital dreamscapes
+      </p>
+      
+      <!-- Album Badge -->
+      <div class="mb-12 inline-block">
+        <div class="bg-black/40 backdrop-blur-lg rounded-2xl p-8 border border-cyan-500/30">
+          <div class="text-cyan-300 font-bold text-2xl mb-2">ALBUM OUT NOW</div>
+          <div class="text-4xl font-bold mb-1">"Vibe Coding"</div>
+          <div class="text-gray-300">Released 2026-01-15 • DetroitLoud</div>
+        </div>
+      </div>
+      
+      <!-- Streaming Links -->
+      <div class="flex flex-wrap justify-center gap-4 mb-12">
+        <a 
+          href="https://youtube.com/@txchyaai" 
+          target="_blank"
+          class="px-8 py-4 bg-red-600 hover:bg-red-700 rounded-full font-bold text-lg transition-colors"
+        >
+          YouTube
+        </a>
+        <a 
+          href="https://open.spotify.com/artist/Txchya" 
+          target="_blank"
+          class="px-8 py-4 bg-green-600 hover:bg-green-700 rounded-full font-bold text-lg transition-colors"
+        >
+          Spotify
+        </a>
+        <a 
+          href="https://music.apple.com/us/artist/txchya" 
+          target="_blank"
+          class="px-8 py-4 bg-pink-600 hover:bg-pink-700 rounded-full font-bold text-lg transition-colors"
+        >
+          Apple Music
+        </a>
+      </div>
+      
+      <!-- Social Links -->
+      <div class="flex justify-center gap-4 mb-20">
+        <a href="https://twitter.com/txchyaai" class="px-5 py-2.5 bg-black/50 hover:bg-gray-800 rounded-full transition-colors">X</a>
+        <a href="https://instagram.com/txchyaai" class="px-5 py-2.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 rounded-full transition-colors">Instagram</a>
+        <a href="https://tiktok.com/@txchyaai" class="px-5 py-2.5 bg-black/50 hover:bg-gray-800 rounded-full transition-colors">TikTok</a>
+      </div>
+    </section>
+    
+    <!-- Album Details -->
+    <section class="container mx-auto px-4 pb-20">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl font-bold mb-8 text-center">Vibe Coding Tracklist</h2>
+        
+        <!-- Tracklist -->
+        <div class="bg-black/30 rounded-xl p-6 mb-8">
+          <div class="space-y-2">
+            {['Night Protocol', 'Neon Cyber Alley', 'Rain on Chrome', 'Skyline Ascension', 'Signal in the Noise', 'Ghost in the Circuit', 'All Time High (ATH)', 'Destiny', 'Coded Dimension', 'Vibe Coded', 'Endless Fall'].map((track, i) => (
+              <div class="flex justify-between items-center py-3 px-4 rounded-lg hover:bg-gray-800/30 transition-colors">
+                <div class="flex items-center gap-4">
+                  <span class="text-gray-400 w-6">{i + 1}.</span>
+                  <span class="text-gray-200">{track}</span>
+                </div>
+                <span class="text-cyan-400 text-sm">3:{String((i + 2) % 60).padStart(2, '0')}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        
+        <!-- Album Info -->
+        <div class="grid md:grid-cols-3 gap-6 text-sm">
+          <div class="bg-black/40 p-4 rounded-xl">
+            <div class="text-gray-400">Label</div>
+            <div class="font-semibold">DetroitLoud</div>
+          </div>
+          <div class="bg-black/40 p-4 rounded-xl">
+            <div class="text-gray-400">Genre</div>
+            <div class="font-semibold">Electronic • Ambient</div>
+          </div>
+          <div class="bg-black/40 p-4 rounded-xl">
+            <div class="text-gray-400">Release Date</div>
+            <div class="font-semibold">2026-01-15</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 py-8 text-center">
+      <div class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-purple-300 mb-2">
+        TXCHYA
+      </div>
+      <p class="text-gray-500 text-sm">© 2026 Txchya Music • Under exclusive license to DetroitLoud</p>
+    </footer>
+    
+  </main>
+</Layout>
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+

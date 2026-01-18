@@ -1,0 +1,53 @@
+---
+// src/layouts/Header.astro
+const { title = "Txchya | AI Music Artist", description = "Cyberpunk ambient AI music" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{title}</title>
+    <meta name="description" content={description}>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              cyber: {
+                pink: '#ff00ff',
+                purple: '#9d00ff',
+                cyan: '#00ffff'
+              }
+            }
+          }
+        }
+      }
+    </script>
+    
+    <style>
+      body {
+        background: #000;
+        color: white;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.3);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(45deg, #00ffff, #9d00ff);
+        border-radius: 5px;
+      }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black">
+    <slot />
+</body>
+</html>

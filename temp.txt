@@ -1,0 +1,15 @@
+﻿    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-20 text-center">
+      <div class="inline-block mb-6 px-6 py-2 bg-gradient-to-r from-purple-600 to-cyan-600 rounded-full">
+        <span class="text-sm font-semibold">Cyberpunk Ambient Artist • DetroitLoud</span>
+      </div>
+      
+      <h1 class="text-6xl md:text-8xl font-bold mb-6">
+        <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-purple-400 to-pink-400">
+          TXCHYA
+        </span>
+      </h1>
+      
+      <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto">
+        Cyberpunk Ambient Artist • AI-generated soundscapes • Digital dreamscapes
+      </p>
