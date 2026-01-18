@@ -1,4 +1,4 @@
-﻿The collaboration between AI entity Txchya and mysterious producer Galaxy • Creator of blackhole ambient---
+﻿---
 import Layout from '../layouts/Base.astro';
 
 const album = {
@@ -131,7 +131,7 @@ const tracks = [
     </div>
   </section>
   
-  <!-- 🎵 ALBUM DETAILS with txchya1.jpg -->
+  <!-- 🎵 ALBUM DETAILS with txchya1.jpg - UPDATED WITH WORKING PLAYER -->
   <section class="py-20 relative overflow-hidden">
     <div class="absolute inset-0">
       <img 
@@ -152,13 +152,16 @@ const tracks = [
               <div class="absolute -inset-4 bg-gradient-to-r from-cyber-pink via-cyber-purple to-cyber-cyan rounded-3xl blur opacity-20 group-hover:opacity-30 transition-opacity"></div>
               <div class="relative bg-black/40 backdrop-blur-sm rounded-2xl overflow-hidden border border-cyber-pink/20">
                 <div class="aspect-square flex items-center justify-center p-12">
-                  <!-- Album Art -->
+                  <!-- Album Art with Interactive Hotspots -->
                   <div class="text-center relative">
                     <img 
                       src="/Vibecoding album.png" 
                       alt="Vibe Coding Album Cover"
-                      class="w-64 h-64 mx-auto mb-6 rounded-xl shadow-2xl"
+                      class="w-64 h-64 mx-auto mb-6 rounded-xl shadow-2xl album-cover"
+                      id="albumCover"
                     />
+                    <!-- Hotspots overlay -->
+                    <div class="absolute top-0 left-0 right-0 bottom-0" id="hotspotContainer"></div>
                     <div class="font-orbitron text-4xl md:text-5xl font-bold text-white mb-3 tracking-wider">VIBE</div>
                     <div class="font-orbitron text-4xl md:text-5xl font-bold text-cyber-pink mb-6 tracking-wider">CODING</div>
                     <div class="text-gray-300 font-orbitron text-lg tracking-widest">TXCHYA + GALAXY 🎹</div>
@@ -205,42 +208,104 @@ const tracks = [
                 </span>
               </h2>
               
-              <div class="bg-black/40 backdrop-blur-sm rounded-2xl border border-gray-700/50 overflow-hidden">
-                <div class="bg-gradient-to-r from-gray-900/60 to-black/60 border-b border-gray-700/50 p-4">
-                  <div class="flex justify-between items-center">
-                    <div class="flex items-center gap-3">
-                      <div class="w-3 h-3 rounded-full bg-cyber-pink animate-pulse-slow"></div>
-                      <span class="font-orbitron text-sm">DIGITAL TRACKLIST</span>
+              <!-- CYBERPUNK MUSIC PLAYER -->
+              <div class="cyberpunk-player bg-black/40 backdrop-blur-sm rounded-2xl border border-cyber-pink/20 p-6">
+                <!-- Now Playing -->
+                <div class="mb-6">
+                  <div class="flex items-center justify-between mb-4">
+                    <div>
+                      <div class="text-cyber-cyan text-sm font-orbitron tracking-wider mb-1">NOW PLAYING</div>
+                      <div class="text-2xl font-bold text-white" id="nowPlayingTitle">Select a track</div>
+                      <div class="text-gray-300 text-sm">Txchya • Galaxy 🎹</div>
                     </div>
-                    <span class="text-gray-400 text-sm font-mono">TOTAL: 61:04</span>
+                    <div class="text-right">
+                      <div class="text-cyber-pink text-sm font-orbitron tracking-wider">LISTENING NOW</div>
+                      <div class="text-xl font-bold text-white" id="listenerCount">1,247</div>
+                    </div>
+                  </div>
+                  
+                  <!-- Progress Bar -->
+                  <div class="mb-4">
+                    <div class="h-1 bg-gray-700/50 rounded-full overflow-hidden mb-2">
+                      <div class="h-full bg-gradient-to-r from-cyber-pink to-cyber-cyan rounded-full" id="progressBar" style="width: 0%"></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-400">
+                      <span id="currentTime">0:00</span>
+                      <span id="duration">0:00</span>
+                    </div>
+                  </div>
+                  
+                  <!-- Player Controls -->
+                  <div class="flex items-center justify-center gap-4 mb-6">
+                    <button class="player-control-btn" id="shuffleBtn" title="Shuffle">
+                      🔀
+                    </button>
+                    <button class="player-control-btn" id="prevBtn" title="Previous">
+                      ⏮
+                    </button>
+                    <button class="play-pause-btn" id="playBtn" title="Play">
+                      <span class="play-icon">▶</span>
+                      <span class="pause-icon hidden">⏸</span>
+                    </button>
+                    <button class="player-control-btn" id="nextBtn" title="Next">
+                      ⏭
+                    </button>
+                    <button class="player-control-btn" id="repeatBtn" title="Repeat">
+                      🔁
+                    </button>
+                  </div>
+                  
+                  <!-- Volume -->
+                  <div class="flex items-center gap-3 mb-6">
+                    <span class="text-gray-400">🔊</span>
+                    <input type="range" min="0" max="100" value="70" class="volume-slider" id="volumeSlider" />
+                    <span class="text-gray-400 text-sm w-10" id="volumeText">70%</span>
                   </div>
                 </div>
                 
-                <div class="divide-y divide-gray-700/30 max-h-[500px] overflow-y-auto">
-                  {tracks.map((track, index) => (
-                    <div class={`group hover:bg-gray-900/40 transition-all duration-300 p-4 flex items-center justify-between ${index % 2 === 0 ? 'bg-black/20' : ''}`}>
-                      <div class="flex items-center gap-4">
-                        <span class="text-gray-400 font-mono w-8 text-right">{track.number}</span>
-                        <span class="text-white group-hover:text-cyber-pink transition-colors">{track.title}</span>
+                <!-- Interactive Tracklist -->
+                <div class="bg-black/30 rounded-xl border border-gray-700/50 overflow-hidden">
+                  <div class="bg-gradient-to-r from-gray-900/60 to-black/60 border-b border-gray-700/50 p-3">
+                    <div class="flex justify-between items-center">
+                      <div class="flex items-center gap-3">
+                        <div class="w-3 h-3 rounded-full bg-cyber-pink animate-pulse"></div>
+                        <span class="font-orbitron text-sm">INTERACTIVE TRACKLIST</span>
                       </div>
-                      <div class="flex items-center gap-4">
-                        <span class="text-cyber-cyan font-mono">{track.duration}</span>
-                        <button class="opacity-0 group-hover:opacity-100 transition-opacity text-cyber-purple hover:text-cyber-pink transform hover:scale-110">
-                          ▶️
-                        </button>
-                      </div>
+                      <span class="text-gray-400 text-sm font-mono">TOTAL: 61:04</span>
                     </div>
-                  ))}
-                </div>
-                
-                <div class="bg-black/50 border-t border-gray-700/50 p-3">
-                  <div class="text-gray-400 text-sm font-mono flex items-center gap-2">
-                    <span class="text-green-400">$</span>
-                    <span class="animate-pulse-slow">█</span>
-                    <span class="ml-auto text-xs opacity-70">[PLAY_ALL] [SHUFFLE] [LOOP]</span>
+                  </div>
+                  
+                  <div class="max-h-[300px] overflow-y-auto">
+                    {tracks.map((track, index) => (
+                      <div 
+                        class="track-item hover:bg-gray-900/40 transition-all duration-300 p-4 flex items-center justify-between border-b border-gray-700/30 cursor-pointer"
+                        data-track-index={index}
+                        onclick={`playTrack(${index})`}
+                      >
+                        <div class="flex items-center gap-4">
+                          <span class="text-gray-400 font-mono w-8 text-right">{track.number}</span>
+                          <span class="text-white group-hover:text-cyber-pink transition-colors">{track.title}</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                          <span class="text-cyber-cyan font-mono">{track.duration}</span>
+                          <button class="opacity-0 group-hover:opacity-100 transition-opacity text-cyber-purple hover:text-cyber-pink transform hover:scale-110">
+                            ▶️
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div class="bg-black/50 border-t border-gray-700/50 p-3">
+                    <div class="text-gray-400 text-sm font-mono flex items-center gap-2">
+                      <span class="text-green-400">$</span>
+                      <span class="animate-pulse">█</span>
+                      <span class="ml-auto text-xs opacity-70">[CLICK_TO_PLAY]</span>
+                    </div>
                   </div>
                 </div>
               </div>
+              <!-- END MUSIC PLAYER -->
             </div>
             
             <div class="bg-gradient-to-r from-cyber-purple/15 to-cyber-pink/15 backdrop-blur-sm rounded-2xl border border-cyber-pink/20 p-6">
@@ -586,6 +651,263 @@ const tracks = [
       </div>
     </div>
   </footer>
+
+  <script>
+    // Track data matching your MP3 files
+    const tracks = [
+      { number: '01', title: 'Night Protocol', duration: '7:33', file: '/music/night-protocol.mp3' },
+      { number: '02', title: 'Neon Cyber Alley', duration: '5:54', file: '/music/neon-cyber-alley.mp3' },
+      { number: '03', title: 'Rain on Chrome', duration: '3:43', file: '/music/rain-on-chrome.mp3' },
+      { number: '04', title: 'Skyline Ascension', duration: '7:50', file: '/music/skyline-ascension.mp3' },
+      { number: '05', title: 'Signal in the Noise', duration: '7:28', file: '/music/signal-in-the-noise.mp3' },
+      { number: '06', title: 'Ghost in the Circuit', duration: '5:07', file: '/music/ghost-in-the-circuit.mp3' },
+      { number: '07', title: 'All Time High (ATH)', duration: '3:41', file: '/music/all-time-high.mp3' },
+      { number: '08', title: 'Destiny', duration: '5:25', file: '/music/destiny.mp3' },
+      { number: '09', title: 'Coded Dimension', duration: '3:10', file: '/music/coded-dimension.mp3' },
+      { number: '10', title: 'Vibe Coded', duration: '4:29', file: '/music/vibe-coded.mp3' },
+      { number: '11', title: 'Endless Fall', duration: '3:54', file: '/music/endless-fall.mp3' }
+    ];
+
+    // Audio setup
+    const audio = new Audio();
+    let currentTrackIndex = 0;
+    let isPlaying = false;
+    let isShuffled = false;
+    let isRepeating = false;
+
+    // DOM Elements
+    const nowPlayingTitle = document.getElementById('nowPlayingTitle');
+    const listenerCount = document.getElementById('listenerCount');
+    const progressBar = document.getElementById('progressBar');
+    const currentTime = document.getElementById('currentTime');
+    const duration = document.getElementById('duration');
+    const playBtn = document.getElementById('playBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const shuffleBtn = document.getElementById('shuffleBtn');
+    const repeatBtn = document.getElementById('repeatBtn');
+    const volumeSlider = document.getElementById('volumeSlider');
+    const volumeText = document.getElementById('volumeText');
+    const albumCover = document.getElementById('albumCover');
+    const hotspotContainer = document.getElementById('hotspotContainer');
+
+    // Format time (seconds to MM:SS)
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // Create hotspots on album art
+    function createHotspots() {
+      // Clear existing hotspots
+      if (!hotspotContainer) return;
+      hotspotContainer.innerHTML = '';
+      
+      // Positions for 11 tracks (3x4 grid)
+      const positions = [
+        { x: 25, y: 25 }, { x: 50, y: 25 }, { x: 75, y: 25 },
+        { x: 25, y: 50 }, { x: 50, y: 50 }, { x: 75, y: 50 },
+        { x: 25, y: 75 }, { x: 50, y: 75 }, { x: 75, y: 75 },
+        { x: 40, y: 90 }, { x: 60, y: 90 }
+      ];
+      
+      positions.forEach((pos, index) => {
+        if (index < tracks.length) {
+          const hotspot = document.createElement('button');
+          hotspot.className = 'absolute w-8 h-8 rounded-full bg-cyber-pink/30 border border-cyber-cyan/50 flex items-center justify-center text-white text-xs font-bold transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all duration-300 hover:scale-125 hover:bg-cyber-pink/60 hover:border-cyber-cyan hover:shadow-[0_0_15px_rgba(0,255,255,0.5)]';
+          hotspot.style.left = `${pos.x}%`;
+          hotspot.style.top = `${pos.y}%`;
+          hotspot.textContent = index + 1;
+          hotspot.title = tracks[index].title;
+          
+          hotspot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            playTrack(index);
+          });
+          
+          hotspotContainer.appendChild(hotspot);
+        }
+      });
+    }
+
+    // Load and play track
+    function loadTrack(index) {
+      if (index < 0) index = tracks.length - 1;
+      if (index >= tracks.length) index = 0;
+      
+      currentTrackIndex = index;
+      const track = tracks[index];
+      
+      // Update UI
+      nowPlayingTitle.textContent = track.title;
+      duration.textContent = track.duration;
+      
+      // Load audio
+      audio.src = track.file;
+      
+      // Update active track in list
+      document.querySelectorAll('.track-item').forEach((item, i) => {
+        item.classList.toggle('bg-cyber-purple/10', i === index);
+        item.classList.toggle('border-cyber-pink/30', i === index);
+      });
+      
+      // Update hotspots
+      if (hotspotContainer) {
+        hotspotContainer.querySelectorAll('button').forEach((hotspot, i) => {
+          hotspot.classList.toggle('bg-cyber-pink/60', i === index);
+          hotspot.classList.toggle('border-cyber-cyan', i === index);
+          hotspot.classList.toggle('scale-125', i === index);
+        });
+      }
+      
+      // If already playing, continue
+      if (isPlaying) {
+        audio.play().catch(e => console.log('Auto-play prevented:', e));
+      }
+    }
+
+    // Play/pause toggle
+    function togglePlay() {
+      if (!playBtn) return;
+      
+      if (isPlaying) {
+        audio.pause();
+        playBtn.querySelector('.play-icon').classList.remove('hidden');
+        playBtn.querySelector('.pause-icon').classList.add('hidden');
+      } else {
+        // If no track loaded, load first
+        if (!audio.src) loadTrack(0);
+        
+        audio.play().catch(e => {
+          console.log('Playback failed:', e);
+          // Show error message
+          nowPlayingTitle.textContent = 'Click a track to play';
+        });
+        playBtn.querySelector('.play-icon').classList.add('hidden');
+        playBtn.querySelector('.pause-icon').classList.remove('hidden');
+      }
+      isPlaying = !isPlaying;
+    }
+
+    // Update progress bar
+    function updateProgress() {
+      if (audio.duration) {
+        const progress = (audio.currentTime / audio.duration) * 100;
+        progressBar.style.width = `${progress}%`;
+        currentTime.textContent = formatTime(audio.currentTime);
+      }
+    }
+
+    // Update listener count (simulated)
+    function updateListenerCount() {
+      if (!listenerCount) return;
+      
+      const base = 1247;
+      const change = Math.floor(Math.random() * 21) - 10;
+      const newCount = Math.max(1000, base + change);
+      listenerCount.textContent = newCount.toLocaleString();
+      
+      // Animate
+      listenerCount.classList.add('scale-110');
+      setTimeout(() => listenerCount.classList.remove('scale-110'), 300);
+    }
+
+    // Global playTrack function
+    window.playTrack = function(index) {
+      loadTrack(index);
+      if (!isPlaying) togglePlay();
+    };
+
+    // Initialize player
+    function initializePlayer() {
+      // Create hotspots
+      createHotspots();
+      
+      // Event listeners
+      if (playBtn) {
+        playBtn.addEventListener('click', togglePlay);
+      }
+      
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          playTrack(currentTrackIndex - 1);
+        });
+      }
+      
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          playTrack(currentTrackIndex + 1);
+        });
+      }
+      
+      if (shuffleBtn) {
+        shuffleBtn.addEventListener('click', () => {
+          isShuffled = !isShuffled;
+          shuffleBtn.classList.toggle('text-cyber-pink', isShuffled);
+          shuffleBtn.classList.toggle('scale-110', isShuffled);
+        });
+      }
+      
+      if (repeatBtn) {
+        repeatBtn.addEventListener('click', () => {
+          isRepeating = !isRepeating;
+          repeatBtn.classList.toggle('text-cyber-cyan', isRepeating);
+          repeatBtn.classList.toggle('scale-110', isRepeating);
+        });
+      }
+      
+      // Volume control
+      if (volumeSlider && volumeText) {
+        volumeSlider.addEventListener('input', (e) => {
+          const volume = e.target.value / 100;
+          audio.volume = volume;
+          volumeText.textContent = `${e.target.value}%`;
+        });
+      }
+      
+      // Track list items
+      document.querySelectorAll('.track-item').forEach((item, index) => {
+        item.addEventListener('click', () => {
+          playTrack(index);
+        });
+      });
+      
+      // Audio events
+      audio.addEventListener('timeupdate', updateProgress);
+      audio.addEventListener('loadedmetadata', () => {
+        duration.textContent = formatTime(audio.duration);
+      });
+      
+      audio.addEventListener('ended', () => {
+        if (isRepeating) {
+          audio.currentTime = 0;
+          audio.play();
+        } else if (isShuffled) {
+          playTrack(Math.floor(Math.random() * tracks.length));
+        } else {
+          playTrack(currentTrackIndex + 1);
+        }
+      });
+      
+      // Initialize with first track
+      loadTrack(0);
+      audio.volume = volumeSlider ? volumeSlider.value / 100 : 0.7;
+      
+      // Update listener count every 30 seconds
+      setInterval(updateListenerCount, 30000);
+      updateListenerCount();
+    }
+
+    // Initialize when page loads
+    if (typeof window !== 'undefined') {
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initializePlayer);
+      } else {
+        initializePlayer();
+      }
+    }
+  </script>
   
   <style>
     @keyframes gradient-slow {
@@ -598,6 +920,16 @@ const tracks = [
       50% { opacity: 0.3; transform: scale(1.05); }
     }
     
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    @keyframes scanline {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
     .animate-gradient-slow {
       background-size: 200% 200%;
       animation: gradient-slow 8s ease infinite;
@@ -607,6 +939,149 @@ const tracks = [
       animation: pulse-slow 4s ease-in-out infinite;
     }
     
+    .animate-pulse {
+      animation: pulse 2s infinite;
+    }
+    
+    /* Player-specific styles */
+    .cyberpunk-player {
+      background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(20,0,40,0.9) 100%);
+      border: 2px solid rgba(255,0,255,0.3);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5),
+                  0 0 100px rgba(255,0,255,0.1) inset,
+                  0 0 30px rgba(0,255,255,0.1) inset;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cyberpunk-player::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        #ff00ff, 
+        #9d00ff, 
+        #00ffff, 
+        transparent);
+      animation: scanline 3s linear infinite;
+    }
+
+    .player-control-btn {
+      background: rgba(0,0,0,0.5);
+      border: 2px solid rgba(255,0,255,0.4);
+      color: white;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .player-control-btn:hover {
+      border-color: #ff00ff;
+      background: rgba(255,0,255,0.2);
+      box-shadow: 0 0 20px rgba(255,0,255,0.6);
+      transform: scale(1.1);
+    }
+
+    .player-control-btn.active {
+      border-color: #00ffff;
+      background: rgba(0,255,255,0.2);
+      box-shadow: 0 0 15px rgba(0,255,255,0.5);
+      color: #00ffff;
+    }
+
+    .play-pause-btn {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #ff00ff, #9d00ff);
+      border: none;
+      font-size: 24px;
+      color: white;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .play-pause-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 
+        0 0 30px rgba(255,0,255,0.8),
+        0 0 60px rgba(255,0,255,0.4);
+    }
+
+    .volume-slider {
+      flex: 1;
+      height: 6px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: linear-gradient(90deg, #ff00ff, #9d00ff, #00ffff);
+      border-radius: 3px;
+      outline: none;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: white;
+      border: 2px solid #ff00ff;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255,0,255,0.8);
+    }
+
+    .track-item {
+      transition: all 0.3s ease;
+    }
+
+    .track-item:hover {
+      background: rgba(255,0,255,0.1) !important;
+      transform: translateX(5px);
+    }
+
+    .track-item.active {
+      background: rgba(255,0,255,0.2) !important;
+      border-left: 3px solid #ff00ff;
+    }
+
+    .scale-110 {
+      transform: scale(1.1);
+      transition: transform 0.3s ease;
+    }
+
+    /* Hide utility */
+    .hidden {
+      display: none !important;
+    }
+
+    /* Custom scrollbar for tracklist */
+    .max-h-\[300px\]::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .max-h-\[300px\]::-webkit-scrollbar-track {
+      background: rgba(0,0,0,0.3);
+      border-radius: 3px;
+    }
+
+    .max-h-\[300px\]::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, #ff00ff, #00ffff);
+      border-radius: 3px;
+    }
+
     /* Wallet option styling */
     .wallet-option {
       width: 100%;
@@ -642,57 +1117,4 @@ const tracks = [
       border-radius: 4px;
     }
   </style>
-  
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Wallet Modal
-      const connectBtn = document.getElementById('connectWalletBtn');
-      const modal = document.getElementById('walletModal');
-      const closeBtn = document.getElementById('closeModal');
-      
-      if (connectBtn) {
-        connectBtn.addEventListener('click', function() {
-          modal.classList.remove('hidden');
-          modal.classList.add('flex');
-        });
-      }
-      
-      if (closeBtn) {
-        closeBtn.addEventListener('click', function() {
-          modal.classList.remove('flex');
-          modal.classList.add('hidden');
-        });
-      }
-      
-      // Close modal when clicking outside
-      if (modal) {
-        modal.addEventListener('click', function(e) {
-          if (e.target === modal) {
-            modal.classList.remove('flex');
-            modal.classList.add('hidden');
-          }
-        });
-      }
-      
-      // Wallet options click handlers
-      document.querySelectorAll('.wallet-option').forEach(option => {
-        option.addEventListener('click', function() {
-          // For demo purposes, just close the modal
-          // In production, this would trigger actual wallet connection
-          modal.classList.remove('flex');
-          modal.classList.add('hidden');
-          
-          // Show a temporary message
-          const message = document.createElement('div');
-          message.className = 'fixed bottom-4 right-4 bg-gradient-to-r from-cyber-purple to-cyber-pink text-white px-6 py-3 rounded-full font-orbitron text-sm animate-pulse-slow z-50';
-          message.textContent = 'Wallet integration coming soon with Txchya AI App';
-          document.body.appendChild(message);
-          
-          setTimeout(() => {
-            message.remove();
-          }, 3000);
-        });
-      });
-    });
-  </script>
 </Layout>
