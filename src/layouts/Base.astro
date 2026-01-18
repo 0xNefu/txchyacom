@@ -9,7 +9,6 @@ const title = Astro.props.title || "Txchya | Cyberpunk Ambient Artist";
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
   
-  <!-- Cyberpunk Meta Tags -->
   <meta name="theme-color" content="#000000">
   <meta name="description" content="Txchya - Cyberpunk Ambient AI Music Artist. Stream 'Vibe Coding' album on all platforms.">
   
@@ -18,9 +17,9 @@ const title = Astro.props.title || "Txchya | Cyberpunk Ambient Artist";
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- Tailwind + Cyberpunk Styles -->
+  <!-- Tailwind + Global Styles -->
   <style global>
-    /* Tailwind CSS */
+    /* Import Tailwind CSS */
     @import "tailwindcss";
     
     /* FORCE BLACK BACKGROUND */
@@ -58,60 +57,18 @@ const title = Astro.props.title || "Txchya | Cyberpunk Ambient Artist";
       box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3), 0 0 10px rgba(0, 255, 255, 0.5);
     }
     
-    /* Cyberpunk link styles */
-    a {
-      position: relative;
-      color: #00ffff;
-      text-decoration: none;
-    }
-    
-    a:hover {
-      color: #ff00ff;
-      text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
-    }
-    
-    a::after {
-      content: '';
-      position: absolute;
-      bottom: -2px;
-      left: 0;
-      width: 0;
-      height: 1px;
-      background: linear-gradient(90deg, #00ffff, #ff00ff);
-      transition: width 0.3s ease;
-    }
-    
-    a:hover::after {
-      width: 100%;
-    }
-    
-    /* Cyberpunk animations */
+    /* Key animations for gradients and glows */
     @keyframes gradient {
       0%, 100% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
     }
-    
-    @keyframes scan {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(100vh); }
+    .animate-gradient {
+      background-size: 200% 200%;
+      animation: gradient 3s ease infinite;
     }
   </style>
 </head>
 <body class="font-inter">
   <slot />
-  
-  <!-- Cyberpunk Background Effects -->
-  <div class="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
-    <div class="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-cyber-purple/10 blur-3xl animate-pulse"></div>
-    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-cyber-cyan/10 blur-3xl animate-pulse delay-1000"></div>
-    
-    <!-- Grid overlay -->
-    <div class="absolute inset-0 opacity-10" style="
-      background-image: 
-        linear-gradient(rgba(0, 255, 255, 0.3) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 255, 0.3) 1px, transparent 1px);
-      background-size: 50px 50px;
-    "></div>
-  </div>
 </body>
 </html>
