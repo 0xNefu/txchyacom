@@ -653,8 +653,68 @@ const tracks = [
   </footer>
 
   <script>
+    // ============================================
+    // WALLET MODAL FUNCTIONALITY - FIXED!
+    // ============================================
+    
+    // Get modal elements
+    const connectWalletBtn = document.getElementById('connectWalletBtn');
+    const closeModalBtn = document.getElementById('closeModal');
+    const walletModal = document.getElementById('walletModal');
+    
+    // Open modal when Connect Wallet button is clicked
+    if (connectWalletBtn) {
+      connectWalletBtn.addEventListener('click', () => {
+        walletModal.classList.remove('hidden');
+        walletModal.classList.add('flex');
+      });
+    }
+    
+    // Close modal when X button is clicked
+    if (closeModalBtn) {
+      closeModalBtn.addEventListener('click', () => {
+        walletModal.classList.add('hidden');
+        walletModal.classList.remove('flex');
+      });
+    }
+    
+    // Close modal when clicking outside the modal content
+    if (walletModal) {
+      walletModal.addEventListener('click', (e) => {
+        if (e.target === walletModal) {
+          walletModal.classList.add('hidden');
+          walletModal.classList.remove('flex');
+        }
+      });
+    }
+    
+    // Add click handlers to wallet options
+    document.querySelectorAll('.wallet-option').forEach(option => {
+      option.addEventListener('click', () => {
+        // Animate selection
+        option.style.transform = 'scale(0.95)';
+        option.style.backgroundColor = 'rgba(0, 255, 255, 0.1)';
+        
+        setTimeout(() => {
+          option.style.transform = '';
+          option.style.backgroundColor = '';
+          
+          // Show success message
+          alert('Wallet connection coming soon with Txchya AI App!');
+          
+          // Close modal
+          walletModal.classList.add('hidden');
+          walletModal.classList.remove('flex');
+        }, 300);
+      });
+    });
+    
+    // ============================================
+    // MUSIC PLAYER FUNCTIONALITY
+    // ============================================
+    
     // Track data matching your MP3 files
-    const tracks = [
+    const musicTracks = [
       { number: '01', title: 'Night Protocol', duration: '7:33', file: '/music/night-protocol.mp3' },
       { number: '02', title: 'Neon Cyber Alley', duration: '5:54', file: '/music/neon-cyber-alley.mp3' },
       { number: '03', title: 'Rain on Chrome', duration: '3:43', file: '/music/rain-on-chrome.mp3' },
@@ -713,13 +773,13 @@ const tracks = [
       ];
       
       positions.forEach((pos, index) => {
-        if (index < tracks.length) {
+        if (index < musicTracks.length) {
           const hotspot = document.createElement('button');
           hotspot.className = 'absolute w-8 h-8 rounded-full bg-cyber-pink/30 border border-cyber-cyan/50 flex items-center justify-center text-white text-xs font-bold transform -translate-x-1/2 -translate-y-1/2 cursor-pointer transition-all duration-300 hover:scale-125 hover:bg-cyber-pink/60 hover:border-cyber-cyan hover:shadow-[0_0_15px_rgba(0,255,255,0.5)]';
           hotspot.style.left = `${pos.x}%`;
           hotspot.style.top = `${pos.y}%`;
           hotspot.textContent = index + 1;
-          hotspot.title = tracks[index].title;
+          hotspot.title = musicTracks[index].title;
           
           hotspot.addEventListener('click', (e) => {
             e.stopPropagation();
@@ -733,11 +793,11 @@ const tracks = [
 
     // Load and play track
     function loadTrack(index) {
-      if (index < 0) index = tracks.length - 1;
-      if (index >= tracks.length) index = 0;
+      if (index < 0) index = musicTracks.length - 1;
+      if (index >= musicTracks.length) index = 0;
       
       currentTrackIndex = index;
-      const track = tracks[index];
+      const track = musicTracks[index];
       
       // Update UI
       nowPlayingTitle.textContent = track.title;
@@ -884,7 +944,7 @@ const tracks = [
           audio.currentTime = 0;
           audio.play();
         } else if (isShuffled) {
-          playTrack(Math.floor(Math.random() * tracks.length));
+          playTrack(Math.floor(Math.random() * musicTracks.length));
         } else {
           playTrack(currentTrackIndex + 1);
         }
@@ -1062,9 +1122,19 @@ const tracks = [
       transition: transform 0.3s ease;
     }
 
-    /* Hide utility */
+    /* Hide utility - CRITICAL FIX */
     .hidden {
       display: none !important;
+    }
+
+    /* Modal styling */
+    #walletModal {
+      transition: opacity 0.3s ease;
+    }
+    
+    #walletModal:not(.hidden) {
+      display: flex !important;
+      opacity: 1;
     }
 
     /* Custom scrollbar for tracklist */
@@ -1100,6 +1170,7 @@ const tracks = [
       border-color: rgba(0, 255, 255, 0.3);
       transform: translateX(4px);
       box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+      background: linear-gradient(to right, rgba(157, 0, 255, 0.2), rgba(0, 0, 0, 0.3)) !important;
     }
     
     /* Custom scrollbar */
