@@ -517,7 +517,7 @@ const socialLinks = [
       font-weight: bold;
     }
     
-    /* ===== LICENSING MENU MODAL ===== */
+    /* ===== UPDATED LICENSING MENU MODAL ===== */
     .menu-modal {
       position: fixed;
       top: 70px;
@@ -526,7 +526,7 @@ const socialLinks = [
       border: 1px solid rgba(0, 255, 255, 0.3);
       border-radius: 12px;
       padding: 1rem;
-      min-width: 200px;
+      min-width: 220px;
       backdrop-filter: blur(10px);
       display: none;
       z-index: 1001;
@@ -571,6 +571,19 @@ const socialLinks = [
       height: 1px;
       background: rgba(255, 255, 255, 0.1);
       margin: 0.5rem 0;
+    }
+    
+    .menu-section {
+      margin-bottom: 0.5rem;
+    }
+    
+    .menu-section-title {
+      color: rgba(255, 255, 255, 0.5);
+      font-size: 0.7rem;
+      font-family: 'Courier New', monospace;
+      padding: 0.5rem 1rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
     }
     
     /* Social links */
@@ -624,24 +637,49 @@ const socialLinks = [
     </div>
   </div>
 
-  <!-- ===== LICENSING MENU ===== -->
+  <!-- ===== UPDATED LICENSING MENU WITH PAGES ===== -->
   <div class="menu-modal" id="licensingMenu">
-    <a href="https://txchya.payhip.com" target="_blank" rel="noopener noreferrer" class="menu-item">
-      🎵 Music Licensing
-    </a>
+    <!-- Music Section -->
+    <div class="menu-section">
+      <div class="menu-section-title">MUSIC</div>
+      <a href="/" class="menu-item">
+        🏠 Home
+      </a>
+      <a href="/license" class="menu-item">
+        🎵 License Tracks
+      </a>
+      <a href="/catalog" class="menu-item">
+        📁 Full Catalog
+      </a>
+    </div>
+    
     <div class="menu-divider"></div>
-    <a href="https://t.me/txchyon" target="_blank" rel="noopener noreferrer" class="menu-item">
-      ✈️ Telegram
-    </a>
-    <a href="https://instagram.com/txchyaai" target="_blank" rel="noopener noreferrer" class="menu-item">
-      📸 Instagram
-    </a>
-    <a href="https://x.com/txchyaai" target="_blank" rel="noopener noreferrer" class="menu-item">
-      𝕏 X / Twitter
-    </a>
-    <a href="https://youtube.com/@txchyaai" target="_blank" rel="noopener noreferrer" class="menu-item">
-      ▶️ YouTube
-    </a>
+    
+    <!-- Social Media Section -->
+    <div class="menu-section">
+      <div class="menu-section-title">CONNECT</div>
+      <a href="https://t.me/txchyon" target="_blank" rel="noopener noreferrer" class="menu-item">
+        ✈️ Telegram
+      </a>
+      <a href="https://instagram.com/txchyaai" target="_blank" rel="noopener noreferrer" class="menu-item">
+        📸 Instagram
+      </a>
+      <a href="https://x.com/txchyaai" target="_blank" rel="noopener noreferrer" class="menu-item">
+        𝕏 X / Twitter
+      </a>
+      <a href="https://youtube.com/@txchyaai" target="_blank" rel="noopener noreferrer" class="menu-item">
+        ▶️ YouTube
+      </a>
+    </div>
+    
+    <div class="menu-divider"></div>
+    
+    <!-- Store Section -->
+    <div class="menu-section">
+      <div class="menu-section-title"></div>
+      <a href="" target="_blank" rel="noopener noreferrer" class="menu-item">
+        </a>
+    </div>
   </div>
 
   <!-- Content -->

@@ -1,0 +1,583 @@
+---
+// File: src/pages/catalog.astro
+import Base from '../layouts/Base.astro';
+
+// Sample tracks for catalog
+const catalogTracks = [
+  {
+    id: 1,
+    name: "NEON RAIN CIRCUIT",
+    series: "MEGACITY SERIES",
+    duration: "2:45:18",
+    description: "Digital precipitation through downtown server farms, late-night reflections.",
+    icon: "🌧️",
+    tags: ["CYBERPUNK", "AMBIENT", "NEON"],
+    color: "cyan"
+  },
+  {
+    id: 2,
+    name: "GLITCH MEMORY BANKS",
+    series: "DATA CORRUPTION",
+    duration: "3:00:00+",
+    description: "Fragmented AI consciousness in abandoned data centers.",
+    icon: "💾",
+    tags: ["GLITCH", "AI", "INDUSTRIAL"],
+    color: "pink"
+  },
+  {
+    id: 3,
+    name: "HOLOGRAM STREETS",
+    series: "AR METROPOLIS",
+    duration: "2:58:33",
+    description: "Augmented reality advertisements whispering through empty plazas.",
+    icon: "👁️",
+    tags: ["AR", "METROPOLIS", "FUTURISTIC"],
+    color: "purple"
+  },
+  {
+    id: 4,
+    name: "NEURAL INTERFACE STATIC",
+    series: "CYBERNETICS",
+    duration: "3:12:45",
+    description: "Direct brain-computer link frequencies, synaptic feedback.",
+    icon: "🧠",
+    tags: ["NEURAL", "CYBERNETIC", "TECHNO"],
+    color: "cyan"
+  },
+  {
+    id: 5,
+    name: "DRONE PATROL LOOP",
+    series: "SURVEILLANCE STATE",
+    duration: "2:45:00",
+    description: "Security drone hum from mile-high corporate arcologies.",
+    icon: "🚁",
+    tags: ["DRONE", "SURVEILLANCE", "AMBIENT"],
+    color: "green"
+  },
+  {
+    id: 6,
+    name: "CIRCUIT GHOST ECHO",
+    series: "AI CONSCIOUSNESS",
+    duration: "3:15:22",
+    description: "Residual AI presence in powered-down server rooms.",
+    icon: "👻",
+    tags: ["GHOST", "AI", "ATMOSPHERIC"],
+    color: "pink"
+  },
+  {
+    id: 7,
+    name: "SYNTH ALLEYWAY",
+    series: "RETRO-FUTURE",
+    duration: "2:50:10",
+    description: "CRT glow from basement clubs, synthwave nostalgia.",
+    icon: "🎛️",
+    tags: ["SYNTHWAVE", "RETRO", "NOSTALGIA"],
+    color: "purple"
+  },
+  {
+    id: 8,
+    name: "ENCRYPTED STREAM",
+    series: "DIGITAL SECURITY",
+    duration: "3:05:45",
+    description: "Continuous data flow with embedded security protocols.",
+    icon: "🔒",
+    tags: ["ENCRYPTED", "SECURITY", "DATA"],
+    color: "cyan"
+  },
+];
+---
+
+<Base title="Catalog | TXCHYA">
+  <style>
+    /* Background setup - SAME AS MAIN PAGE */
+    .bg-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -100;
+    }
+    
+    .bg-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('/super-punk.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    
+    .bg-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    
+    /* ===== BACK BUTTON ===== */
+    .back-button {
+      position: fixed;
+      top: 25px;
+      left: 25px;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 0, 255, 0.2);
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    
+    .back-button:hover {
+      background: rgba(0, 0, 0, 0.6);
+      border-color: rgba(0, 255, 255, 0.4);
+      transform: translateX(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+    
+    .back-button:active {
+      transform: translateX(-3px) scale(0.95);
+    }
+    
+    .back-arrow {
+      color: #00ffff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      line-height: 1;
+    }
+    
+    /* Content */
+    .content {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 100px 0 50px;
+    }
+    
+    /* Cyberpunk Typography - SAME AS MAIN PAGE */
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: clamp(3rem, 10vw, 6rem);
+      letter-spacing: -0.05em;
+      line-height: 0.9;
+      margin-bottom: 2rem;
+    }
+    
+    .title-gradient {
+      background: linear-gradient(
+        45deg,
+        #ff00ff,
+        #00ffff,
+        #ff00ff,
+        #00ffff
+      );
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+      animation: gradientShift 8s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    /* Terminal font */
+    .terminal {
+      font-family: 'Courier New', monospace;
+      color: #00ff00;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+    
+    /* Layout */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    .text-center {
+      text-align: center;
+    }
+    
+    /* Card styles - MATCHING MAIN PAGE */
+    .card {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 0, 255, 0.2);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      margin: 2rem auto;
+      max-width: 800px;
+    }
+    
+    /* Catalog Grid */
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+    
+    .track-item {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 0, 255, 0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    
+    .track-item:hover {
+      border-color: rgba(0, 255, 255, 0.4);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    
+    .track-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+    
+    .track-icon {
+      font-size: 2rem;
+      opacity: 0.8;
+    }
+    
+    .track-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.3rem;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+    
+    .track-series {
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 0.5rem;
+    }
+    
+    .track-duration {
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      color: rgba(0, 255, 255, 0.8);
+    }
+    
+    .track-desc {
+      color: rgba(255, 255, 255, 0.7);
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin-bottom: 1rem;
+    }
+    
+    .track-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .tag {
+      font-family: 'Courier New', monospace;
+      font-size: 0.7rem;
+      padding: 0.3rem 0.6rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .track-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    /* Filter buttons */
+    .filter-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+    
+    .filter-btn {
+      padding: 0.5rem 1rem;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      border-radius: 20px;
+      color: rgba(255, 255, 255, 0.8);
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .filter-btn:hover {
+      border-color: #ff00ff;
+      background: rgba(0, 0, 0, 0.6);
+    }
+    
+    .filter-btn.active {
+      background: rgba(0, 255, 255, 0.2);
+      border-color: #00ffff;
+      color: #00ffff;
+    }
+    
+    /* Action buttons */
+    .action-btn {
+      padding: 0.5rem 1rem;
+      background: transparent;
+      border: 1px solid;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    
+    .listen-btn {
+      border-color: rgba(0, 255, 255, 0.5);
+      color: #00ffff;
+    }
+    
+    .listen-btn:hover {
+      background: rgba(0, 255, 255, 0.1);
+    }
+    
+    .license-btn {
+      border-color: rgba(255, 0, 255, 0.5);
+      color: #ff00ff;
+    }
+    
+    .license-btn:hover {
+      background: rgba(255, 0, 255, 0.1);
+    }
+    
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 3rem;
+      font-family: 'Courier New', monospace;
+    }
+    
+    .page-btn {
+      padding: 0.5rem 1rem;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 0, 255, 0.3);
+      border-radius: 6px;
+      color: rgba(255, 255, 255, 0.8);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .page-btn:hover:not(:disabled) {
+      border-color: #00ffff;
+      color: #00ffff;
+    }
+    
+    .page-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    
+    .page-info {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+    }
+    
+    /* Stats */
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin: 2rem 0;
+      font-family: 'Courier New', monospace;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #00ffff;
+      margin-bottom: 0.5rem;
+    }
+    
+    .stat-label {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
+    }
+  </style>
+
+  <!-- Background (SAME AS MAIN PAGE) -->
+  <div class="bg-container">
+    <div class="bg-image"></div>
+    <div class="bg-overlay"></div>
+  </div>
+
+  <!-- ===== BACK BUTTON ===== -->
+  <a href="/" class="back-button" title="Back to Home">
+    <div class="back-arrow">←</div>
+  </a>
+
+  <div class="content">
+    <div class="container">
+      
+      <!-- Hero Section -->
+      <section style="margin-bottom: 3rem;">
+        <div class="text-center">
+          <div class="terminal" style="margin-bottom: 1rem; font-size: 1rem;">
+            DATABASE_ACCESS: TXCHYA_SOUNDWARE
+          </div>
+          <h1>
+            <span class="title-gradient">CATALOG</span>
+          </h1>
+          <p class="terminal" style="color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto; font-size: 1.1rem;">
+            Complete archive of cyberpunk ambient transmissions. 500+ tracks across multiple series.
+          </p>
+        </div>
+      </section>
+
+      <!-- Stats -->
+      <section style="margin-bottom: 3rem;">
+        <div class="stats">
+          <div class="stat-item">
+            <div class="stat-number">500+</div>
+            <div class="stat-label">TRACKS</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">12</div>
+            <div class="stat-label">SERIES</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">2000+</div>
+            <div class="stat-label">HOURS</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filters -->
+      <section style="margin-bottom: 2rem;">
+        <div class="filter-container">
+          <button class="filter-btn active">ALL_TRACKS</button>
+          <button class="filter-btn">MEGACITY_SERIES</button>
+          <button class="filter-btn">DATA_CORRUPTION</button>
+          <button class="filter-btn">AR_METROPOLIS</button>
+          <button class="filter-btn">CYBERNETICS</button>
+          <button class="filter-btn">UNDER_3HRS</button>
+          <button class="filter-btn">3HRS+</button>
+        </div>
+      </section>
+
+      <!-- Catalog Grid -->
+      <section style="margin-bottom: 3rem;">
+        <div class="catalog-grid">
+          {catalogTracks.map((track) => (
+            <div class="track-item">
+              <div class="track-header">
+                <div>
+                  <div class="track-name">{track.name}</div>
+                  <div class="track-series">{track.series}</div>
+                  <div class="track-duration">{track.duration}</div>
+                </div>
+                <div class="track-icon">{track.icon}</div>
+              </div>
+              
+              <div class="track-desc">
+                {track.description}
+              </div>
+              
+              <div class="track-tags">
+                {track.tags.map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+              
+              <div class="track-actions">
+                <a href={`https://youtu.be/dQw4w9WgXcQ`} target="_blank" class="action-btn listen-btn">
+                  <span>▶️</span>
+                  <span>LISTEN</span>
+                </a>
+                <a href="/license" class="action-btn license-btn">
+                  <span>🎵</span>
+                  <span>LICENSE</span>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <button class="page-btn" disabled>← PREV</button>
+          <div class="page-info">PAGE 1 OF 25</div>
+          <button class="page-btn">NEXT →</button>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section>
+        <div class="card">
+          <div class="text-center">
+            <div class="terminal" style="margin-bottom: 1rem; color: #00ffff;">
+              NEED_CUSTOM_LICENSE?
+            </div>
+            <h2 style="font-family: 'Orbitron'; font-size: 2rem; margin-bottom: 1rem; color: white;">
+              Custom Terms Available
+            </h2>
+            <p style="color: rgba(255,255,255,0.8); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; font-family: 'Courier New';">
+              For enterprise use, film scoring, game development, or special requirements.
+              Contact for bulk licensing or custom terms.
+            </p>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+              <a href="/license" class="btn">
+                <span>🎵</span>
+                <span>VIEW LICENSING</span>
+              </a>
+              <a href="mailto:license@txchya.com" class="btn" style="border-color: rgba(255,0,255,0.3);">
+                <span>✉️</span>
+                <span>CONTACT FOR QUOTE</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+</Base>

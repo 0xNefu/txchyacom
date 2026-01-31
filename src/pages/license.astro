@@ -1,0 +1,513 @@
+---
+// File: src/pages/license.astro
+import Base from '../layouts/Base.astro';
+
+// Txchya Cyberpunk tracks
+const tracks = [
+  {
+    name: "CYBERPUNK DREAMS",
+    description: "Digital consciousness in neon-lit server farms",
+    creatorEmbed: '<a href="https://payhip.com/b/[CREATOR_ID]" class="payhip-buy-button" data-target-variant="[CREATOR_VARIANT]" data-theme="dark" data-product="[PRODUCT_ID]">CREATOR $29 • ACCESS</a>',
+    commercialEmbed: '<a href="https://payhip.com/b/[COMMERCIAL_ID]" class="payhip-buy-button" data-target-variant="[COMMERCIAL_VARIANT]" data-theme="dark" data-product="[PRODUCT_ID]">COMMERCIAL $99 • ACCESS</a>',
+  },
+  {
+    name: "NEON GHOSTS",
+    description: "AI echoes in abandoned data centers",
+    creatorEmbed: '<a href="https://payhip.com/b/[CREATOR_ID]" class="payhip-buy-button" data-target-variant="[CREATOR_VARIANT]" data-theme="dark" data-product="[PRODUCT_ID]">CREATOR $29 • ACCESS</a>',
+    commercialEmbed: '<a href="https://payhip.com/b/[COMMERCIAL_ID]" class="payhip-buy-button" data-target-variant="[COMMERCIAL_VARIANT]" data-theme="dark" data-product="[PRODUCT_ID]">COMMERCIAL $99 • ACCESS</a>',
+  },
+  {
+    name: "GLITCH SERENITY",
+    description: "Data corruption turned to ambient art",
+    creatorEmbed: '<a href="https://payhip.com/b/[CREATOR_ID]" class="payhip-buy-button" data-target-variant="[CREATOR_VARIANT]" data-theme="dark" data-product="[PRODUCT_ID]">CREATOR $29 • ACCESS</a>',
+    commercialEmbed: '<a href="https://payhip.com/b/[COMMERCIAL_ID]" class="payhip-buy-button" data-target-variant="[COMMERCIAL_VARIANT]" data-theme="dark" data-product="[PRODUCT_ID]">COMMERCIAL $99 • ACCESS</a>',
+  },
+  {
+    name: "SYNTH RAIN",
+    description: "Digital precipitation through AR skies",
+    creatorEmbed: '<a href="https://payhip.com/b/[CREATOR_ID]" class="payhip-buy-button" data-target-variant="[CREATOR_VARIANT]" data-theme="dark" data-product="[PRODUCT_ID]">CREATOR $29 • ACCESS</a>',
+    commercialEmbed: '<a href="https://payhip.com/b/[COMMERCIAL_ID]" class="payhip-buy-button" data-target-variant="[COMMERCIAL_VARIANT]" data-theme="dark" data-product="[PRODUCT_ID]">COMMERCIAL $99 • ACCESS</a>',
+  },
+  {
+    name: "CIRCUIT BREATH",
+    description: "Server hum from mile-high arcologies",
+    creatorEmbed: '<a href="https://payhip.com/b/[CREATOR_ID]" class="payhip-buy-button" data-target-variant="[CREATOR_VARIANT]" data-theme="dark" data-product="[PRODUCT_ID]">CREATOR $29 • ACCESS</a>',
+    commercialEmbed: '<a href="https://payhip.com/b/[COMMERCIAL_ID]" class="payhip-buy-button" data-target-variant="[COMMERCIAL_VARIANT]" data-theme="dark" data-product="[PRODUCT_ID]">COMMERCIAL $99 • ACCESS</a>',
+  },
+  {
+    name: "DATA STREAM",
+    description: "Encrypted information flow whispers",
+    creatorEmbed: '<a href="https://payhip.com/b/[CREATOR_ID]" class="payhip-buy-button" data-target-variant="[CREATOR_VARIANT]" data-theme="dark" data-product="[PRODUCT_ID]">CREATOR $29 • ACCESS</a>',
+    commercialEmbed: '<a href="https://payhip.com/b/[COMMERCIAL_ID]" class="payhip-buy-button" data-target-variant="[COMMERCIAL_VARIANT]" data-theme="dark" data-product="[PRODUCT_ID]">COMMERCIAL $99 • ACCESS</a>',
+  },
+];
+---
+
+<Base title="License | TXCHYA">
+  <!-- Using same styles as main page -->
+  <style>
+    /* Background setup */
+    .bg-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -100;
+    }
+    
+    .bg-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('/super-punk.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    
+    .bg-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    
+    /* ===== BACK BUTTON ===== */
+    .back-button {
+      position: fixed;
+      top: 25px;
+      left: 25px;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 0, 255, 0.2);
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    
+    .back-button:hover {
+      background: rgba(0, 0, 0, 0.6);
+      border-color: rgba(0, 255, 255, 0.4);
+      transform: translateX(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    }
+    
+    .back-button:active {
+      transform: translateX(-3px) scale(0.95);
+    }
+    
+    .back-arrow {
+      color: #00ffff;
+      font-size: 1.5rem;
+      font-weight: bold;
+      line-height: 1;
+    }
+    
+    /* Content */
+    .content {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      padding: 100px 0 50px;
+    }
+    
+    /* Cyberpunk Typography */
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: clamp(3rem, 10vw, 6rem);
+      letter-spacing: -0.05em;
+      line-height: 0.9;
+      margin-bottom: 2rem;
+    }
+    
+    .title-gradient {
+      background: linear-gradient(
+        45deg,
+        #ff00ff,
+        #00ffff,
+        #ff00ff,
+        #00ffff
+      );
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+      animation: gradientShift 8s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    /* Card styles - MATCHING MAIN SITE */
+    .card {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 0, 255, 0.2);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      margin: 2rem auto;
+      max-width: 800px;
+    }
+    
+    /* Terminal font */
+    .terminal {
+      font-family: 'Courier New', monospace;
+      color: #00ff00;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+    
+    /* Grid */
+    .stream-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    /* Buttons - MATCHING MAIN SITE */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      border-radius: 8px;
+      color: white;
+      text-decoration: none;
+      font-family: 'Courier New', monospace;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .btn:hover {
+      border-color: #ff00ff;
+      background: rgba(0, 0, 0, 0.6);
+      transform: translateY(-2px);
+    }
+    
+    /* Layout */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    .text-center {
+      text-align: center;
+    }
+    
+    /* Track Grid */
+    .track-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+    
+    .track-card {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 0, 255, 0.2);
+      border-radius: 16px;
+      padding: 1.5rem;
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+    
+    .track-card:hover {
+      border-color: rgba(0, 255, 255, 0.4);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    
+    .track-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+    
+    .track-desc {
+      color: rgba(255, 255, 255, 0.7);
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      line-height: 1.4;
+    }
+    
+    /* Payhip buttons */
+    .payhip-buy-button {
+      display: block;
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 0.5rem;
+    }
+    
+    .creator-btn {
+      background: rgba(0, 255, 255, 0.1);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      color: #00ffff;
+    }
+    
+    .creator-btn:hover {
+      background: rgba(0, 255, 255, 0.2);
+      border-color: rgba(0, 255, 255, 0.5);
+    }
+    
+    .commercial-btn {
+      background: rgba(255, 0, 255, 0.1);
+      border: 1px solid rgba(255, 0, 255, 0.3);
+      color: #ff00ff;
+    }
+    
+    .commercial-btn:hover {
+      background: rgba(255, 0, 255, 0.2);
+      border-color: rgba(255, 0, 255, 0.5);
+    }
+    
+    /* License info */
+    .license-info {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 3rem 0;
+      backdrop-filter: blur(10px);
+    }
+    
+    .license-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      color: white;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    
+    .license-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    
+    .license-type {
+      padding: 1.5rem;
+      border-radius: 12px;
+    }
+    
+    .license-type.creator {
+      border: 1px solid rgba(0, 255, 255, 0.3);
+    }
+    
+    .license-type.commercial {
+      border: 1px solid rgba(255, 0, 255, 0.3);
+    }
+    
+    .license-type-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .license-type.creator .license-type-title {
+      color: #00ffff;
+    }
+    
+    .license-type.commercial .license-type-title {
+      color: #ff00ff;
+    }
+    
+    .license-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+    }
+    
+    .feature-icon {
+      margin-top: 0.2rem;
+    }
+  </style>
+
+  <!-- Background (SAME AS MAIN PAGE) -->
+  <div class="bg-container">
+    <div class="bg-image"></div>
+    <div class="bg-overlay"></div>
+  </div>
+
+  <!-- ===== BACK BUTTON ===== -->
+  <a href="/" class="back-button" title="Back to Home">
+    <div class="back-arrow">←</div>
+  </a>
+
+  <div class="content">
+    <div class="container">
+      
+      <!-- Hero Section -->
+      <section style="margin-bottom: 4rem;">
+        <div class="text-center">
+          <div class="terminal" style="margin-bottom: 1rem; font-size: 1rem;">
+            ACCESS_LICENSE_PORT
+          </div>
+          <h1>
+            <span class="title-gradient">SOUNDWARE</span>
+          </h1>
+          <p class="terminal" style="color: rgba(255,255,255,0.8); max-width: 600px; margin: 0 auto; font-size: 1.1rem;">
+            License digital consciousness transmissions. Cyberpunk ambient for creators & commercial use.
+          </p>
+        </div>
+      </section>
+
+      <!-- Tracks Grid -->
+      <section style="margin-bottom: 4rem;">
+        <div class="track-grid">
+          {tracks.map((track) => (
+            <div class="track-card">
+              <div class="track-name">{track.name}</div>
+              <div class="track-desc">{track.description}</div>
+              
+              <div style="margin-top: 1.5rem;">
+                <button class="payhip-buy-button creator-btn" onclick="window.location.href='https://payhip.com/b/[CREATOR_ID]'">
+                  CREATOR LICENSE • $29
+                </button>
+                <button class="payhip-buy-button commercial-btn" onclick="window.location.href='https://payhip.com/b/[COMMERCIAL_ID]'">
+                  COMMERCIAL LICENSE • $99
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- License Information -->
+      <section style="margin-bottom: 4rem;">
+        <div class="license-info">
+          <h2 class="license-title">LICENSE PROTOCOLS</h2>
+          
+          <div class="license-grid">
+            <div class="license-type creator">
+              <div class="license-type-title">CREATOR LICENSE</div>
+              <div style="margin-bottom: 1.5rem; color: rgba(0,255,255,0.8); font-family: 'Courier New';">
+                For content creators, influencers & digital artists
+              </div>
+              
+              <div>
+                <div class="license-feature">
+                  <span class="feature-icon">✓</span>
+                  <span>YouTube monetization & streams</span>
+                </div>
+                <div class="license-feature">
+                  <span class="feature-icon">✓</span>
+                  <span>Podcasts & digital content</span>
+                </div>
+                <div class="license-feature">
+                  <span class="feature-icon">✓</span>
+                  <span>Social media & influencer use</span>
+                </div>
+                <div class="license-feature">
+                  <span class="feature-icon">✓</span>
+                  <span>Personal projects & portfolios</span>
+                </div>
+                <div class="license-feature">
+                  <span class="feature-icon">✓</span>
+                  <span>Twitch streams & gaming content</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="license-type commercial">
+              <div class="license-type-title">COMMERCIAL LICENSE</div>
+              <div style="margin-bottom: 1.5rem; color: rgba(255,0,255,0.8); font-family: 'Courier New';">
+                For films, games, ads & commercial projects
+              </div>
+              
+              <div>
+                <div class="license-feature">
+                  <span class="feature-icon">⚡</span>
+                  <span>Film, TV & documentary scoring</span>
+                </div>
+                <div class="license-feature">
+                  <span class="feature-icon">⚡</span>
+                  <span>Video games & mobile apps</span>
+                </div>
+                <div class="license-feature">
+                  <span class="feature-icon">⚡</span>
+                  <span>Advertising & broadcast media</span>
+                </div>
+                <div class="license-feature">
+                  <span class="feature-icon">⚡</span>
+                  <span>Corporate & commercial projects</span>
+                </div>
+                <div class="license-feature">
+                  <span class="feature-icon">⚡</span>
+                  <span>Unlimited distribution & copies</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section>
+        <div class="card">
+          <div class="text-center">
+            <div class="terminal" style="margin-bottom: 1rem; color: #00ffff;">
+              NEED_CUSTOM_LICENSE?
+            </div>
+            <h2 style="font-family: 'Orbitron'; font-size: 2rem; margin-bottom: 1rem; color: white;">
+              Custom Terms Available
+            </h2>
+            <p style="color: rgba(255,255,255,0.8); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto; font-family: 'Courier New';">
+              For enterprise use, film scoring, game development, or special requirements.
+              Contact for bulk licensing or custom terms.
+            </p>
+            
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+              <a href="/catalog" class="btn">
+                <span>📁</span>
+                <span>VIEW FULL CATALOG</span>
+              </a>
+              <a href="mailto:license@txchya.com" class="btn" style="border-color: rgba(255,0,255,0.3);">
+                <span>✉️</span>
+                <span>CONTACT FOR QUOTE</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Payhip Script -->
+  <script type="text/javascript" src="https://payhip.com/payhip.js"></script>
+</Base>
