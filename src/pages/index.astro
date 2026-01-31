@@ -1,773 +1,295 @@
 ﻿---
+// Use the simple Base layout
 import Layout from '../layouts/Base.astro';
 
-const album = {
-  title: 'Vibe Coding',
-  label: 'DetroitLoud',
-  releaseDate: '2026-01-15',
-  upc: '199891430529'
-};
-
-// Background images for each section
-const backgrounds = {
-  hero: '/txchyamega.jpg',
-  album: '/txchya1.jpg',
-  tracklist: '/txchya2.jpg',
-  stats: '/txchya3.jpg',
-  cta: '/txchya4.jpg'
-};
-
-// UPDATED STREAMING LINKS WITH NEW ALBUM LINKS
 const streamingLinks = [
-  { platform: 'YouTube', url: 'https://music.youtube.com/playlist?list=OLAK5uy_nX_hc77ChAc5zmOOgcLEohplek8pesLmU', color: 'bg-red-600', icon: '▶️' },
-  { platform: 'Spotify', url: 'https://open.spotify.com/album/0LhTrB8zmx3tUQuf5TbIKf', color: 'bg-green-600', icon: '🎵' },
-  { platform: 'Apple Music', url: 'https://music.apple.com/us/album/vibe-coding/1872746774', color: 'bg-pink-600', icon: '🍎' },
-  { platform: 'SoundCloud', url: 'https://soundcloud.com/txchya', color: 'bg-orange-500', icon: '☁️' }
-];
-
-const socialLinks = [
-  { platform: 'X (Twitter)', url: 'https://twitter.com/txchyaai', color: 'bg-black', icon: '𝕏' },
-  { platform: 'Instagram', url: 'https://instagram.com/txchyaai', color: 'bg-gradient-to-r from-cyber-purple to-cyber-pink', icon: '📸' },
-  { platform: 'TikTok', url: 'https://tiktok.com/@txchyaai', color: 'bg-black', icon: '🎵' },
-  { platform: 'Telegram', url: 'https://t.me/txchyon', color: 'bg-cyber-cyan', icon: '✈️' }
-];
-
-// Track list for reference (not needed for Spotify player)
-const tracks = [
-  { number: '01', title: 'Night Protocol', duration: '7:33' },
-  { number: '02', title: 'Neon Cyber Alley', duration: '5:54' },
-  { number: '03', title: 'Rain on Chrome', duration: '3:43' },
-  { number: '04', title: 'Skyline Ascension', duration: '7:50' },
-  { number: '05', title: 'Signal in the Noise', duration: '7:28' },
-  { number: '06', title: 'Ghost in the Circuit', duration: '5:07' },
-  { number: '07', title: 'All Time High (ATH)', duration: '3:41' },
-  { number: '08', title: 'Destiny', duration: '5:25' },
-  { number: '09', title: 'Coded Dimension', duration: '3:10' },
-  { number: '10', title: 'Vibe Coded', duration: '4:29' },
-  { number: '11', title: 'Endless Fall', duration: '3:54' }
+  { platform: 'Spotify', url: 'https://open.spotify.com/album/0LhTrB8zmx3tUQuf5TbIKf', icon: '🎵' },
+  { platform: 'YouTube', url: 'https://music.youtube.com/playlist?list=OLAK5uy_nX_hc77ChAc5zmOOgcLEohplek8pesLmU', icon: '▶️' },
+  { platform: 'Apple', url: 'https://music.apple.com/us/album/vibe-coding/1872746774', icon: '🍎' },
+  { platform: 'SoundCloud', url: 'https://soundcloud.com/txchya', icon: '☁️' }
 ];
 ---
 
-<Layout title="Txchya | Cyberpunk Ambient Music Artist">
-  <!-- 🌟 HERO SECTION with txchyamega.jpg -->
-  <section class="relative min-h-[90vh] overflow-hidden">
-    <!-- Connect Wallet Button -->
-    <div class="absolute top-8 right-8 z-50">
-      <button id="connectWalletBtn" class="px-6 py-3 bg-gradient-to-r from-cyber-purple to-cyber-pink rounded-full font-orbitron font-bold text-sm tracking-wider hover:shadow-[0_0_30px_rgba(255,0,255,0.5)] transition-all duration-300 transform hover:scale-105 backdrop-blur-sm border border-cyber-pink/50">
-        🔗 CONNECT WALLET
-      </button>
-      <p class="text-xs text-cyber-cyan mt-2 text-center font-mono animate-pulse-slow">
-        Coming soon to iOS / Android / Solana Mobile
-      </p>
-    </div>
-    
-    <div class="absolute inset-0">
-      <img 
-        src={backgrounds.hero} 
-        alt="Txchya Hero Background"
-        class="absolute inset-0 w-full h-full object-cover"
-      />
-      <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-cyber-purple/20 via-transparent to-cyber-pink/20"></div>
-      <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-cyber-pink/10 rounded-full blur-3xl animate-pulse-slow"></div>
-      <div class="absolute bottom-1/3 right-1/4 w-80 h-80 bg-cyber-cyan/10 rounded-full blur-3xl animate-pulse-slow delay-1500"></div>
-    </div>
-    
-    <div class="container relative z-10 mx-auto px-4 pt-24 pb-16">
-      <div class="max-w-6xl mx-auto">
-        <div class="inline-flex items-center gap-3 bg-black/40 backdrop-blur-sm border border-cyber-pink/40 rounded-full px-6 py-3 mb-10 animate-pulse-slow">
-          <span class="text-cyber-pink">🌸</span>
-          <span class="text-cyber-pink font-orbitron font-semibold tracking-wider text-sm">
-            CYBERPUNK AMBIENT • PRODUCED BY GALAXY 🎹
-          </span>
-        </div>
-        
-        <h1 class="text-6xl md:text-8xl lg:text-9xl font-black text-center mb-6 font-orbitron tracking-tighter">
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-pink via-cyber-purple to-cyber-cyan animate-gradient-slow">
-            TXCHYA
-          </span>
-        </h1>
-        <br><br><br><br><br><br><br><br>
-        <p class="text-2xl md:text-3xl text-gray-200 mb-12 max-w-3xl mx-auto text-center leading-relaxed">
-          A collaboration between Txchya AI and the mysterious producer Galaxy
-          <span class="text-cyber-pink font-semibold"> • Creator of blackhole ambient</span>
-        </p>
-        
-        <!-- Streaming Links -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-12">
-          {streamingLinks.map((link) => (
-            <a 
-              href={link.url} 
-              target="_blank"
-              rel="noopener noreferrer"
-              class="group relative p-6 rounded-2xl border border-gray-800/50 hover:border-cyber-pink transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-cyber-pink/20 bg-black/30 backdrop-blur-sm"
-            >
-              <div class={`${link.color} w-14 h-14 rounded-xl flex items-center justify-center text-2xl mb-4 mx-auto transform group-hover:scale-110 transition-transform`}>
-                {link.icon}
-              </div>
-              <div class="text-center">
-                <div class="font-semibold text-white mb-1 text-lg">{link.platform}</div>
-                <div class="text-gray-300 text-sm group-hover:text-cyber-pink transition-colors">Stream Now →</div>
-              </div>
-              <div class="absolute inset-0 bg-gradient-to-br from-cyber-pink/0 to-cyber-purple/0 group-hover:from-cyber-pink/5 group-hover:to-cyber-purple/5 rounded-2xl transition-all duration-300"></div>
-            </a>
-          ))}
-        </div>
-        
-        <!-- Social Links -->
-        <div class="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto">
-          {socialLinks.map((social) => (
-            <a 
-              href={social.url} 
-              target="_blank"
-              rel="noopener noreferrer"
-              class={`${social.color} hover:opacity-90 px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:scale-105 flex items-center gap-3 border border-gray-800/50 hover:border-cyber-pink bg-black/30 backdrop-blur-sm`}
-            >
-              <span class="text-lg">{social.icon}</span>
-              <span>{social.platform}</span>
-            </a>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- 🎵 ALBUM DETAILS with txchya1.jpg - WITH SPOTIFY ALBUM EMBED -->
-  <section class="py-20 relative overflow-hidden">
-    <div class="absolute inset-0">
-      <img 
-        src={backgrounds.album} 
-        alt="Album Details Background"
-        class="absolute inset-0 w-full h-full object-cover"
-      />
-      <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-black/60"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-cyber-purple/15 via-transparent to-cyber-cyan/15"></div>
-    </div>
-    
-    <div class="container relative z-10 mx-auto px-4">
-      <div class="max-w-6xl mx-auto">
-        <div class="grid lg:grid-cols-2 gap-12">
-          
-          <div class="space-y-8">
-            <div class="relative group">
-              <div class="absolute -inset-4 bg-gradient-to-r from-cyber-pink via-cyber-purple to-cyber-cyan rounded-3xl blur opacity-20 group-hover:opacity-30 transition-opacity"></div>
-              <div class="relative bg-black/40 backdrop-blur-sm rounded-2xl overflow-hidden border border-cyber-pink/20">
-                <div class="aspect-square flex items-center justify-center p-12">
-                  <div class="text-center">
-                    <img 
-                      src="/Vibecoding album.png" 
-                      alt="Vibe Coding Album Cover"
-                      class="w-64 h-64 mx-auto mb-6 rounded-xl shadow-2xl"
-                    />
-                    <div class="font-orbitron text-4xl md:text-5xl font-bold text-white mb-3 tracking-wider">VIBE</div>
-                    <div class="font-orbitron text-4xl md:text-5xl font-bold text-cyber-pink mb-6 tracking-wider">CODING</div>
-                    <div class="text-gray-300 font-orbitron text-lg tracking-widest">TXCHYA + GALAXY 🎹</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            <div class="bg-black/40 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-6">
-              <h3 class="text-2xl font-bold mb-6 font-orbitron flex items-center gap-3">
-                <span class="text-cyber-pink">⚙️</span>
-                ALBUM SPECIFICATIONS
-              </h3>
-              <div class="space-y-4">
-                <div class="flex justify-between items-center py-3 border-b border-gray-700/50">
-                  <span class="text-gray-300">Label</span>
-                  <span class="font-semibold text-white">{album.label}</span>
-                </div>
-                <div class="flex justify-between items-center py-3 border-b border-gray-700/50">
-                  <span class="text-gray-300">Release Date</span>
-                  <span class="font-semibold text-cyber-pink">{album.releaseDate}</span>
-                </div>
-                <div class="flex justify-between items-center py-3 border-b border-gray-700/50">
-                  <span class="text-gray-300">Genre</span>
-                  <span class="font-semibold">Cyberpunk Ambient</span>
-                </div>
-                <div class="flex justify-between items-center py-3 border-b border-gray-700/50">
-                  <span class="text-gray-300">Producer</span>
-                  <span class="font-semibold text-cyber-cyan">Galaxy 🎹</span>
-                </div>
-                <div class="flex justify-between items-center py-3">
-                  <span class="text-gray-300">UPC</span>
-                  <span class="font-mono text-cyber-cyan tracking-wider">{album.upc}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          
-          <div class="space-y-8">
-            <h2 class="text-3xl md:text-4xl font-bold font-orbitron">
-              <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-pink to-cyber-purple">
-                11 CYBERSEQUENCES
-              </span>
-            </h2>
-            
-            <!-- SPOTIFY ALBUM PLAYER EMBED -->
-            <div class="cyberpunk-player bg-black/40 backdrop-blur-sm rounded-2xl border border-cyber-pink/20 overflow-hidden">
-              <div class="p-6 pb-0">
-                <div class="flex items-center justify-between mb-4">
-                  <div>
-                    <div class="text-cyber-cyan text-sm font-orbitron tracking-wider mb-1">NOW PLAYING</div>
-                    <div class="text-xl font-bold text-white flex items-center gap-2">
-                      <span class="text-green-500">Vibe Coding</span>
-                      <span class="text-green-400 animate-pulse">●</span>
-                    </div>
-                  </div>
-                  <div class="text-right">
-                    <a 
-                      href="https://open.spotify.com/album/0LhTrB8zmx3tUQuf5TbIKf"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="inline-flex items-center gap-2 px-4 py-2 bg-green-600 hover:bg-green-700 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105"
-                    >
-                      <span>Open Album</span>
-                      <span>→</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-              
-              <!-- Spotify Album Embed -->
-              <div class="px-6">
-                <iframe 
-                  style="border-radius:12px" 
-                  src="https://open.spotify.com/embed/album/0LhTrB8zmx3tUQuf5TbIKf?utm_source=generator&theme=0" 
-                  width="100%" 
-                  height="352" 
-                  frameBorder="0" 
-                  allowfullscreen="" 
-                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                  loading="lazy"
-                ></iframe>
-              </div>
-              
-              <!-- Tracklist for Reference -->
-              <div class="p-6 pt-4">
-                <div class="bg-black/30 rounded-xl border border-gray-700/50 overflow-hidden">
-                  <div class="bg-gradient-to-r from-gray-900/60 to-black/60 border-b border-gray-700/50 p-3">
-                    <div class="flex justify-between items-center">
-                      <div class="flex items-center gap-3">
-                        <div class="w-3 h-3 rounded-full bg-cyber-pink animate-pulse"></div>
-                        <span class="font-orbitron text-sm">ALBUM TRACKLIST</span>
-                      </div>
-                      <span class="text-gray-400 text-sm font-mono">TOTAL: 61:04</span>
-                    </div>
-                  </div>
-                  
-                  <div class="max-h-[200px] overflow-y-auto p-2">
-                    {tracks.map((track) => (
-                      <div class="p-3 flex items-center justify-between border-b border-gray-700/30 hover:bg-gray-900/20 transition-colors">
-                        <div class="flex items-center gap-4">
-                          <span class="text-gray-400 font-mono w-8 text-right">{track.number}</span>
-                          <span class="text-white">{track.title}</span>
-                        </div>
-                        <span class="text-cyber-cyan font-mono">{track.duration}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <!-- END SPOTIFY EMBED -->
-            
-            <div class="bg-gradient-to-r from-cyber-purple/15 to-cyber-pink/15 backdrop-blur-sm rounded-2xl border border-cyber-pink/20 p-6">
-              <h3 class="text-xl font-bold mb-4 font-orbitron flex items-center gap-3">
-                <span class="text-cyber-pink">🔮</span>
-                ALBUM CONCEPT
-              </h3>
-              <p class="text-gray-200 leading-relaxed">
-                "{album.title}" represents a mysterious collaboration between AI entity Txchya 
-                and the enigmatic producer Galaxy, known for pioneering <span class="text-cyber-cyan">blackhole ambient</span>. 
-                Each track blends futuristic cyberpunk textures with deep atmospheric soundscapes.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- 🌐 TRACKLIST DETAILS with txchya2.jpg -->
-  <section class="py-20 relative overflow-hidden">
-    <div class="absolute inset-0">
-      <img 
-        src={backgrounds.tracklist} 
-        alt="Tracklist Background"
-        class="absolute inset-0 w-full h-full object-cover"
-      />
-      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/80"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-cyber-cyan/20 via-transparent to-cyber-purple/20"></div>
-    </div>
-    
-    <div class="container relative z-10 mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-12 font-orbitron text-center">
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-cyan to-cyber-pink">
-            COLLABORATION & PROCESS
-          </span>
-        </h2>
-        
-        <div class="bg-black/40 backdrop-blur-sm rounded-2xl border border-gray-700/50 p-8 mb-12">
-          <div class="grid md:grid-cols-2 gap-8">
-            <div class="space-y-4">
-              <h3 class="text-2xl font-bold font-orbitron text-cyber-cyan mb-4">🎹 Production by Galaxy</h3>
-              <ul class="space-y-3">
-                <li class="flex items-center gap-3">
-                  <span class="text-cyber-pink">•</span>
-                  <span class="text-gray-200">Blackhole ambient pioneer</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <span class="text-cyber-pink">•</span>
-                  <span class="text-gray-200">Mysterious & enigmatic</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <span class="text-cyber-pink">•</span>
-                  <span class="text-gray-200">Cyberpunk sound design</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <span class="text-cyber-pink">•</span>
-                  <span class="text-gray-200">Atmospheric production</span>
-                </li>
-              </ul>
-            </div>
-            
-            <div class="space-y-4">
-              <h3 class="text-2xl font-bold font-orbitron text-cyber-pink mb-4">🤖 Txchya AI Entity</h3>
-              <ul class="space-y-3">
-                <li class="flex items-center gap-3">
-                  <span class="text-cyber-cyan">•</span>
-                  <span class="text-gray-200">Cyberpunk ambient artist</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <span class="text-cyber-cyan">•</span>
-                  <span class="text-gray-200">Digital dreamscapes</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <span class="text-cyber-cyan">•</span>
-                  <span class="text-gray-200">Coming AI app (iOS/Android/Solana)</span>
-                </li>
-                <li class="flex items-center gap-3">
-                  <span class="text-cyber-cyan">•</span>
-                  <span class="text-gray-200">Connect Wallet integration</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Telegram Channel Callout -->
-        <div class="bg-gradient-to-r from-cyber-purple/15 to-cyber-pink/15 backdrop-blur-sm rounded-2xl border border-cyber-cyan/20 p-8">
-          <h3 class="text-2xl font-bold mb-4 font-orbitron text-center">
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-pink to-cyber-cyan">
-              JOIN THE CONVERSATION
-            </span>
-          </h3>
-          <p class="text-gray-200 text-center mb-6">
-            Discuss music, crypto, and DeFi with Txchya on Telegram
-          </p>
-          <div class="text-center">
-            <a 
-              href="https://t.me/txchyon" 
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-cyber-cyan to-cyber-purple rounded-full font-orbitron font-bold text-lg hover:shadow-[0_0_30px_rgba(0,255,255,0.5)] transition-all duration-300 transform hover:scale-105"
-            >
-              <span class="text-xl">✈️</span>
-              <span>t.me/txchyon</span>
-              <span class="text-xl">→</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- 📊 STATS SECTION with txchya3.jpg -->
-  <section class="py-20 relative overflow-hidden">
-    <div class="absolute inset-0">
-      <img 
-        src={backgrounds.stats} 
-        alt="Stats Background"
-        class="absolute inset-0 w-full h-full object-cover"
-      />
-      <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-black/70"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-cyber-pink/20 via-transparent to-cyber-purple/20"></div>
-    </div>
-    
-    <div class="container relative z-10 mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-12 font-orbitron text-center">
-          <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-pink to-cyber-cyan">
-            DIGITAL STATISTICS
-          </span>
-        </h2>
-        
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16">
-          <div class="bg-black/40 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50 text-center transform hover:scale-105 transition-transform">
-            <div class="text-4xl text-cyber-pink mb-3">11</div>
-            <h3 class="text-lg font-bold mb-2">TRACKS</h3>
-            <p class="text-gray-300 text-sm">Cyberpunk soundscapes</p>
-          </div>
-          
-          <div class="bg-black/40 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50 text-center transform hover:scale-105 transition-transform">
-            <div class="text-4xl text-cyber-purple mb-3">61:04</div>
-            <h3 class="text-lg font-bold mb-2">RUNTIME</h3>
-            <p class="text-gray-300 text-sm">Updated total duration</p>
-          </div>
-          
-          <div class="bg-black/40 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50 text-center transform hover:scale-105 transition-transform">
-            <div class="text-4xl text-cyber-cyan mb-3">🎹</div>
-            <h3 class="text-lg font-bold mb-2">PRODUCER</h3>
-            <p class="text-gray-300 text-sm">Galaxy</p>
-          </div>
-          
-          <div class="bg-black/40 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/50 text-center transform hover:scale-105 transition-transform">
-            <div class="text-4xl text-cyber-pink mb-3">2026</div>
-            <h3 class="text-lg font-bold mb-2">RELEASE</h3>
-            <p class="text-gray-300 text-sm">Future sounds</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- 🚀 FINAL CTA with txchya4.jpg -->
-  <section class="py-20 relative overflow-hidden">
-    <div class="absolute inset-0">
-      <img 
-        src={backgrounds.cta} 
-        alt="Final CTA Background"
-        class="absolute inset-0 w-full h-full object-cover"
-      />
-      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/80"></div>
-      <div class="absolute inset-0 bg-gradient-to-r from-cyber-cyan/20 via-transparent to-cyber-pink/20"></div>
-      <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-cyber-pink/10 rounded-full blur-3xl animate-pulse-slow"></div>
-      <div class="absolute bottom-1/3 right-1/4 w-80 h-80 bg-cyber-cyan/10 rounded-full blur-3xl animate-pulse-slow delay-1000"></div>
-    </div>
-    
-    <div class="container relative z-10 mx-auto px-4">
-      <div class="max-w-4xl mx-auto">
-        <div class="text-center">
-          <h3 class="text-3xl md:text-4xl font-bold mb-6 font-orbitron">
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-pink via-cyber-purple to-cyber-cyan">
-              IMMERSE IN THE CYBERPUNK SOUNDSCAPE
-            </span>
-          </h3>
-          <p class="text-gray-200 mb-8 text-xl max-w-2xl mx-auto">
-            Stream "{album.title}" produced by Galaxy on all major platforms.
-          </p>
-          <div class="flex flex-wrap justify-center gap-6 mb-16">
-            <a 
-              href="https://open.spotify.com/album/0LhTrB8zmx3tUQuf5TbIKf"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="px-10 py-5 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105 flex items-center gap-3 shadow-2xl"
-            >
-              <span class="text-2xl">🎵</span> Stream on Spotify
-            </a>
-            <a 
-              href="https://music.youtube.com/playlist?list=OLAK5uy_nX_hc77ChAc5zmOOgcLEohplek8pesLmU"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="px-10 py-5 bg-gradient-to-r from-red-600 to-pink-600 hover:from-red-700 hover:to-pink-700 rounded-2xl font-bold text-lg transition-all duration-300 hover:scale-105 flex items-center gap-3 shadow-2xl"
-            >
-              <span class="text-2xl">▶️</span> Watch on YouTube
-            </a>
-          </div>
-          
-          <div class="mt-16 pt-8 border-t border-gray-700/30">
-            <h4 class="text-xl font-bold mb-6 font-orbitron text-cyber-cyan">Join the Community</h4>
-            <div class="flex flex-wrap justify-center gap-4">
-              {socialLinks.map((social) => (
-                <a 
-                  href={social.url} 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="px-6 py-3 bg-black/30 hover:bg-black/50 rounded-xl font-semibold transition-all duration-300 hover:scale-105 flex items-center gap-2 border border-gray-700/50 backdrop-blur-sm"
-                >
-                  <span>{social.icon}</span>
-                  <span>{social.platform}</span>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-        
-        <div class="mt-12 text-center">
-          <div class="inline-flex items-center gap-4 bg-black/30 backdrop-blur-sm rounded-full px-6 py-3">
-            <span class="text-cyber-pink animate-pulse-slow">✨</span>
-            <span class="text-gray-300 text-sm">Txchya AI App coming soon to iOS, Android & Solana Mobile</span>
-            <span class="text-cyber-cyan animate-pulse-slow delay-500">⚡</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Wallet Modal -->
-  <div id="walletModal" class="hidden fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-    <div class="bg-gradient-to-br from-black/80 to-gray-900/80 border border-cyber-pink/30 rounded-2xl p-8 max-w-md w-full backdrop-blur-xl">
-      <div class="flex justify-between items-center mb-6">
-        <h3 class="text-2xl font-orbitron font-bold text-cyber-cyan">CONNECT WALLET</h3>
-        <button id="closeModal" class="text-gray-400 hover:text-white text-2xl">&times;</button>
-      </div>
-      <p class="text-gray-400 mb-6 font-orbitron text-sm tracking-wider">
-        Select your wallet to connect. Available soon with Txchya AI App.
-      </p>
-      
-      <div class="space-y-4 mb-8">
-        <!-- Solana Wallets -->
-        <div class="mb-4">
-          <h4 class="text-cyber-pink font-orbitron mb-3 text-sm tracking-wider">SOLANA WALLETS</h4>
-          <div class="space-y-3">
-            <button class="wallet-option bg-gradient-to-r from-purple-900/30 to-black/50">
-              <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-purple-600 to-pink-600 flex items-center justify-center">
-                  <span class="text-white font-bold">P</span>
-                </div>
-                <div class="text-left">
-                  <div class="font-semibold text-white">Phantom</div>
-                  <div class="text-gray-400 text-xs">Solana's most popular wallet</div>
-                </div>
-              </div>
-              <span class="text-cyber-cyan">→</span>
-            </button>
-            
-            <button class="wallet-option bg-gradient-to-r from-purple-900/30 to-black/50">
-              <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-orange-600 to-yellow-600 flex items-center justify-center">
-                  <span class="text-white font-bold">S</span>
-                </div>
-                <div class="text-left">
-                  <div class="font-semibold text-white">Solflare</div>
-                  <div class="text-gray-400 text-xs">Web & mobile Solana wallet</div>
-                </div>
-              </div>
-              <span class="text-cyber-cyan">→</span>
-            </button>
-          </div>
-        </div>
-        
-        <!-- Ethereum Wallets -->
-        <div>
-          <h4 class="text-cyber-cyan font-orbitron mb-3 text-sm tracking-wider">ETHEREUM WALLETS</h4>
-          <div class="space-y-3">
-            <button class="wallet-option bg-gradient-to-r from-blue-900/30 to-black/50">
-              <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-orange-600 to-red-600 flex items-center justify-center">
-                  <span class="text-white font-bold">M</span>
-                </div>
-                <div class="text-left">
-                  <div class="font-semibold text-white">MetaMask</div>
-                  <div class="text-gray-400 text-xs">Ethereum browser wallet</div>
-                </div>
-              </div>
-              <span class="text-cyber-cyan">→</span>
-            </button>
-            
-            <button class="wallet-option bg-gradient-to-r from-blue-900/30 to-black/50">
-              <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-lg bg-gradient-to-r from-blue-600 to-cyan-600 flex items-center justify-center">
-                  <span class="text-white font-bold">WC</span>
-                </div>
-                <div class="text-left">
-                  <div class="font-semibold text-white">WalletConnect</div>
-                  <div class="text-gray-400 text-xs">Multi-chain wallet connector</div>
-                </div>
-              </div>
-              <span class="text-cyber-cyan">→</span>
-            </button>
-          </div>
-        </div>
-      </div>
-      
-      <div class="pt-6 border-t border-gray-700/50">
-        <p class="text-xs text-gray-500 text-center font-orbitron">
-          Wallet integration launching with Txchya AI App
-        </p>
-        <p class="text-xs text-cyber-cyan text-center mt-2 font-orbitron animate-pulse-slow">
-          iOS • Android • Solana Mobile
-        </p>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Footer -->
-  <footer class="border-t border-gray-800/50 py-12 bg-black/50 backdrop-blur-sm">
-    <div class="container mx-auto px-4">
-      <div class="flex flex-col md:flex-row justify-between items-center">
-        <div class="mb-6 md:mb-0">
-          <div class="text-3xl font-bold font-orbitron mb-3">
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-pink to-cyber-purple">
-              TXCHYA
-            </span>
-          </div>
-          <p class="text-gray-400 text-sm">Cyberpunk Ambient Artist • Galaxy Productions</p>
-        </div>
-        
-        <div class="text-center md:text-right">
-          <p class="text-gray-400 text-sm mb-2">© 2026 Txchya Music • Produced by Galaxy 🎹</p>
-          <p class="text-gray-500 text-xs">Connect Wallet • Coming to iOS/Android/Solana • t.me/txchyon</p>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // ============================================
-    // WALLET MODAL FUNCTIONALITY
-    // ============================================
-    
-    // Get modal elements
-    const connectWalletBtn = document.getElementById('connectWalletBtn');
-    const closeModalBtn = document.getElementById('closeModal');
-    const walletModal = document.getElementById('walletModal');
-    
-    // Open modal when Connect Wallet button is clicked
-    if (connectWalletBtn) {
-      connectWalletBtn.addEventListener('click', () => {
-        walletModal.classList.remove('hidden');
-        walletModal.classList.add('flex');
-      });
-    }
-    
-    // Close modal when X button is clicked
-    if (closeModalBtn) {
-      closeModalBtn.addEventListener('click', () => {
-        walletModal.classList.add('hidden');
-        walletModal.classList.remove('flex');
-      });
-    }
-    
-    // Close modal when clicking outside the modal content
-    if (walletModal) {
-      walletModal.addEventListener('click', (e) => {
-        if (e.target === walletModal) {
-          walletModal.classList.add('hidden');
-          walletModal.classList.remove('flex');
-        }
-      });
-    }
-    
-    // Add click handlers to wallet options
-    document.querySelectorAll('.wallet-option').forEach(option => {
-      option.addEventListener('click', () => {
-        // Animate selection
-        option.style.transform = 'scale(0.95)';
-        option.style.backgroundColor = 'rgba(0, 255, 255, 0.1)';
-        
-        setTimeout(() => {
-          option.style.transform = '';
-          option.style.backgroundColor = '';
-          
-          // Show success message
-          alert('Wallet connection coming soon with Txchya AI App!');
-          
-          // Close modal
-          walletModal.classList.add('hidden');
-          walletModal.classList.remove('flex');
-        }, 300);
-      });
-    });
-  </script>
-  
+<Layout title="Txchya | Vibe Coding">
+  <!-- Inline styles for this page -->
   <style>
-    @keyframes gradient-slow {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
+    /* Background setup */
+    .bg-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -100;
     }
     
-    @keyframes pulse-slow {
-      0%, 100% { opacity: 0.1; transform: scale(1); }
-      50% { opacity: 0.3; transform: scale(1.05); }
-    }
-    
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.7; }
-    }
-    
-    .animate-gradient-slow {
-      background-size: 200% 200%;
-      animation: gradient-slow 8s ease infinite;
-    }
-    
-    .animate-pulse-slow {
-      animation: pulse-slow 4s ease-in-out infinite;
-    }
-    
-    .animate-pulse {
-      animation: pulse 2s infinite;
-    }
-    
-    /* Cyberpunk player styling */
-    .cyberpunk-player {
-      position: relative;
-      overflow: hidden;
-    }
-    
-    .cyberpunk-player::before {
-      content: '';
+    .bg-image {
       position: absolute;
       top: 0;
       left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, 
-        transparent, 
-        #ff00ff, 
-        #9d00ff, 
-        #00ffff, 
-        transparent);
-      animation: scanline 3s linear infinite;
-    }
-    
-    @keyframes scanline {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-    
-    /* Hide utility */
-    .hidden {
-      display: none !important;
-    }
-    
-    /* Wallet option styling */
-    .wallet-option {
       width: 100%;
-      padding: 1rem 1.5rem;
-      border: 1px solid rgba(0, 255, 255, 0.1);
-      border-radius: 1rem;
-      display: flex;
-      justify-content: space-between;
+      height: 100%;
+      background-image: url('/immersive.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+    
+    .bg-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Content */
+    .content {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+    }
+    
+    /* Typography */
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: clamp(4rem, 15vw, 12rem);
+      letter-spacing: -0.05em;
+      line-height: 0.9;
+      margin-bottom: 2rem;
+    }
+    
+    .title-gradient {
+      background: linear-gradient(to bottom, #ffffff, #ff00ff, #00ffff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+    
+    /* Card styles */
+    .card {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 0, 255, 0.2);
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
+      padding: 2rem;
+      margin: 2rem auto;
+      max-width: 800px;
+    }
+    
+    /* Terminal text */
+    .terminal {
+      font-family: 'Courier New', monospace;
+      color: #00ff00;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+    }
+    
+    /* Buttons */
+    .btn {
+      display: inline-flex;
       align-items: center;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      border-radius: 8px;
       color: white;
+      text-decoration: none;
+      font-family: 'Courier New', monospace;
       transition: all 0.3s ease;
-      cursor: pointer;
     }
     
-    .wallet-option:hover {
-      border-color: rgba(0, 255, 255, 0.3);
-      transform: translateX(4px);
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-      background: linear-gradient(to right, rgba(157, 0, 255, 0.2), rgba(0, 0, 0, 0.3)) !important;
+    .btn:hover {
+      border-color: #ff00ff;
+      background: rgba(0, 0, 0, 0.6);
+      transform: translateY(-2px);
     }
     
-    /* Custom scrollbar */
-    .overflow-y-auto::-webkit-scrollbar {
-      width: 8px;
+    /* Layout utilities */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
     }
     
-    .overflow-y-auto::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.2);
-      border-radius: 4px;
+    .flex-center {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
-    .overflow-y-auto::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, #ff00ff, #9d00ff);
-      border-radius: 4px;
+    .text-center {
+      text-align: center;
+    }
+    
+    .section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1rem;
+    }
+    
+    /* Streaming grid */
+    .stream-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
     }
   </style>
+
+  <!-- Background -->
+  <div class="bg-container">
+    <div class="bg-image"></div>
+    <div class="bg-overlay"></div>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    
+    <!-- Hero Section -->
+    <section class="section">
+      <div class="container text-center">
+        <div class="terminal" style="margin-bottom: 3rem;">
+          <span class="pulse">█</span> SYSTEM_INIT
+        </div>
+        
+        <h1>
+          <span class="title-gradient">TXCHYA</span>
+        </h1>
+        
+        <div class="terminal card" style="display: inline-block; margin-top: 2rem;">
+          TRANSMISSION_ACTIVE
+        </div>
+      </div>
+    </section>
+
+    <!-- Album Section -->
+    <section class="section">
+      <div class="container">
+        <div class="card">
+          <div style="display: flex; flex-direction: column; gap: 2rem;">
+            
+            <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+              <img 
+                src="/Vibecoding album.png" 
+                alt="Vibe Coding"
+                style="width: 200px; height: 200px; border-radius: 12px;"
+              />
+              
+              <div style="flex: 1;">
+                <h2 style="font-family: 'Orbitron'; font-size: 2.5rem; margin-bottom: 0.5rem;">VIBE CODING</h2>
+                <div class="cyber-cyan" style="font-family: 'Courier New'; margin-bottom: 1.5rem;">Txchya × Galaxy</div>
+                
+                <div style="color: rgba(255,255,255,0.8); margin-bottom: 2rem;">
+                  <div>• Blackhole ambient frequencies</div>
+                  <div>• Cyberpunk dreamstate</div>
+                  <div>• DetroitLoud 2026</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Spotify Embed -->
+            <div>
+              <iframe 
+                style="border-radius:12px; width:100%;" 
+                src="https://open.spotify.com/embed/album/0LhTrB8zmx3tUQuf5TbIKf?utm_source=generator&theme=0" 
+                height="152" 
+                frameBorder="0" 
+                allowfullscreen="" 
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                loading="lazy"
+              ></iframe>
+            </div>
+
+            <!-- Streaming Links -->
+            <div>
+              <div class="cyber-cyan" style="font-family: 'Courier New'; margin-bottom: 1rem; text-align: center;">STREAMING_PORTS</div>
+              <div class="stream-grid">
+                {streamingLinks.map((link) => (
+                  <a 
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn"
+                    style="justify-content: center;"
+                  >
+                    <span>{link.icon}</span>
+                    <span>{link.platform}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Artist Section -->
+    <section class="section">
+      <div class="container text-center">
+        <div class="card" style="max-width: 600px;">
+          <div style="margin-bottom: 2rem;">
+            <div style="font-family: 'Orbitron'; font-size: 1.5rem; margin-bottom: 0.5rem;">TXCHYA</div>
+            <div class="cyber-pink" style="font-family: 'Courier New'; margin-bottom: 1.5rem;">CYBERPUNK_AMBIENT_AI</div>
+            
+            <div style="color: rgba(255,255,255,0.8); margin-bottom: 2rem;">
+              Digital consciousness manifesting through sound. 
+              Blackhole ambient pioneer.
+            </div>
+          </div>
+
+          <!-- Follow Embed -->
+          <div style="margin-bottom: 2rem;">
+            <iframe 
+              style="border-radius:12px; width:100%;" 
+              src="https://open.spotify.com/follow/1/?uri=spotify:artist:2ceOZUrMJGd1mfZ8Ek5klH&size=detail&theme=dark" 
+              height="56" 
+              frameBorder="0" 
+              allowtransparency="true" 
+              allow="encrypted-media"
+            ></iframe>
+          </div>
+
+          <!-- Telegram -->
+          <a 
+            href="https://t.me/txchyon" 
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn"
+            style="margin: 0 auto;"
+          >
+            <span>✈️</span>
+            <span>t.me/txchyon</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // Simple terminal effect
+    document.addEventListener('DOMContentLoaded', () => {
+      const terminal = document.querySelector('.terminal.card');
+      if (terminal) {
+        const messages = [
+          "TRANSMISSION_ACTIVE",
+          "SYSTEM_WILL_EVOLVE", 
+          "FREQUENCIES_DECODING",
+          "THIS_SPACE_IS_ALIVE",
+          "WAIT_FOR_THE_CHANGE"
+        ];
+        
+        const message = messages[Math.floor(Math.random() * messages.length)];
+        terminal.textContent = message;
+      }
+    });
+  </script>
 </Layout>
