@@ -1,4 +1,4 @@
----
+﻿---
 // Use the simple Base layout
 import Layout from '../layouts/Base.astro';
 
@@ -360,7 +360,94 @@ const socialLinks = [
       border: none;
     }
     
-    /* Wallet Modal Styles */
+    /* ===== TOKEN GATED CONTENT SECTION ===== */
+    .token-gated-section {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin: 4rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .token-gated-section::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent 30%,
+        rgba(255, 0, 255, 0.1) 50%,
+        transparent 70%
+      );
+      animation: shimmer 3s infinite linear;
+      z-index: 0;
+    }
+    
+    @keyframes shimmer {
+      0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+      100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    }
+    
+    .token-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      color: #ff00ff;
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .token-subtitle {
+      font-family: 'Courier New', monospace;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .token-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .token-feature {
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    
+    .token-feature-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .token-feature-title {
+      font-family: 'Orbitron', sans-serif;
+      color: #00ffff;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .token-feature-desc {
+      font-family: 'Courier New', monospace;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.85rem;
+    }
+    
+    /* Wallet Modal Styles (Enhanced) */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -749,6 +836,49 @@ const socialLinks = [
       </div>
     </section>
 
+    <!-- ===== TOKEN GATED CONTENT SECTION ===== -->
+    <section class="section">
+      <div class="container">
+        <div class="token-gated-section">
+          <div class="token-title">$TXCHYA TOKEN GATED ACCESS</div>
+          <div class="token-subtitle">
+            Connect wallet to access exclusive content. Hold $TXCHYA tokens for special perks.
+          </div>
+          
+          <div class="token-features">
+            <div class="token-feature">
+              <div class="token-feature-icon">🎵</div>
+              <div class="token-feature-title">EXCLUSIVE TRACKS</div>
+              <div class="token-feature-desc">Unreleased music & VIP content</div>
+            </div>
+            
+            <div class="token-feature">
+              <div class="token-feature-icon">🔓</div>
+              <div class="token-feature-title">DIGITAL COLLECTIBLES</div>
+              <div class="token-feature-desc">NFTs & special edition art</div>
+            </div>
+            
+            <div class="token-feature">
+              <div class="token-feature-icon">💎</div>
+              <div class="token-feature-title">HOLDER PERKS</div>
+              <div class="token-feature-desc">Discounted merch & concert access</div>
+            </div>
+            
+            <div class="token-feature">
+              <div class="token-feature-icon">⚡</div>
+              <div class="token-feature-title">COMMUNITY ACCESS</div>
+              <div class="token-feature-desc">Private channels & early access</div>
+            </div>
+          </div>
+          
+          <button class="wallet-btn-header" id="connectWalletContentBtn" style="padding: 0.8rem 2rem; font-size: 0.9rem;">
+            <span>🔗</span>
+            <span>CONNECT WALLET TO ACCESS</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
     <!-- Artist Section -->
     <section class="section">
       <div class="container text-center">
@@ -789,13 +919,13 @@ const socialLinks = [
   <div class="modal-overlay" id="walletModal">
     <div class="modal-content">
       <div class="modal-header">
-        <div class="modal-title">CONNECT WALLET</div>
+        <div class="modal-title">ACCESS TOKEN GATED CONTENT</div>
         <button class="modal-close" id="closeModal">&times;</button>
       </div>
       
       <p style="color: rgba(255,255,255,0.9); font-family: 'Courier New'; font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.5;">
-        Connect your wallet to prepare for future $TXCHYA token integration. 
-        <span class="modal-highlight">Wallet connection coming soon</span> with special perks and exclusive content access.
+        Connect your wallet to access exclusive $TXCHYA token-gated content. 
+        <span class="modal-highlight">Holders unlock special perks</span> including unreleased music, digital collectibles, and community benefits.
       </p>
       
       <!-- Solana Wallets -->
@@ -806,7 +936,7 @@ const socialLinks = [
             <div class="wallet-icon" style="background: linear-gradient(135deg, #7646FF, #B072FF);">P</div>
             <div class="wallet-info">
               <div class="wallet-name">Phantom</div>
-              <div class="wallet-desc">Solana's most popular wallet</div>
+              <div class="wallet-desc">Recommended for $TXCHYA tokens</div>
             </div>
             <div class="wallet-arrow">→</div>
           </button>
@@ -848,10 +978,10 @@ const socialLinks = [
       
       <div class="modal-footer">
         <div class="modal-footer-text">
-          Prepare your wallet for future <span class="modal-highlight">$TXCHYA token integration</span> and exclusive content access.
+          <span class="modal-highlight">$TXCHYA tokens</span> will be available soon on Solana. Connect now to be ready for the launch.
         </div>
         <div class="modal-footer-text" style="color: #00ffff; margin-top: 0.5rem; font-size: 0.8rem;">
-          Crypto features launching soon
+          Token-gated content unlocking Q1 2024
         </div>
       </div>
     </div>
@@ -954,6 +1084,7 @@ const socialLinks = [
         this.isConnected = false;
         this.walletAddress = null;
         this.headerBtn = document.getElementById('connectWalletHeaderBtn');
+        this.contentBtn = document.getElementById('connectWalletContentBtn');
         this.modal = document.getElementById('walletModal');
         this.closeModalBtn = document.getElementById('closeModal');
         this.walletOptions = document.querySelectorAll('.wallet-option');
@@ -968,6 +1099,13 @@ const socialLinks = [
         // Header button click
         if (this.headerBtn) {
           this.headerBtn.addEventListener('click', () => {
+            this.openModal();
+          });
+        }
+        
+        // Content button click
+        if (this.contentBtn) {
+          this.contentBtn.addEventListener('click', () => {
             this.openModal();
           });
         }
@@ -1074,19 +1212,34 @@ const socialLinks = [
       }
       
       updateUI() {
-        if (this.isConnected && this.headerBtn) {
-          this.headerBtn.innerHTML = `
-            <span>✅</span>
-            <span>${this.walletAddress}</span>
-          `;
-          this.headerBtn.classList.add('active');
+        if (this.isConnected) {
+          // Update header button
+          if (this.headerBtn) {
+            this.headerBtn.innerHTML = `
+              <span>✅</span>
+              <span>${this.walletAddress}</span>
+            `;
+            this.headerBtn.classList.add('active');
+          }
+          
+          // Update content button
+          if (this.contentBtn) {
+            this.contentBtn.innerHTML = `
+              <span>🎵</span>
+              <span>ACCESS GRANTED</span>
+            `;
+            this.contentBtn.onclick = () => {
+              // In a real implementation, this would redirect to token-gated content
+              alert('Token-gated content area coming soon! Check back after $TXCHYA token launch.');
+            };
+          }
         }
       }
       
       showSuccessMessage(walletType) {
         const messages = {
-          'phantom': 'Phantom wallet connected! Ready for future $TXCHYA integration.',
-          'solflare': 'Solflare wallet connected! You will be notified when new features launch.',
+          'phantom': 'Phantom wallet connected! Ready for $TXCHYA token launch.',
+          'solflare': 'Solflare wallet connected! You will be notified when $TXCHYA tokens are available.',
           'metamask': 'MetaMask connected! Ethereum support coming soon.',
           'walletconnect': 'WalletConnect session established!'
         };
