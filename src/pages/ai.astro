@@ -20,26 +20,38 @@ import BaseLayout from '../layouts/Base.astro';
     .main-wrapper {
       position: relative;
       min-height: 100vh;
-      display: flex;
-      flex-direction: row; /* Flex row for sidebar */
+      display: block; /* Removed flex to allow overlapping */
       overflow: hidden;
     }
 
-    /* Sidebar Styles */
+    /* Sidebar - Transparent Overlay */
     .chat-sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
       width: 280px;
       height: 100vh;
-      background: var(--sidebar-bg);
-      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.03); /* Highly transparent */
+      backdrop-filter: blur(8px);
       border-right: 1px solid rgba(0, 0, 0, 0.05);
       display: flex;
       flex-direction: column;
       z-index: 100;
-      transition: transform 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .chat-sidebar:hover {
+        background: rgba(255, 255, 255, 0.1); /* Subtle highlight on hover */
+        width: 300px;
     }
 
     html.dark .chat-sidebar {
-      border-color: rgba(0, 243, 255, 0.1);
+      background: rgba(0, 0, 0, 0.2);
+      border-color: rgba(0, 243, 255, 0.05);
+    }
+
+    html.dark .chat-sidebar:hover {
+        background: rgba(0, 243, 255, 0.05);
     }
 
     .sidebar-header {
@@ -49,6 +61,12 @@ import BaseLayout from '../layouts/Base.astro';
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 2px;
+      opacity: 0.4;
+      transition: opacity 0.3s ease;
+    }
+
+    .chat-sidebar:hover .sidebar-header {
+        opacity: 0.8;
     }
 
     .history-list {
@@ -58,6 +76,12 @@ import BaseLayout from '../layouts/Base.astro';
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
+      opacity: 0.3;
+      transition: opacity 0.3s ease;
+    }
+
+    .chat-sidebar:hover .history-list {
+        opacity: 1;
     }
 
     .history-item {
@@ -142,44 +166,58 @@ import BaseLayout from '../layouts/Base.astro';
       position: relative;
       z-index: 10;
       width: 100%;
-      max-width: 800px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      min-height: 100vh;
+      justify-content: center;
     }
 
     .title-gradient {
-      font-size: clamp(2rem, 8vw, 4rem);
+      position: absolute; /* Floating background */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      font-size: clamp(6rem, 25vw, 15rem); /* EVEN BIGGER */
       font-weight: 900;
-      line-height: 1;
-      margin-bottom: 1.5rem;
+      line-height: 0.7;
+      margin: 0;
       text-align: center;
       font-family: 'Orbitron', sans-serif;
+      letter-spacing: -0.05em;
       background: linear-gradient(90deg, #1e293b, #2563eb);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      opacity: 0.1; /* Very subtle background layer */
+      z-index: -1;
+      pointer-events: none;
+      white-space: nowrap;
     }
 
     html.dark .title-gradient {
       background: linear-gradient(90deg, #fff, #00f3ff, #7c3aed);
-      -webkit-background-clip: text;
-      background-clip: text;
-      text-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
+      opacity: 0.15;
+      text-shadow: 0 0 100px rgba(0, 243, 255, 0.1);
     }
 
     .subtitle {
-      font-size: 1rem;
+      font-size: 0.75rem;
       text-align: center;
       margin-bottom: 2rem;
-      opacity: 0.8;
-      max-width: 600px;
+      opacity: 0.4;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      font-weight: 900;
     }
 
-    /* AI CONSOLE */
+    /* AI CONSOLE - Floating over background title */
     .ai-console {
       width: 100%;
-      background: rgba(255, 255, 255, 0.9);
+      position: relative;
+      z-index: 20;
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(20px);
       border: 1px solid rgba(0, 0, 0, 0.1);
       border-radius: 20px;
@@ -329,7 +367,12 @@ import BaseLayout from '../layouts/Base.astro';
           <div class="ai-console">
             <div class="console-header">
               <div style="font-size: 10px; font-weight: 800; color: var(--primary-accent); letter-spacing: 2px;">NEURAL_LINK: ACTIVE</div>
-              <div style="display: flex; gap: 0.75rem; align-items: center;">
+            <div style="display: flex; gap: 0.75rem; align-items: center;">
+                <!-- Opacity Controller -->
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-right: 0.5rem;">
+                   <span style="font-size: 8px; opacity: 0.5;">OPACITY</span>
+                   <input type="range" id="opacitySlider" min="5" max="100" value="85" style="width: 50px; height: 3px; cursor: pointer; accent-color: var(--primary-accent);" />
+                </div>
                 <button id="clearHistoryBtn" style="font-size: 9px; cursor: pointer; color: var(--primary-accent); background: none; border: 1px solid var(--primary-accent); padding: 2px 6px; border-radius: 4px;">PURGE</button>
                 <div id="sessionLabel" style="font-size: 9px; opacity: 0.4;">SESSION: NEW</div>
               </div>
@@ -481,6 +524,20 @@ import BaseLayout from '../layouts/Base.astro';
     const sidebar = document.getElementById('sidebar');
     document.getElementById('mobileSidebarToggle')?.addEventListener('click', () => {
         sidebar.classList.toggle('open');
+    });
+
+    // Opacity Logic
+    const opacitySlider = document.getElementById('opacitySlider');
+    const aiConsole = document.querySelector('.ai-console');
+    
+    opacitySlider?.addEventListener('input', (e) => {
+        const val = e.target.value;
+        const opacity = val / 100;
+        if (aiConsole) {
+            const isDark = document.documentElement.classList.contains('dark');
+            const baseColor = isDark ? '0, 0, 0' : '255, 255, 255';
+            aiConsole.style.background = `rgba(${baseColor}, ${opacity})`;
+        }
     });
 
     // Initial Load
