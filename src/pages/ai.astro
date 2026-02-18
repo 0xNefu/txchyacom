@@ -234,21 +234,30 @@ try {
 
     .console-header {
       padding: 0.75rem 1.5rem;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.03);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(0, 0, 0, 0.02);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.03), transparent);
+    }
+
+    html.dark .console-header {
+      background: linear-gradient(to bottom, rgba(255,255,255,0.05), transparent);
+      border-color: rgba(255, 255, 255, 0.02);
     }
 
     /* Sidebar Settings Box */
     .sidebar-settings {
       padding: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      background: rgba(0, 0, 0, 0.2);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.2), transparent);
       display: flex;
       flex-direction: column;
       gap: 1.25rem;
+    }
+
+    html.dark .sidebar-settings {
+      background: linear-gradient(to top, rgba(0, 243, 255, 0.05), transparent);
     }
 
     html.dark .sidebar-settings {
@@ -339,7 +348,13 @@ try {
 
     .console-input-area {
       padding: 1.5rem;
-      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      border-top: 1px solid rgba(0, 0, 0, 0.03);
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.05), transparent);
+    }
+
+    html.dark .console-input-area {
+      background: linear-gradient(to top, rgba(255, 255, 255, 0.05), transparent);
+      border-color: rgba(255, 255, 255, 0.02);
     }
 
     .input-wrapper { display: flex; gap: 1rem; }
