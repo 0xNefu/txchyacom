@@ -1,220 +1,267 @@
 ---
-// src/pages/index.astro - Dynamic Theme Restoration (Professional Light / Nexus Dark)
+// src/pages/index.astro - Premium Integrated Neural Hub
 import BaseLayout from '../layouts/Base.astro';
+
+const streamingLinks = [
+  { platform: 'Spotify', url: 'https://open.spotify.com/album/0LhTrB8zmx3tUQuf5TbIKf', icon: '🎵' },
+  { platform: 'YouTube', url: 'https://music.youtube.com/playlist?list=OLAK5uy_nX_hc77ChAc5zmOOgcLEohplek8pesLmU', icon: '▶️' },
+  { platform: 'Apple', url: 'https://music.apple.com/us/album/vibe-coding/1872746774', icon: '🍎' },
+  { platform: 'SoundCloud', url: 'https://soundcloud.com/txchya', icon: '☁️' }
+];
 ---
 
-<BaseLayout title="TXCHYA | Decision Intelligence Layer">
-  <!-- PROFESSIONAL LIGHT MODE STYLES -->
+<BaseLayout title="TXCHYA | Intelligence & Sound Architecture">
   <style>
-    .light-mode-only { display: block; }
-    .dark-mode-only { display: none; }
-    
-    html.dark .light-mode-only { display: none; }
-    html.dark .dark-mode-only { display: block; }
-
-    /* Light Mode Variables */
-    :root {
-      --primary-blue: #2563eb;
-      --primary-purple: #7c3aed;
-      --light-bg: #f8fafc;
-      --text-primary: #1e293b;
-      --text-secondary: #475569;
-      --border-color: #e2e8f0;
-    }
-
-    /* Professional Hero (Light) */
-    .hero-light {
+    /* Premium Design Tokens */
+    .hero-container {
       position: relative;
       min-height: 100vh;
+      width: 100%;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: var(--light-bg);
-      overflow: hidden;
+      background: #ffffff;
     }
 
-    .hero-bg-light {
-      position: absolute;
-      inset: 0;
-      background-image: url('/hero99.jpg');
-      background-size: cover;
-      background-position: center;
-      opacity: 0.7;
-      z-index: 0;
+    html.dark .hero-container {
+      background: #000000;
     }
 
-    .grid-light {
+    /* Massive Background Branding */
+    .brand-bg-text {
       position: absolute;
-      inset: 0;
-      background-image: linear-gradient(rgba(37,99,235,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(37,99,235,0.03) 1px, transparent 1px);
-      background-size: 40px 40px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(10rem, 35vw, 25rem);
+      font-weight: 950;
+      color: rgba(0, 0, 0, 0.03);
       z-index: 1;
+      pointer-events: none;
+      white-space: nowrap;
+      letter-spacing: -0.05em;
     }
 
-    /* Nexus Dark Styles */
-    .nexus-main {
-      height: 100vh;
-      width: 100%;
+    html.dark .brand-bg-text {
+      color: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Neural HUD Panel */
+    .hud-panel {
       position: relative;
-      overflow: hidden;
+      z-index: 10;
+      width: 90%;
+      max-width: 900px;
+      padding: 5rem 3rem;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(40px);
+      -webkit-backdrop-filter: blur(40px);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: 60px;
+      box-shadow: 0 50px 100px -20px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.5s ease;
+    }
+
+    html.dark .hud-panel {
+      background: rgba(10, 10, 10, 0.8);
+      border-color: rgba(255, 255, 255, 0.05);
+      box-shadow: 0 50px 150px -20px rgba(0, 243, 255, 0.1);
+    }
+
+    /* Input Area Styling */
+    .ai-input-zone {
+      width: 100%;
+      max-width: 650px;
+      margin-top: 3rem;
+    }
+
+    .ai-input-field {
+      width: 100%;
+      padding: 1.5rem 2rem;
+      border-radius: 30px;
+      border: 2px solid rgba(0, 0, 0, 0.05);
+      background: rgba(240, 240, 240, 0.5);
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    html.dark .ai-input-field {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+
+    .ai-input-field:focus {
+      border-color: #2563eb;
+      background: #fff;
+      box-shadow: 0 0 20px rgba(37, 99, 235, 0.1);
+    }
+
+    html.dark .ai-input-field:focus {
+      border-color: #00f3ff;
       background: #000;
+      box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
     }
 
-    .stars {
-        background-image: radial-gradient(white 1px, transparent 1px);
-        background-size: 50px 50px;
-    }
-    
-    @keyframes spin-slow {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-    }
-    .animate-spin-slow {
-        animation: spin-slow 20s linear infinite;
+    /* Grid Aesthetics */
+    .neural-grid {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 2;
     }
 
-    @keyframes scanline {
-        0% { transform: translateY(-100%); }
-        100% { transform: translateY(100%); }
+    html.dark .neural-grid {
+      background-image: radial-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px);
     }
-    .animate-scanline-local {
-        animation: scanline 8s linear infinite;
+
+    /* Action Buttons */
+    .action-btn {
+      margin-top: 1.5rem;
+      padding: 1rem 3rem;
+      background: #2563eb;
+      color: white;
+      border-radius: 30px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(37, 99, 235, 0.2);
+    }
+
+    html.dark .action-btn {
+      background: #00f3ff;
+      color: #000;
+      box-shadow: 0 10px 30px rgba(0, 243, 255, 0.2);
+    }
+
+    .action-btn:hover {
+      transform: translateY(-5px);
+      background: #000;
+      color: #fff;
     }
   </style>
 
-  <!-- ================= LIGHT MODE: PROFESSIONAL DESIGN ================= -->
-  <div class="light-mode-only">
-    <main class="main-wrapper">
-      <section class="hero-light">
-        <div class="hero-bg-light"></div>
-        <div class="grid-light"></div>
-        
-        <div class="relative z-10 w-full max-w-5xl px-6 flex flex-col items-center">
-          <div class="font-mono text-blue-600 mb-8 tracking-widest uppercase text-sm">System_Initialized // Decision_Intelligence</div>
-          
-          <h1 class="text-6xl md:text-8xl font-extrabold tracking-tighter text-slate-900 mb-6 text-center">
-            TXCHYA
-          </h1>
-          
-          <p class="text-xl text-slate-700 text-center max-w-2xl mb-12 font-medium">
-            A purpose built intelligence layer that connects you to verified knowledge 
-            and real world experts for life critical decisions.
-          </p>
-          
-          <div class="w-full max-w-2xl bg-white/90 backdrop-blur-xl border border-blue-100 rounded-3xl p-8 shadow-2xl">
-             <h3 class="text-center font-bold text-slate-800 mb-6">What do you need help with right now?</h3>
-             <div class="flex flex-col md:flex-row gap-3">
-               <input id="aiInputLight" type="text" placeholder="I need a trustworthy roofing company..." class="flex-1 px-5 py-3 rounded-xl border-2 border-slate-100 focus:border-blue-500 outline-none transition-all" />
-               <button id="aiSubmitLight" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-200">Execute</button>
-             </div>
-             <div class="mt-6 p-4 bg-slate-50 rounded-xl border-l-4 border-blue-500 text-xs text-slate-500 leading-relaxed">
-               <strong>Transparency note:</strong> I'll help you find the right solution based on verified data. 
-               All recommendations are justified and alternatives are shown.
-             </div>
-          </div>
-        </div>
-      </section>
+  <main class="hero-container">
+    <div class="brand-bg-text">TXCHYA</div>
+    <div class="neural-grid"></div>
 
-      <!-- How it Works (Light) -->
-      <section class="py-24 bg-white">
-        <div class="max-w-6xl mx-auto px-6">
-          <h2 class="text-3xl font-bold text-slate-900 mb-16 text-center">Infrastructure for Better Decisions</h2>
-          <div class="grid md:grid-cols-3 gap-12">
-             <div class="text-center">
-                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mx-auto mb-6">1</div>
-                <h3 class="font-bold text-lg mb-3">Understand Intent</h3>
-                <p class="text-slate-500 text-sm">Clarify what you actually need, filter noise, and identify the right domain level.</p>
-             </div>
-             <div class="text-center">
-                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mx-auto mb-6">2</div>
-                <h3 class="font-bold text-lg mb-3">Apply Verified Knowledge</h3>
-                <p class="text-slate-500 text-sm">Pull from bounded, auditable data sources – not the open internet. No hallucinations.</p>
-             </div>
-             <div class="text-center">
-                <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center font-bold mx-auto mb-6">3</div>
-                <h3 class="font-bold text-lg mb-3">Guide to Action</h3>
-                <p class="text-slate-500 text-sm">Provide clear options, explain tradeoffs, and connect you to vetted real-world solutions.</p>
-             </div>
-          </div>
-        </div>
-      <!-- Attribution Footer (Light) -->
-      <footer class="py-12 border-t border-slate-100 bg-slate-50">
-        <div class="max-w-6xl mx-auto px-6 text-center text-[10px] uppercase tracking-[0.2em] text-slate-400">
-           POWERED BY <a href="https://everrank.app" target="_blank" class="hover:text-blue-600 transition-colors">EVERRANK</a> // 
-           CREATED BY <a href="https://galaxybuilt.dev" target="_blank" class="hover:text-blue-600 transition-colors">GALAXYBUILT</a>
-        </div>
-      </footer>
-    </main>
-  </div>
+    <div class="hud-panel">
+      <!-- Top Branding -->
+      <div class="mb-12 text-center">
+        <div class="text-[10px] font-black tracking-[0.6em] text-blue-600 dark:text-cyan-400 mb-4 uppercase italic">Decision Intelligence Gateway</div>
+        <h1 class="text-7xl md:text-9xl font-black tracking-tighter text-slate-900 dark:text-white font-primary italic leading-none">
+          TXCHYA<span class="text-blue-600 dark:text-cyan-400 not-italic">.</span>
+        </h1>
+      </div>
 
-  <!-- ================= DARK MODE: NEXUS SPLIT DESIGN ================= -->
-  <div class="dark-mode-only">
-    <main class="nexus-main font-primary">
-        <!-- TOP: MUSIC -->
-        <a href="/music" class="group block h-1/2 w-full relative overflow-hidden border-b border-[#222]">
-            <div class="absolute inset-0 bg-[#0a0a0a]">
-                <div class="stars absolute inset-0 opacity-20"></div>
-                <div class="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-purple-500/10 to-transparent"></div>
-            </div>
-            <div class="absolute inset-0 flex flex-col items-center justify-center z-10 p-6">
-                <div class="mb-4 text-purple-500 opacity-60 group-hover:opacity-100 transition-all duration-500">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
-                </div>
-                <h2 class="text-4xl md:text-6xl font-bold tracking-tighter text-white mb-2 group-hover:text-purple-400 transition-all">SONIC <span class="font-thin opacity-50">ARCHITECTURE</span></h2>
-                <div class="px-6 py-2 border border-white/10 rounded-full text-[10px] uppercase tracking-[0.3em] text-white/40 group-hover:bg-purple-500 group-hover:text-white transition-all">Enter Transmission</div>
-            </div>
+      <!-- AI CORE INPUT -->
+      <div class="ai-input-zone">
+        <div class="text-center font-black text-[10px] uppercase tracking-[0.4em] text-slate-400 mb-6 italic">/// Initiate Neural Query</div>
+        <div class="flex flex-col md:flex-row gap-4">
+          <input 
+            id="mainHubInput"
+            type="text" 
+            placeholder="READY_FOR_INPUT..." 
+            class="ai-input-field flex-1"
+          />
+          <button id="mainHubExecute" class="action-btn">Link_Core</button>
+        </div>
+      </div>
+
+      <!-- Ecosystem Links -->
+      <div class="mt-20 w-full flex flex-wrap justify-center gap-8 border-t border-slate-100 dark:border-white/5 pt-12">
+        <a href="/music" class="group flex flex-col items-center gap-2">
+            <div class="text-[9px] font-black tracking-widest text-slate-400 group-hover:text-blue-500 uppercase">Sonic_Architecture</div>
+            <div class="h-[2px] w-0 group-hover:w-full bg-blue-500 transition-all duration-500"></div>
         </a>
-
-        <!-- CENTER WHEEL -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 pointer-events-none">
-            <div class="w-32 h-32 bg-black rounded-full border border-white/10 flex items-center justify-center shadow-[0_0_50px_rgba(168,85,247,0.2)]">
-                <div class="absolute inset-0 rounded-full border border-white/5 animate-spin-slow"></div>
-                <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-white/20">
-                    <img src="/txchya-logo.jpg" alt="Logo" class="w-full h-full object-cover grayscale opacity-80" />
-                </div>
-                <!-- Mini Nodes -->
-                <a href="https://everrank.app" target="_blank" class="absolute -top-12 left-1/2 -translate-x-1/2 w-6 h-6 rounded bg-indigo-600 flex items-center justify-center text-[8px] text-white hover:scale-110 transition-transform pointer-events-auto" title="EverRank">E</a>
-                <div class="absolute -bottom-12 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-slate-800 border border-white/20 flex items-center justify-center text-[8px] text-white">T</div>
-            </div>
-        </div>
-
-        <!-- Attribution Footer (Dark) -->
-        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 text-[10px] uppercase tracking-[0.3em] text-white/20 text-center w-full">
-           POWERED BY <a href="https://everrank.app" target="_blank" class="hover:text-cyan-400 transition-colors">EVERRANK</a> // 
-           CREATED BY <a href="https://galaxybuilt.dev" target="_blank" class="hover:text-purple-400 transition-colors">GALAXYBUILT</a>
-        </div>
-
-        <!-- BOTTOM: AI -->
-        <a href="/ai" class="group block h-1/2 w-full relative overflow-hidden bg-[#050505]">
-            <div class="absolute inset-0">
-                <div class="absolute inset-0 bg-[linear-gradient(rgba(0,243,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,243,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [transform:perspective(1000px)_rotateX(60deg)_translateY(-50px)_scale(1.5)] opacity-40"></div>
-                <div class="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/5 to-transparent h-full animate-scanline-local"></div>
-            </div>
-            <div class="absolute inset-0 flex flex-col items-center justify-center z-10 p-6 pt-20">
-                <div class="mb-4 text-cyan-400 opacity-60 group-hover:opacity-100 transition-all">
-                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path></svg>
-                </div>
-                <h2 class="text-4xl md:text-6xl font-bold tracking-tighter text-white mb-2 group-hover:text-cyan-400 transition-all">NEURO <span class="font-thin opacity-50">SYSTEM</span></h2>
-                <div class="px-6 py-2 border border-white/10 rounded-full text-[10px] uppercase tracking-[0.3em] text-white/40 group-hover:bg-cyan-500 group-hover:text-black transition-all">Initialize Core</div>
-            </div>
+        <a href="/ai" class="group flex flex-col items-center gap-2">
+            <div class="text-[9px] font-black tracking-widest text-slate-400 group-hover:text-cyan-400 uppercase">Neural_System</div>
+            <div class="h-[2px] w-0 group-hover:w-full bg-cyan-400 transition-all duration-500"></div>
         </a>
-    </main>
-  </div>
+        <a href="https://x.com/txchyaai" target="_blank" class="group flex flex-col items-center gap-2">
+            <div class="text-[9px] font-black tracking-widest text-slate-400 group-hover:text-pink-500 uppercase">X_Network</div>
+            <div class="h-[2px] w-0 group-hover:w-full bg-pink-500 transition-all duration-500"></div>
+        </a>
+      </div>
+      
+      <!-- Footer Info -->
+      <div class="mt-12 text-[8px] font-black tracking-[0.3em] text-slate-300 uppercase">
+        V2.0 // Managed by GalaxyBuilt // <span class="text-slate-900 dark:text-white">Active</span>
+      </div>
+    </div>
 
-  <script>
+    <!-- Secondary HUD Overlay - Technical Metadata -->
+    <div class="absolute bottom-10 left-10 z-20 hidden md:block">
+        <div class="flex flex-col gap-1">
+            <div class="text-[7px] font-black tracking-[4px] text-blue-600 dark:text-cyan-400 opacity-50">LATENCY: 14ms</div>
+            <div class="text-[7px] font-black tracking-[4px] text-slate-400 opacity-50">X: 144.02 // Y: 92.11</div>
+        </div>
+    </div>
+
+    <div class="absolute top-10 left-10 z-20 hidden md:block">
+        <div class="flex flex-col gap-1">
+            <div class="text-[7px] font-black tracking-[4px] text-slate-400 opacity-50 uppercase">Neural_Link_Established</div>
+            <div class="text-[7px] font-black tracking-[4px] text-slate-400 opacity-50 uppercase">Secure_Node_0x71</div>
+        </div>
+    </div>
+  </main>
+
+  <!-- Global Ecosystem Grid Section -->
+  <section class="bg-slate-50 dark:bg-[#050505] py-32 relative z-30 border-t border-slate-200 dark:border-white/5">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <!-- Music -->
+            <div class="group">
+                <div class="text-[10px] font-black tracking-[0.4em] text-blue-600 dark:text-cyan-400 mb-6 uppercase">Sonic Architecture</div>
+                <h3 class="text-3xl font-black tracking-tighter text-slate-900 dark:text-white italic mb-4">Vibe Coding</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-8">The first neural-integrated ambient project by TXCHYA. Explore the intersection of machine intelligence and synthetic soundscapes.</p>
+                <a href="/music" class="text-[10px] font-black tracking-[0.2em] uppercase border-b border-slate-900 dark:border-white pb-1 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors">Enter_Stream_Grid</a>
+            </div>
+
+            <!-- AI -->
+            <div class="group">
+                <div class="text-[10px] font-black tracking-[0.4em] text-blue-600 dark:text-cyan-400 mb-6 uppercase">Neural System</div>
+                <h3 class="text-3xl font-black tracking-tighter text-slate-900 dark:text-white italic mb-4">Decision Core</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-8">Direct interface with the TXCHYA neural network. Real-time intelligence processing and creative synthesis.</p>
+                <a href="/ai" class="text-[10px] font-black tracking-[0.2em] uppercase border-b border-slate-900 dark:border-white pb-1 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors">Access_Framework</a>
+            </div>
+
+            <!-- Network -->
+            <div class="group">
+                <div class="text-[10px] font-black tracking-[0.4em] text-blue-600 dark:text-cyan-400 mb-6 uppercase">Global Network</div>
+                <h3 class="text-3xl font-black tracking-tighter text-slate-900 dark:text-white italic mb-4">The Nexus</h3>
+                <p class="text-sm text-slate-500 dark:text-slate-400 leading-relaxed mb-8">Connected platforms including X, YouTube, and the Txchyon ecosystem. Verified knowledge distribution.</p>
+                <a href="https://x.com/txchyaai" target="_blank" class="text-[10px] font-black tracking-[0.2em] uppercase border-b border-slate-900 dark:border-white pb-1 hover:text-blue-600 dark:hover:text-cyan-400 transition-colors">Connect_Terminal</a>
+            </div>
+        </div>
+    </div>
+  </section>
+
+  <script is:inline>
     document.addEventListener('DOMContentLoaded', () => {
-      // Input Redirection
-      const btnLight = document.getElementById('aiSubmitLight');
-      const inputLight = document.getElementById('aiInputLight');
+      const input = document.getElementById('mainHubInput');
+      const btn = document.getElementById('mainHubExecute');
       
-      btnLight?.addEventListener('click', () => {
-        const query = inputLight.value.trim();
-        if(query) window.location.href = `/ai?q=${encodeURIComponent(query)}`;
-      });
-      
-      inputLight?.addEventListener('keypress', (e) => {
-        if(e.key === 'Enter') btnLight?.click();
+      const navigate = () => {
+        const query = input.value.trim();
+        if(query) window.location.href = '/ai?q=' + encodeURIComponent(query);
+      };
+
+      btn?.addEventListener('click', navigate);
+      input?.addEventListener('keypress', (e) => {
+        if(e.key === 'Enter') navigate();
       });
     });
   </script>
