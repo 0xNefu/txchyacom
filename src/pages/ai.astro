@@ -6,6 +6,7 @@ import path from 'node:path';
 
 const publicDir = path.join(process.cwd(), 'public');
 const musicDir = path.join(publicDir, 'music');
+const bgDir = path.join(publicDir, 'backgrounds');
 
 let musicTracks = [];
 try {
@@ -14,9 +15,17 @@ try {
         .map(file => `/music/${file}`);
 } catch (e) { console.error("Music directory not found"); }
 
-const bgFiles = fs.readdirSync(publicDir)
-    .filter(file => /\.(jpg|jpeg|png|webp)$/i.test(file) && !file.includes('favicon') && !file.includes('logo'))
-    .map(file => `/${file}`);
+let bgFiles = [];
+try {
+    bgFiles = fs.readdirSync(bgDir)
+        .filter(file => /\.(jpg|jpeg|png|webp)$/i.test(file))
+        .map(file => `/backgrounds/${file}`);
+} catch (e) { 
+    console.error("Backgrounds directory not found, using root fallback");
+    bgFiles = fs.readdirSync(publicDir)
+        .filter(file => /\.(jpg|jpeg|png|webp)$/i.test(file) && !file.includes('favicon') && !file.includes('logo'))
+        .map(file => `/${file}`);
+}
 ---
 
 <BaseLayout title="TXCHYA | Decision Intelligence Layer">
@@ -338,6 +347,43 @@ const bgFiles = fs.readdirSync(publicDir)
       animation: pulse-sonic 2s infinite;
       color: var(--primary-accent) !important;
     }
+
+    /* Neural Toggle Switch */
+    .switch-container {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+    }
+    .switch-track {
+      width: 24px;
+      height: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--primary-accent);
+      border-radius: 10px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .switch-thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 6px;
+      height: 6px;
+      background: var(--primary-accent);
+      border-radius: 50%;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .switch-container.active .switch-track {
+      background: rgba(37, 99, 235, 0.2);
+    }
+    .switch-container.active .switch-thumb {
+      left: 14px;
+      box-shadow: 0 0 10px var(--primary-accent);
+    }
+    html.dark .switch-container.active .switch-track {
+        background: rgba(0, 243, 255, 0.1);
+    }
   </style>
 
   <div class="main-wrapper" data-tracks={JSON.stringify(musicTracks)} data-bgs={JSON.stringify(bgFiles)}>
@@ -377,8 +423,13 @@ const bgFiles = fs.readdirSync(publicDir)
 
                 <!-- Visual Background Controller -->
                 <div style="display: flex; align-items: center; gap: 0.5rem; padding-left: 1rem; border-left: 1px solid rgba(255,255,255,0.05);">
-                    <button id="bgModeToggle" style="background:none; border: 1px solid var(--primary-accent); color: var(--primary-accent); cursor:pointer; font-size: 7px; padding: 1px 4px; border-radius: 3px; font-weight: 800;">VISUAL: AUTO</button>
-                    <button id="skipBg" style="background:none; border:none; color: var(--primary-accent); cursor:pointer; font-size: 8px; opacity: 0.4;">»</button>
+                    <div id="bgModeToggle" class="switch-container active" title="Toggle Auto Background">
+                        <span id="bgModeLabel" style="font-size: 7px; color: var(--primary-accent); font-weight: 800; opacity: 0.8;">AUTO_VISUAL</span>
+                        <div class="switch-track">
+                            <div class="switch-thumb"></div>
+                        </div>
+                    </div>
+                    <button id="skipBg" style="background:none; border:none; color: var(--primary-accent); cursor:pointer; font-size: 8px; opacity: 0.4; margin-left: 0.2rem;">»</button>
                 </div>
               </div>
               
@@ -546,7 +597,7 @@ const bgFiles = fs.readdirSync(publicDir)
     const tracks = JSON.parse(tracksContainer?.dataset.tracks || '[]');
     
     let currentTrackIndex = 0;
-    const audio = new Audio(tracks[currentTrackIndex]);
+    const audio = tracks.length > 0 ? new Audio(tracks[currentTrackIndex]) : new Audio();
     const playBtn = document.getElementById('playMusic');
     const skipBtn = document.getElementById('skipMusic');
     const timeDisplay = document.getElementById('musicTime');
@@ -592,11 +643,12 @@ const bgFiles = fs.readdirSync(publicDir)
     let isAutoBg = true;
     const heroBg = document.getElementById('heroBg');
     const bgToggle = document.getElementById('bgModeToggle');
+    const bgLabel = document.getElementById('bgModeLabel');
     const skipBgBtn = document.getElementById('skipBg');
     let bgInterval;
 
     function updateBg() {
-        if (backgrounds.length === 0) return;
+        if (!backgrounds || backgrounds.length === 0 || !heroBg) return;
         heroBg.style.backgroundImage = `url(${backgrounds[currentBgIndex]})`;
     }
 
@@ -613,13 +665,13 @@ const bgFiles = fs.readdirSync(publicDir)
 
     bgToggle?.addEventListener('click', () => {
         isAutoBg = !isAutoBg;
+        bgToggle.classList.toggle('active', isAutoBg);
+        
         if (isAutoBg) {
-            bgToggle.textContent = 'VISUAL: AUTO';
-            bgToggle.style.opacity = '1';
+            bgLabel.textContent = 'AUTO_VISUAL';
             startBgInterval();
         } else {
-            bgToggle.textContent = 'VISUAL: MANUAL';
-            bgToggle.style.opacity = '0.6';
+            bgLabel.textContent = 'MANUAL_VISUAL';
             clearInterval(bgInterval);
         }
     });
