@@ -170,15 +170,22 @@ const ogImage = Astro.props.ogImage || `${siteUrl}/og-image.jpg`;
   
   <slot />
 
-  <!-- Global Theme Toggle -->
-  <button 
-    id="globalThemeToggle" 
-    class="fixed bottom-6 right-6 z-[9999] w-14 h-14 rounded-full border-2 border-indigo-500/50 bg-black/80 backdrop-blur-md shadow-[0_0_20px_rgba(79,70,229,0.3)] flex items-center justify-center text-2xl transition-all hover:scale-110 active:scale-95 group overflow-hidden"
-    title="Switch Aesthetic"
-  >
-     <div class="absolute inset-0 bg-indigo-500/10 group-hover:bg-indigo-500/20 transition-colors"></div>
-     <span class="relative z-10 filter drop-shadow-md">🌓</span>
-  </button>
+  <!-- Invisible Global Header -->
+  <header class="fixed top-0 left-0 w-full z-[9999] pointer-events-none p-6 flex justify-end">
+    <div class="pointer-events-auto flex items-center gap-6">
+      <!-- Nav Links? We could add some subtle ones here if needed later -->
+      
+      <!-- Global Theme Toggle -->
+      <button 
+        id="globalThemeToggle" 
+        class="w-12 h-12 rounded-full border border-indigo-500/30 bg-white/5 dark:bg-black/40 backdrop-blur-md shadow-2xl flex items-center justify-center text-xl transition-all hover:scale-110 active:scale-95 group overflow-hidden"
+        title="Switch Aesthetic"
+      >
+         <div class="absolute inset-0 bg-indigo-500/5 group-hover:bg-indigo-500/10 transition-colors"></div>
+         <span class="relative z-10 filter drop-shadow-sm">🌓</span>
+      </button>
+    </div>
+  </header>
 
   <script is:inline>
     document.getElementById('globalThemeToggle')?.addEventListener('click', () => {
