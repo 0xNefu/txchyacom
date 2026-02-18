@@ -65,6 +65,58 @@ try {
       backdrop-filter: none !important; /* Force remove blur */
     }
 
+    .top-right-branding {
+      position: fixed;
+      top: 2rem;
+      right: 3rem;
+      z-index: 150;
+      text-align: right;
+      pointer-events: none;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    .top-right-branding .core-text {
+      font-size: 20px; /* Larger head words */
+      font-weight: 200; /* Thin start */
+      letter-spacing: 8px; /* Extra wide */
+      color: var(--primary-accent);
+      text-transform: uppercase;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .top-right-branding .core-text b {
+      font-weight: 900;
+      letter-spacing: 2px;
+      display: block;
+      margin-top: -5px;
+    }
+
+    .top-right-branding .core-status {
+      font-size: 7px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--primary-accent);
+      opacity: 0.6;
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .top-right-branding .core-status::before {
+      content: '';
+      width: 4px;
+      height: 4px;
+      background: var(--primary-accent);
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 10px var(--primary-accent);
+      animation: pulse 1s infinite;
+    }
+
     #globalThemeToggle { display: none !important; } /* Hide the global one on this page */
 
     .chat-sidebar:hover {
@@ -214,14 +266,14 @@ try {
     .grid-pattern {
       position: fixed;
       inset: 0;
-      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
       background-size: 30px 30px;
       z-index: -5;
       pointer-events: none;
     }
 
     html.dark .grid-pattern {
-      background-image: radial-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(0, 243, 255, 0.05) 1px, transparent 1px);
     }
 
     /* AI CONSOLE - Centered & Transparent (No Blur) */
@@ -250,30 +302,31 @@ try {
 
     .console-header {
       padding: 0.75rem 1.5rem;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.03), transparent);
+      background: rgba(0, 0, 0, 0.02);
     }
 
     html.dark .console-header {
-      background: linear-gradient(to bottom, rgba(255,255,255,0.05), transparent);
-      border-color: rgba(255, 255, 255, 0.02);
+      background: rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.05);
     }
 
     /* Sidebar Settings Box */
     .sidebar-settings {
       padding: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.2), transparent);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.2);
       display: flex;
       flex-direction: column;
       gap: 1.25rem;
     }
 
     html.dark .sidebar-settings {
-      background: linear-gradient(to top, rgba(0, 243, 255, 0.05), transparent);
+      background: rgba(255, 255, 255, 0.02);
+      border-color: rgba(255, 255, 255, 0.05);
     }
 
     .setting-group {
@@ -345,8 +398,8 @@ try {
     }
 
     html.dark .msg-bot {
-      background: linear-gradient(to right, rgba(0, 243, 255, 0.05), transparent);
-      border-color: rgba(0, 243, 255, 0.1);
+      background: rgba(0, 243, 255, 0.05);
+      border-color: rgba(0, 243, 255, 0.2);
       color: #00f3ff;
       border-left: 2px solid #00f3ff;
       border-radius: 4px;
@@ -360,13 +413,13 @@ try {
 
     .console-input-area {
       padding: 1.5rem;
-      border-top: 1px solid rgba(0, 0, 0, 0.02);
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.03), transparent);
+      border-top: 1px solid rgba(0, 0, 0, 0.05);
+      background: rgba(0, 0, 0, 0.02);
     }
 
     html.dark .console-input-area {
-      background: linear-gradient(to top, rgba(255, 255, 255, 0.02), transparent);
-      border-color: rgba(255, 255, 255, 0.01);
+      background: rgba(255, 255, 255, 0.01);
+      border-color: rgba(255, 255, 255, 0.05);
     }
 
     .input-wrapper { display: flex; gap: 1rem; }
@@ -475,6 +528,12 @@ try {
   </style>
 
   <div class="main-wrapper" data-tracks={JSON.stringify(musicTracks)} data-bgs={JSON.stringify(bgFiles)}>
+    <!-- Top Right Branding -->
+    <div class="top-right-branding">
+        <div class="core-text">TXCHYA <b>CORE</b></div>
+        <div class="core-status">Neural_Link_v2.0 // Active</div>
+    </div>
+
     <!-- Sidebar Toggle (Mobile) -->
     <button class="sidebar-toggle" id="mobileSidebarToggle">☰</button>
 
