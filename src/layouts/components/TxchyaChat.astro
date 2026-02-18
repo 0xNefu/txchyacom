@@ -1,0 +1,141 @@
+---
+/**
+ * TxchyaChat - Floating AI Assistant Widget
+ * Connects to /api/chat
+ */
+---
+
+<div id="txchya-chat-widget" class="fixed bottom-6 right-6 z-[9999] font-mono">
+  <!-- Trigger Button -->
+  <button 
+    id="chat-trigger"
+    class="w-14 h-14 rounded-full bg-black border border-[#00f3ff]/30 shadow-[0_0_20px_rgba(0,243,255,0.2)] flex items-center justify-center hover:scale-110 active:scale-95 transition-all duration-300 group overflow-hidden"
+  >
+    <div class="absolute inset-0 bg-[#00f3ff]/5 group-hover:bg-[#00f3ff]/10 transition-colors"></div>
+    <img src="/txchya-logo.jpg" alt="AI" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+    <!-- Notification Dot -->
+    <div class="absolute top-0 right-0 w-3 h-3 bg-[#00f3ff] rounded-full border-2 border-black animate-pulse"></div>
+  </button>
+
+  <!-- Chat Window -->
+  <div 
+    id="chat-window" 
+    class="absolute bottom-20 right-0 w-[350px] h-[500px] bg-black/90 backdrop-blur-xl border border-[#00f3ff]/30 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col scale-0 opacity-0 origin-bottom-right transition-all duration-500 overflow-hidden"
+  >
+    <!-- Header -->
+    <div class="p-4 border-b border-[#00f3ff]/20 bg-[#00f3ff]/5 flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <div class="w-2 h-2 rounded-full bg-[#00f3ff] animate-pulse"></div>
+        <span class="text-[10px] uppercase tracking-[0.2em] text-[#00f3ff]">Neural Link v3.0</span>
+      </div>
+      <button id="close-chat" class="text-[#00f3ff]/50 hover:text-[#00f3ff] transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <!-- Messages -->
+    <div id="chat-messages-widget" class="flex-1 p-4 overflow-y-auto space-y-4 scrollbar-hide">
+      <div class="flex gap-3">
+        <div class="w-6 h-6 rounded-full bg-[#00f3ff]/10 border border-[#00f3ff]/30 flex items-center justify-center shrink-0">
+          <span class="text-[10px]">T</span>
+        </div>
+        <div class="p-3 rounded-r-xl rounded-bl-xl bg-[#00f3ff]/5 border border-[#00f3ff]/10 text-[12px] text-gray-300">
+          Link established. I am Txchya. Accessing ecosystem nodes...
+        </div>
+      </div>
+    </div>
+
+    <!-- Input -->
+    <div class="p-4 border-t border-[#00f3ff]/20 bg-black/50">
+      <form id="chat-form-widget" class="flex gap-2">
+        <input 
+          type="text" 
+          id="chat-input-widget"
+          placeholder="Command..." 
+          class="flex-1 bg-black/50 border border-[#00f3ff]/20 rounded-lg px-3 py-2 text-[12px] text-white focus:outline-none focus:border-[#00f3ff]/50 transition-all"
+        >
+        <button type="submit" class="p-2 text-[#00f3ff] hover:bg-[#00f3ff]/10 rounded-lg transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<style>
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  #chat-window.open {
+    scale: 1;
+    opacity: 1;
+  }
+</style>
+
+<script>
+  const trigger = document.getElementById('chat-trigger');
+  const window_box = document.getElementById('chat-window');
+  const close_btn = document.getElementById('close-chat');
+  const form = document.getElementById('chat-form-widget');
+  const input = document.getElementById('chat-input-widget');
+  const messages = document.getElementById('chat-messages-widget');
+
+  let isOpen = false;
+  let isThinking = false;
+
+  trigger.addEventListener('click', () => {
+    isOpen = !isOpen;
+    window_box.classList.toggle('open', isOpen);
+  });
+
+  close_btn.addEventListener('click', () => {
+    isOpen = false;
+    window_box.classList.remove('open');
+  });
+
+  function addMsg(text, isUser = false) {
+    const div = document.createElement('div');
+    div.className = `flex gap-3 ${isUser ? 'flex-row-reverse' : ''}`;
+    
+    const avatar = isUser ? '' : `<div class="w-6 h-6 rounded-full bg-[#00f3ff]/10 border border-[#00f3ff]/30 flex items-center justify-center shrink-0"><span class="text-[10px]">T</span></div>`;
+    
+    div.innerHTML = `
+      ${avatar}
+      <div class="p-3 rounded-xl ${isUser ? 'rounded-tr-none bg-[#00f3ff]/10 border border-[#00f3ff]/30' : 'rounded-tl-none bg-[#00f3ff]/5 border border-[#00f3ff]/10'} text-[12px] text-gray-300 max-w-[80%]">
+        ${text}
+      </div>
+    `;
+    
+    messages.appendChild(div);
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const query = input.value.trim();
+    if (!query || isThinking) return;
+
+    input.value = '';
+    isThinking = true;
+    addMsg(query, true);
+
+    const loader = document.createElement('div');
+    loader.className = 'text-[10px] text-[#00f3ff]/50 animate-pulse mt-2';
+    loader.textContent = 'Processing...';
+    messages.appendChild(loader);
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: query, site: 'Txchya.com Widget' })
+      });
+      const data = await res.json();
+      loader.remove();
+      addMsg(data.reply || 'Link lost. Try again.');
+    } catch (err) {
+      loader.remove();
+      addMsg('Neural failure. Connection interrupted.');
+    } finally {
+      isThinking = false;
+    }
+  });
+</script>

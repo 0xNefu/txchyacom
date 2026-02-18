@@ -4,6 +4,8 @@ const siteUrl = "https://txchya.com";
 const defaultDescription = "Txchya - Cyberpunk Ambient AI Music Artist. Dark synthwave, dystopian soundscapes. Stream 'Vibe Coding' album on all platforms.";
 const description = Astro.props.description || defaultDescription;
 const ogImage = Astro.props.ogImage || `${siteUrl}/og-image.jpg`;
+
+import TxchyaChat from "./components/TxchyaChat.astro";
 ---
 
 <!DOCTYPE html>
@@ -128,5 +130,6 @@ const ogImage = Astro.props.ogImage || `${siteUrl}/og-image.jpg`;
 <body class="bg-black text-white">
   <div class="scanline"></div>
   <slot />
+  <TxchyaChat />
 </body>
 </html>
