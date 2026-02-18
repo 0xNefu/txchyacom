@@ -61,9 +61,11 @@ try {
       display: flex;
       flex-direction: column;
       z-index: 100;
-      transition: all 0.4s ease;
+      transition: transform 0.3s ease;
       backdrop-filter: none !important; /* Force remove blur */
     }
+
+    #globalThemeToggle { display: none !important; } /* Hide the global one on this page */
 
     .chat-sidebar:hover {
         background: rgba(0, 0, 0, 0.1);
@@ -239,6 +241,65 @@ try {
       background: rgba(0, 0, 0, 0.02);
     }
 
+    /* Sidebar Settings Box */
+    .sidebar-settings {
+      padding: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    html.dark .sidebar-settings {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .setting-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .setting-label {
+      font-size: 8px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.4;
+      color: var(--primary-accent);
+    }
+
+    .setting-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .control-btn {
+      background: none;
+      border: 1px solid var(--primary-accent);
+      color: var(--primary-accent);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 8px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .control-btn:hover {
+      background: var(--primary-accent);
+      color: white;
+    }
+
+    .control-slider {
+      flex: 1;
+      height: 3px;
+      cursor: pointer;
+      accent-color: var(--primary-accent);
+    }
+
     .console-messages {
       flex: 1;
       padding: 2rem;
@@ -397,6 +458,56 @@ try {
       <div class="history-list scrollbar-hide" id="historyList">
         <!-- History items injected here -->
       </div>
+
+      <!-- Neural Controls Box -->
+      <div class="sidebar-settings">
+        <!-- Aesthetic Toggle -->
+        <div class="setting-group">
+          <div class="setting-label">Atmosphere Protocol</div>
+          <div class="setting-controls">
+             <div id="sidebarThemeToggle" class="switch-container active" style="flex:1;">
+                <span id="sidebarThemeLabel" style="font-size: 7px; font-weight: 800; color: var(--primary-accent);">AESTHETIC: DARK</span>
+                <div class="switch-track">
+                   <div class="switch-thumb"></div>
+                </div>
+             </div>
+          </div>
+        </div>
+
+        <!-- Music Controller -->
+        <div class="setting-group">
+          <div class="setting-label">Sonic Transmission</div>
+          <div class="setting-controls" style="gap: 1rem;">
+             <button id="playMusic" class="control-btn" style="min-width: 30px;">►</button>
+             <span id="musicTime" style="font-size: 9px; font-family: 'Courier New', monospace; opacity: 0.6;">00:00</span>
+             <button id="skipMusic" class="control-btn">NEXT</button>
+          </div>
+        </div>
+
+        <!-- Background Controller -->
+        <div class="setting-group">
+          <div class="setting-label">Visual Matrix</div>
+          <div class="setting-controls" style="gap: 1rem;">
+             <div id="bgModeToggle" class="switch-container active" style="flex:1;">
+                <span id="bgModeLabel" style="font-size: 7px; font-weight: 800; color: var(--primary-accent);">VISUAL: AUTO</span>
+                <div class="switch-track">
+                   <div class="switch-thumb"></div>
+                </div>
+             </div>
+             <button id="skipBg" class="control-btn">SKIP</button>
+          </div>
+        </div>
+
+        <!-- Opacity Controller -->
+        <div class="setting-group">
+          <div class="setting-label">HUD Density</div>
+          <div class="setting-controls">
+             <input type="range" id="opacitySlider" min="0" max="100" value="85" class="control-slider" />
+          </div>
+        </div>
+
+        <button id="clearHistoryBtn" style="margin-top: 0.5rem; font-size: 7px; color: #ef4444; background: none; border: 1px solid #ef444433; padding: 4px; border-radius: 4px; cursor: pointer; text-transform: uppercase; font-weight: 800; letter-spacing: 1px;">Purge Communications</button>
+      </div>
     </aside>
 
     <!-- Main Content -->
@@ -411,37 +522,8 @@ try {
 
           <div class="ai-console">
             <div class="console-header">
-              <div style="display: flex; gap: 1rem; align-items: center;">
-                <div style="font-size: 10px; font-weight: 800; color: var(--primary-accent); letter-spacing: 2px;">NEURAL_LINK: ACTIVE</div>
-                
-                <!-- Ambient Player -->
-                <div id="ambientPlayer" style="display: flex; align-items: center; gap: 0.5rem; padding-left: 1rem; border-left: 1px solid rgba(255,255,255,0.05);">
-                   <button id="playMusic" style="background:none; border:none; color: var(--primary-accent); cursor:pointer; font-size: 10px; padding: 0;">►</button>
-                   <span id="musicTime" style="font-size: 8px; opacity: 0.5; font-family: 'Courier New', monospace;">SONIC_OFF</span>
-                   <button id="skipMusic" style="background:none; border:none; color: var(--primary-accent); cursor:pointer; font-size: 8px; opacity: 0.4;">»</button>
-                </div>
-
-                <!-- Visual Background Controller -->
-                <div style="display: flex; align-items: center; gap: 0.5rem; padding-left: 1rem; border-left: 1px solid rgba(255,255,255,0.05);">
-                    <div id="bgModeToggle" class="switch-container active" title="Toggle Auto Background">
-                        <span id="bgModeLabel" style="font-size: 7px; color: var(--primary-accent); font-weight: 800; opacity: 0.8;">AUTO_VISUAL</span>
-                        <div class="switch-track">
-                            <div class="switch-thumb"></div>
-                        </div>
-                    </div>
-                    <button id="skipBg" style="background:none; border:none; color: var(--primary-accent); cursor:pointer; font-size: 8px; opacity: 0.4; margin-left: 0.2rem;">»</button>
-                </div>
-              </div>
-              
-              <div style="display: flex; gap: 0.75rem; align-items: center;">
-                <!-- Opacity Controller -->
-                <div style="display: flex; align-items: center; gap: 0.5rem; margin-right: 0.5rem;">
-                   <span style="font-size: 8px; opacity: 0.5;">OPACITY</span>
-                   <input type="range" id="opacitySlider" min="5" max="100" value="85" style="width: 50px; height: 3px; cursor: pointer; accent-color: var(--primary-accent);" />
-                </div>
-                <button id="clearHistoryBtn" style="font-size: 9px; cursor: pointer; color: var(--primary-accent); background: none; border: 1px solid var(--primary-accent); padding: 2px 6px; border-radius: 4px;">PURGE</button>
-                <div id="sessionLabel" style="font-size: 9px; opacity: 0.4;">SESSION: NEW</div>
-              </div>
+              <div style="font-size: 10px; font-weight: 800; color: var(--primary-accent); letter-spacing: 2px;">NEURAL_LINK: ACTIVE</div>
+              <div id="sessionLabel" style="font-size: 9px; opacity: 0.4;">SESSION: INITIALIZED</div>
             </div>
 
             <div id="console-messages" class="console-messages scrollbar-hide">
@@ -636,6 +718,35 @@ try {
     });
 
     audio.addEventListener('ended', skipTrack);
+
+    // Sidebar Theme Logic
+    const sidebarThemeToggle = document.getElementById('sidebarThemeToggle');
+    const sidebarThemeLabel = document.getElementById('sidebarThemeLabel');
+    
+    function updateSidebarThemeUI(isDark) {
+        if (isDark) {
+            sidebarThemeLabel.textContent = 'AESTHETIC: NEON';
+            sidebarThemeToggle.classList.add('active');
+        } else {
+            sidebarThemeLabel.textContent = 'AESTHETIC: LIGHT';
+            sidebarThemeToggle.classList.remove('active');
+        }
+    }
+
+    updateSidebarThemeUI(document.documentElement.classList.contains('dark'));
+    
+    sidebarThemeToggle?.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.contains('dark');
+        if (isDark) {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+            updateSidebarThemeUI(false);
+        } else {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+            updateSidebarThemeUI(true);
+        }
+    });
 
     // Background Rotation Logic
     const backgrounds = JSON.parse(tracksContainer?.dataset.bgs || '[]');
