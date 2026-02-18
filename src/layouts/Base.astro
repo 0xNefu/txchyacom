@@ -4,8 +4,6 @@ const siteUrl = "https://txchya.com";
 const defaultDescription = "Txchya - Cyberpunk Ambient AI Music Artist. Dark synthwave, dystopian soundscapes. Stream 'Vibe Coding' album on all platforms.";
 const description = Astro.props.description || defaultDescription;
 const ogImage = Astro.props.ogImage || `${siteUrl}/og-image.jpg`;
-
-import TxchyaChat from "./components/TxchyaChat.astro";
 ---
 
 <!DOCTYPE html>
@@ -47,19 +45,32 @@ import TxchyaChat from "./components/TxchyaChat.astro";
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
   
   <style>
+    :root {
+      --bg-color: #ffffff;
+      --text-color: #0f172a;
+      --accent-color: #2563eb;
+    }
+
+    html.dark {
+      --bg-color: #000000;
+      --text-color: #ffffff;
+      --accent-color: #00ffff;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     html, body {
-      background: #000 !important;
-      color: white;
+      background: var(--bg-color);
+      color: var(--text-color);
       font-family: 'Courier New', monospace;
       min-height: 100vh;
       overflow-x: hidden;
+      transition: background-color 0.3s ease, color 0.3s ease;
     }
     
     /* Custom scrollbar */
     ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
+    ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); }
     ::-webkit-scrollbar-thumb {
       background: linear-gradient(to bottom, #ff00ff, #9d00ff, #00ffff);
       border-radius: 4px;
@@ -107,7 +118,7 @@ import TxchyaChat from "./components/TxchyaChat.astro";
       animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
     }
 
-    /* Scanline effect */
+    /* Scanline effect - Only visible in dark mode */
     .scanline {
       position: fixed;
       top: 0;
@@ -118,7 +129,13 @@ import TxchyaChat from "./components/TxchyaChat.astro";
       animation: scanline 10s linear infinite;
       pointer-events: none;
       z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    html.dark .scanline {
       opacity: 0.3;
+      visibility: visible;
     }
 
     @keyframes scanline {
@@ -126,10 +143,55 @@ import TxchyaChat from "./components/TxchyaChat.astro";
       100% { transform: translateY(100vh); }
     }
   </style>
+
+  <script is:inline>
+    // Theme toggle logic
+    const theme = (() => {
+      if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+        return localStorage.getItem('theme');
+      }
+      if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'dark'; // Default to dark for Txchya aesthetics
+    })();
+
+    if (theme === 'light') {
+      document.documentElement.classList.remove('dark');
+    } else {
+      document.documentElement.classList.add('dark');
+    }
+
+    window.localStorage.setItem('theme', theme);
+  </script>
 </head>
-<body class="bg-black text-white">
+<body class="bg-[var(--bg-color)] text-[var(--text-color)]">
   <div class="scanline"></div>
+  
   <slot />
-  <TxchyaChat />
+
+  <!-- Global Theme Toggle -->
+  <button 
+    id="globalThemeToggle" 
+    class="fixed bottom-6 left-6 z-[9999] w-12 h-12 rounded-full border border-white/20 bg-black/50 backdrop-blur shadow-2xl flex items-center justify-center text-xl transition-all hover:scale-110 active:scale-95 group overflow-hidden"
+    title="Switch Aesthetic"
+  >
+     <div class="absolute inset-0 bg-white/5 group-hover:bg-white/10 transition-colors"></div>
+     <span class="relative z-10">🌓</span>
+  </button>
+
+  <script is:inline>
+    document.getElementById('globalThemeToggle')?.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.contains('dark');
+      if (isDark) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+      }
+      // Immediate reload or dynamic update handles the transition
+    });
+  </script>
 </body>
 </html>
