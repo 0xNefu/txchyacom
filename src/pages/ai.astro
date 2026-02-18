@@ -24,49 +24,39 @@ import BaseLayout from '../layouts/Base.astro';
       overflow: hidden;
     }
 
-    /* Sidebar - Transparent Overlay */
+    /* Sidebar - Ultra Transparent Overlay */
     .chat-sidebar {
       position: fixed;
       left: 0;
       top: 0;
-      width: 280px;
+      width: 260px;
       height: 100vh;
-      background: rgba(255, 255, 255, 0.03); /* Highly transparent */
-      backdrop-filter: blur(8px);
-      border-right: 1px solid rgba(0, 0, 0, 0.05);
+      background: rgba(0, 0, 0, 0.05); /* Slightly darker for contrast while transparent */
+      border-right: 1px solid rgba(255, 255, 255, 0.05);
       display: flex;
       flex-direction: column;
       z-index: 100;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s ease;
+      backdrop-filter: none !important; /* Force remove blur */
     }
 
     .chat-sidebar:hover {
-        background: rgba(255, 255, 255, 0.1); /* Subtle highlight on hover */
-        width: 300px;
+        background: rgba(0, 0, 0, 0.1);
     }
 
     html.dark .chat-sidebar {
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(255, 255, 255, 0.01);
       border-color: rgba(0, 243, 255, 0.05);
-    }
-
-    html.dark .chat-sidebar:hover {
-        background: rgba(0, 243, 255, 0.05);
     }
 
     .sidebar-header {
       padding: 1.5rem;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
       font-weight: 800;
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 2px;
-      opacity: 0.4;
-      transition: opacity 0.3s ease;
-    }
-
-    .chat-sidebar:hover .sidebar-header {
-        opacity: 0.8;
+      opacity: 0.5;
     }
 
     .history-list {
@@ -76,92 +66,69 @@ import BaseLayout from '../layouts/Base.astro';
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
-      opacity: 0.3;
-      transition: opacity 0.3s ease;
+      /* Custom thin scrollbar for sidebar */
     }
 
-    .chat-sidebar:hover .history-list {
-        opacity: 1;
+    .history-list::-webkit-scrollbar {
+        width: 3px;
+    }
+    .history-list::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
     }
 
     .history-item {
       padding: 0.75rem 1rem;
-      border-radius: 10px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       transition: all 0.2s ease;
-      background: rgba(0, 0, 0, 0.02);
-      border: 1px solid transparent;
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.05);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      color: inherit;
+      opacity: 0.6;
     }
 
     .history-item:hover {
-      background: rgba(37, 99, 235, 0.05);
-      border-color: rgba(37, 99, 235, 0.1);
+      background: rgba(255, 255, 255, 0.05);
+      opacity: 1;
     }
 
-    html.dark .history-item {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    html.dark .history-item:hover {
-      background: rgba(0, 243, 255, 0.05);
-      border-color: rgba(0, 243, 255, 0.1);
-    }
-
-    .new-chat-btn {
-      margin: 1rem;
-      padding: 0.75rem;
-      background: var(--primary-accent);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-weight: 700;
-      font-size: 0.8rem;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    /* Main Content */
+    /* Main Content Area */
     .content-area {
-      flex: 1;
-      height: 100vh;
-      overflow-y: auto;
       position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      overflow: hidden;
     }
 
     .hero-section {
-      min-height: 100vh;
+      width: 100%;
+      height: 100%;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 4rem 1rem;
+      position: relative;
     }
 
     .hero-bg {
-      position: absolute;
+      position: fixed;
       inset: 0;
       background-image: url('/hero99.jpg');
       background-size: cover;
       background-position: center;
       opacity: var(--hero-bg-opacity);
-      z-index: 0;
+      z-index: -10;
     }
 
-    .grid-pattern {
-      position: absolute;
-      inset: 0;
-      background-image: 
-        linear-gradient(rgba(37, 99, 235, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(37, 99, 235, 0.05) 1px, transparent 1px);
-      background-size: 50px 50px;
-      z-index: 1;
-    }
-
+    /* MASSIVE BRANDING UNDERNEATH */
     .hero-content {
       position: relative;
       z-index: 10;
@@ -169,20 +136,18 @@ import BaseLayout from '../layouts/Base.astro';
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
       justify-content: center;
     }
 
     .title-gradient {
-      position: absolute; /* Floating background */
+      position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: 100%;
-      font-size: clamp(6rem, 25vw, 15rem); /* EVEN BIGGER */
+      font-size: clamp(8rem, 30vw, 20rem); /* MASSIVE */
       font-weight: 900;
       line-height: 0.7;
-      margin: 0;
       text-align: center;
       font-family: 'Orbitron', sans-serif;
       letter-spacing: -0.05em;
@@ -190,7 +155,7 @@ import BaseLayout from '../layouts/Base.astro';
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      opacity: 0.1; /* Very subtle background layer */
+      opacity: 0.15;
       z-index: -1;
       pointer-events: none;
       white-space: nowrap;
@@ -198,39 +163,44 @@ import BaseLayout from '../layouts/Base.astro';
 
     html.dark .title-gradient {
       background: linear-gradient(90deg, #fff, #00f3ff, #7c3aed);
-      opacity: 0.15;
+      opacity: 0.2;
       text-shadow: 0 0 100px rgba(0, 243, 255, 0.1);
     }
 
     .subtitle {
+      position: absolute;
+      top: 65%;
       font-size: 0.75rem;
       text-align: center;
-      margin-bottom: 2rem;
       opacity: 0.4;
-      letter-spacing: 8px;
+      letter-spacing: 12px;
       text-transform: uppercase;
       font-weight: 900;
+      z-index: -1;
+      pointer-events: none;
     }
 
-    /* AI CONSOLE - Floating over background title */
+    /* AI CONSOLE - Centered & Transparent (No Blur) */
     .ai-console {
-      width: 100%;
+      width: 95%;
+      max-width: 1100px; /* Wider as requested */
       position: relative;
       z-index: 20;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.85); 
       border: 1px solid rgba(0, 0, 0, 0.1);
-      border-radius: 20px;
+      border-radius: 24px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      height: 550px;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+      height: 700px; /* Bigger */
+      box-shadow: 0 50px 120px rgba(0, 0, 0, 0.15);
+      backdrop-filter: none !important;
     }
 
     html.dark .ai-console {
-      background: rgba(0, 0, 0, 0.7);
-      border-color: rgba(0, 243, 255, 0.2);
+      background: rgba(0, 0, 0, 0.6);
+      border-color: rgba(0, 243, 255, 0.1);
+      box-shadow: 0 0 80px rgba(0, 0, 0, 0.4);
     }
 
     .console-header {
