@@ -4,15 +4,19 @@ import BaseLayout from '../layouts/Base.astro';
 import fs from 'node:fs';
 import path from 'node:path';
 
-const musicDir = path.join(process.cwd(), 'public', 'music');
+const publicDir = path.join(process.cwd(), 'public');
+const musicDir = path.join(publicDir, 'music');
+
 let musicTracks = [];
 try {
     musicTracks = fs.readdirSync(musicDir)
         .filter(file => file.endsWith('.mp3'))
         .map(file => `/music/${file}`);
-} catch (e) {
-    console.error("Music directory not found");
-}
+} catch (e) { console.error("Music directory not found"); }
+
+const bgFiles = fs.readdirSync(publicDir)
+    .filter(file => /\.(jpg|jpeg|png|webp)$/i.test(file) && !file.includes('favicon') && !file.includes('logo'))
+    .map(file => `/${file}`);
 ---
 
 <BaseLayout title="TXCHYA | Decision Intelligence Layer">
@@ -138,6 +142,7 @@ try {
       background-position: center;
       opacity: var(--hero-bg-opacity);
       z-index: -10;
+      transition: background-image 1s ease-in-out;
     }
 
     /* MASSIVE BRANDING UNDERNEATH */
@@ -335,7 +340,7 @@ try {
     }
   </style>
 
-  <div class="main-wrapper" data-tracks={JSON.stringify(musicTracks)}>
+  <div class="main-wrapper" data-tracks={JSON.stringify(musicTracks)} data-bgs={JSON.stringify(bgFiles)}>
     <!-- Sidebar Toggle (Mobile) -->
     <button class="sidebar-toggle" id="mobileSidebarToggle">☰</button>
 
@@ -351,7 +356,7 @@ try {
     <!-- Main Content -->
     <main class="content-area">
       <section class="hero-section">
-        <div class="hero-bg"></div>
+        <div class="hero-bg" id="heroBg"></div>
         <div class="grid-pattern"></div>
 
         <div class="hero-content">
@@ -362,11 +367,18 @@ try {
             <div class="console-header">
               <div style="display: flex; gap: 1rem; align-items: center;">
                 <div style="font-size: 10px; font-weight: 800; color: var(--primary-accent); letter-spacing: 2px;">NEURAL_LINK: ACTIVE</div>
+                
                 <!-- Ambient Player -->
                 <div id="ambientPlayer" style="display: flex; align-items: center; gap: 0.5rem; padding-left: 1rem; border-left: 1px solid rgba(255,255,255,0.05);">
                    <button id="playMusic" style="background:none; border:none; color: var(--primary-accent); cursor:pointer; font-size: 10px; padding: 0;">►</button>
                    <span id="musicTime" style="font-size: 8px; opacity: 0.5; font-family: 'Courier New', monospace;">SONIC_OFF</span>
                    <button id="skipMusic" style="background:none; border:none; color: var(--primary-accent); cursor:pointer; font-size: 8px; opacity: 0.4;">»</button>
+                </div>
+
+                <!-- Visual Background Controller -->
+                <div style="display: flex; align-items: center; gap: 0.5rem; padding-left: 1rem; border-left: 1px solid rgba(255,255,255,0.05);">
+                    <button id="bgModeToggle" style="background:none; border: 1px solid var(--primary-accent); color: var(--primary-accent); cursor:pointer; font-size: 7px; padding: 1px 4px; border-radius: 3px; font-weight: 800;">VISUAL: AUTO</button>
+                    <button id="skipBg" style="background:none; border:none; color: var(--primary-accent); cursor:pointer; font-size: 8px; opacity: 0.4;">»</button>
                 </div>
               </div>
               
@@ -573,6 +585,50 @@ try {
     });
 
     audio.addEventListener('ended', skipTrack);
+
+    // Background Rotation Logic
+    const backgrounds = JSON.parse(tracksContainer?.dataset.bgs || '[]');
+    let currentBgIndex = 0;
+    let isAutoBg = true;
+    const heroBg = document.getElementById('heroBg');
+    const bgToggle = document.getElementById('bgModeToggle');
+    const skipBgBtn = document.getElementById('skipBg');
+    let bgInterval;
+
+    function updateBg() {
+        if (backgrounds.length === 0) return;
+        heroBg.style.backgroundImage = `url(${backgrounds[currentBgIndex]})`;
+    }
+
+    function skipBg() {
+        currentBgIndex = (currentBgIndex + 1) % backgrounds.length;
+        updateBg();
+    }
+
+    function startBgInterval() {
+        clearInterval(bgInterval);
+        // Change every 30 minutes (30 * 60 * 1000)
+        bgInterval = setInterval(skipBg, 1800000); 
+    }
+
+    bgToggle?.addEventListener('click', () => {
+        isAutoBg = !isAutoBg;
+        if (isAutoBg) {
+            bgToggle.textContent = 'VISUAL: AUTO';
+            bgToggle.style.opacity = '1';
+            startBgInterval();
+        } else {
+            bgToggle.textContent = 'VISUAL: MANUAL';
+            bgToggle.style.opacity = '0.6';
+            clearInterval(bgInterval);
+        }
+    });
+
+    skipBgBtn?.addEventListener('click', skipBg);
+
+    // Initial Start
+    if (isAutoBg) startBgInterval();
+    updateBg();
 
     // Opacity Logic
     const opacitySlider = document.getElementById('opacitySlider');
