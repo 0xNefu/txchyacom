@@ -138,7 +138,13 @@ import BaseLayout from '../layouts/Base.astro';
              </div>
           </div>
         </div>
-      </section>
+      <!-- Attribution Footer (Light) -->
+      <footer class="py-12 border-t border-slate-100 bg-slate-50">
+        <div class="max-w-6xl mx-auto px-6 text-center text-[10px] uppercase tracking-[0.2em] text-slate-400">
+           POWERED BY <a href="https://everrank.app" target="_blank" class="hover:text-blue-600 transition-colors">EVERRANK</a> // 
+           CREATED BY <a href="https://galaxybuilt.dev" target="_blank" class="hover:text-blue-600 transition-colors">GALAXYBUILT</a>
+        </div>
+      </footer>
     </main>
   </div>
 
@@ -168,9 +174,15 @@ import BaseLayout from '../layouts/Base.astro';
                     <img src="/txchya-logo.jpg" alt="Logo" class="w-full h-full object-cover grayscale opacity-80" />
                 </div>
                 <!-- Mini Nodes -->
-                <div class="absolute -top-12 left-1/2 -translate-x-1/2 w-6 h-6 rounded bg-indigo-600 flex items-center justify-center text-[8px] text-white">E</div>
+                <a href="https://everrank.app" target="_blank" class="absolute -top-12 left-1/2 -translate-x-1/2 w-6 h-6 rounded bg-indigo-600 flex items-center justify-center text-[8px] text-white hover:scale-110 transition-transform pointer-events-auto" title="EverRank">E</a>
                 <div class="absolute -bottom-12 left-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-slate-800 border border-white/20 flex items-center justify-center text-[8px] text-white">T</div>
             </div>
+        </div>
+
+        <!-- Attribution Footer (Dark) -->
+        <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 text-[10px] uppercase tracking-[0.3em] text-white/20 text-center w-full">
+           POWERED BY <a href="https://everrank.app" target="_blank" class="hover:text-cyan-400 transition-colors">EVERRANK</a> // 
+           CREATED BY <a href="https://galaxybuilt.dev" target="_blank" class="hover:text-purple-400 transition-colors">GALAXYBUILT</a>
         </div>
 
         <!-- BOTTOM: AI -->

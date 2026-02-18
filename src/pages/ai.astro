@@ -248,7 +248,10 @@ import BaseLayout from '../layouts/Base.astro';
         <div class="ai-console">
           <div class="console-header">
             <div class="status-tag">Neural_Link: Established</div>
-            <div style="font-size: 9px; opacity: 0.4;">SESSION_ID: TX-{Math.floor(Math.random()*9999)}</div>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+              <button id="clearHistory" style="font-size: 9px; color: var(--primary-accent); background: none; border: 1px solid var(--primary-accent); padding: 2px 8px; border-radius: 4px; cursor: pointer; opacity: 0.6; hover:opacity: 1;" title="Wipe stored memory">Clear</button>
+              <div style="font-size: 9px; opacity: 0.4;">SESSION_ID: TX-{Math.floor(Math.random()*9999)}</div>
+            </div>
           </div>
 
           <div id="console-messages" class="console-messages scrollbar-hide">
@@ -267,8 +270,9 @@ import BaseLayout from '../layouts/Base.astro';
           </div>
         </div>
 
-        <div style="margin-top: 4rem; opacity: 0.4; font-size: 10px; text-align: center; letter-spacing: 2px;">
-           POWERED BY EVERRANK // SYSTEM_ULTIMA
+        <div style="margin-top: 4rem; opacity: 0.4; font-size: 10px; text-align: center; letter-spacing: 2px; text-transform: uppercase;">
+           POWERED BY <a href="https://everrank.app" target="_blank" class="hover:text-cyan-400 transition-colors">EVERRANK</a> // 
+           CREATED BY <a href="https://galaxybuilt.dev" target="_blank" class="hover:text-purple-400 transition-colors">GALAXYBUILT</a>
         </div>
       </div>
     </section>
@@ -280,13 +284,32 @@ import BaseLayout from '../layouts/Base.astro';
     const logs = document.getElementById('console-messages');
 
     let processing = false;
+    let chatHistory = [];
 
-    function addLog(text, isUser = false) {
+    // Load history
+    try {
+      const saved = localStorage.getItem('txchya_chat_history');
+      if (saved) {
+        chatHistory = JSON.parse(saved);
+        // Clear default message if history exists
+        if (chatHistory.length > 0) logs.innerHTML = '';
+        chatHistory.forEach(msg => addLog(msg.text, msg.isUser, false));
+      }
+    } catch (e) { console.error('History load failed'); }
+
+    function addLog(text, isUser = false, save = true) {
       const div = document.createElement('div');
       div.className = `msg ${isUser ? 'msg-user' : 'msg-bot'}`;
       div.innerHTML = (isUser ? '' : '> ') + text.replace(/\n/g, '<br/>');
       logs.appendChild(div);
       logs.scrollTop = logs.scrollHeight;
+
+      if (save) {
+        chatHistory.push({ text, isUser });
+        // Keep only last 50 messages to prevent bloat
+        if (chatHistory.length > 50) chatHistory.shift();
+        localStorage.setItem('txchya_chat_history', JSON.stringify(chatHistory));
+      }
     }
 
     async function handle(e) {
@@ -323,6 +346,20 @@ import BaseLayout from '../layouts/Base.astro';
     }
 
     form?.addEventListener('submit', handle);
+
+    document.getElementById('clearHistory')?.addEventListener('click', () => {
+      if (confirm('Wipe chat history?')) {
+        localStorage.removeItem('txchya_chat_history');
+        chatHistory = [];
+        logs.innerHTML = `
+          <div class="msg msg-bot">
+             > SYSTEM INITIALIZED.<br/>
+             > HISTORY PURGED.<br/>
+             > HOW CAN I ASSIST?
+          </div>
+        `;
+      }
+    });
 
     // Initial query check
     const q = new URLSearchParams(window.location.search).get('q');
