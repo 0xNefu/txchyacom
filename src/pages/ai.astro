@@ -310,6 +310,17 @@ import BaseLayout from '../layouts/Base.astro';
 
     .scrollbar-hide::-webkit-scrollbar { width: 4px; }
     .scrollbar-hide::-webkit-scrollbar-thumb { background: var(--primary-accent); border-radius: 10px; }
+
+    @keyframes pulse-sonic {
+      0% { opacity: 0.4; }
+      50% { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
+
+    .sonic-active {
+      animation: pulse-sonic 2s infinite;
+      color: var(--primary-accent) !important;
+    }
   </style>
 
   <div class="main-wrapper">
@@ -337,8 +348,17 @@ import BaseLayout from '../layouts/Base.astro';
 
           <div class="ai-console">
             <div class="console-header">
-              <div style="font-size: 10px; font-weight: 800; color: var(--primary-accent); letter-spacing: 2px;">NEURAL_LINK: ACTIVE</div>
-            <div style="display: flex; gap: 0.75rem; align-items: center;">
+              <div style="display: flex; gap: 1rem; align-items: center;">
+                <div style="font-size: 10px; font-weight: 800; color: var(--primary-accent); letter-spacing: 2px;">NEURAL_LINK: ACTIVE</div>
+                <!-- Ambient Player -->
+                <div id="ambientPlayer" style="display: flex; align-items: center; gap: 0.5rem; padding-left: 1rem; border-left: 1px solid rgba(255,255,255,0.05);">
+                   <button id="playMusic" style="background:none; border:none; color: var(--primary-accent); cursor:pointer; font-size: 10px; padding: 0;">►</button>
+                   <span id="musicTime" style="font-size: 8px; opacity: 0.5; font-family: 'Courier New', monospace;">SONIC_OFF</span>
+                   <button id="skipMusic" style="background:none; border:none; color: var(--primary-accent); cursor:pointer; font-size: 8px; opacity: 0.4;">»</button>
+                </div>
+              </div>
+              
+              <div style="display: flex; gap: 0.75rem; align-items: center;">
                 <!-- Opacity Controller -->
                 <div style="display: flex; align-items: center; gap: 0.5rem; margin-right: 0.5rem;">
                    <span style="font-size: 8px; opacity: 0.5;">OPACITY</span>
@@ -496,6 +516,55 @@ import BaseLayout from '../layouts/Base.astro';
     document.getElementById('mobileSidebarToggle')?.addEventListener('click', () => {
         sidebar.classList.toggle('open');
     });
+
+    // Ambient Music Logic
+    const tracks = [
+        '/music/all-time-high.mp3',
+        '/music/coded-dimension.mp3',
+        '/music/destiny.mp3',
+        '/music/vibe-coded.mp3',
+        '/music/rain-on-chrome.mp3'
+    ];
+    let currentTrackIndex = 0;
+    const audio = new Audio(tracks[currentTrackIndex]);
+    const playBtn = document.getElementById('playMusic');
+    const skipBtn = document.getElementById('skipMusic');
+    const timeDisplay = document.getElementById('musicTime');
+    let isPlaying = false;
+
+    function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function togglePlay() {
+        if (isPlaying) {
+            audio.pause();
+            playBtn.textContent = '►';
+            timeDisplay.classList.remove('sonic-active');
+        } else {
+            audio.play();
+            playBtn.textContent = '||';
+            timeDisplay.classList.add('sonic-active');
+        }
+        isPlaying = !isPlaying;
+    }
+
+    function skipTrack() {
+        currentTrackIndex = (currentTrackIndex + 1) % tracks.length;
+        audio.src = tracks[currentTrackIndex];
+        if (isPlaying) audio.play();
+    }
+
+    playBtn?.addEventListener('click', togglePlay);
+    skipBtn?.addEventListener('click', skipTrack);
+
+    audio.addEventListener('timeupdate', () => {
+        timeDisplay.textContent = formatTime(audio.currentTime);
+    });
+
+    audio.addEventListener('ended', skipTrack);
 
     // Opacity Logic
     const opacitySlider = document.getElementById('opacitySlider');
