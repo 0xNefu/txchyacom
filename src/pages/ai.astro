@@ -1,6 +1,18 @@
 ﻿---
 // src/pages/ai.astro - Professional UI with Mode-Based Accents + Chat History Sidebar
 import BaseLayout from '../layouts/Base.astro';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const musicDir = path.join(process.cwd(), 'public', 'music');
+let musicTracks = [];
+try {
+    musicTracks = fs.readdirSync(musicDir)
+        .filter(file => file.endsWith('.mp3'))
+        .map(file => `/music/${file}`);
+} catch (e) {
+    console.error("Music directory not found");
+}
 ---
 
 <BaseLayout title="TXCHYA | Decision Intelligence Layer">
@@ -323,7 +335,7 @@ import BaseLayout from '../layouts/Base.astro';
     }
   </style>
 
-  <div class="main-wrapper">
+  <div class="main-wrapper" data-tracks={JSON.stringify(musicTracks)}>
     <!-- Sidebar Toggle (Mobile) -->
     <button class="sidebar-toggle" id="mobileSidebarToggle">☰</button>
 
@@ -518,19 +530,9 @@ import BaseLayout from '../layouts/Base.astro';
     });
 
     // Ambient Music Logic
-    const tracks = [
-        '/music/all-time-high.mp3',
-        '/music/coded-dimension.mp3',
-        '/music/destiny.mp3',
-        '/music/vibe-coded.mp3',
-        '/music/rain-on-chrome.mp3',
-        '/music/endless-fall.mp3',
-        '/music/ghosts-in-the-circuit.mp3',
-        '/music/neon-cyber-alley.mp3',
-        '/music/night-protocol.mp3',
-        '/music/signal-in-the-noise.mp3',
-        '/music/skyline-ascension.mp3'
-    ];
+    const tracksContainer = document.querySelector('.main-wrapper');
+    const tracks = JSON.parse(tracksContainer?.dataset.tracks || '[]');
+    
     let currentTrackIndex = 0;
     const audio = new Audio(tracks[currentTrackIndex]);
     const playBtn = document.getElementById('playMusic');
