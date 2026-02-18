@@ -27,13 +27,15 @@ function getCorsOrigin(request: Request): string {
     return isAllowed ? origin : ALLOWED_ORIGINS[0];
 }
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
     try {
         const body = await request.json();
         const { message, site = 'Txchya.com' } = body;
 
         // Initialize OpenAI client
-        const apiKey = import.meta.env.OPENAI_API_KEY;
+        // In Cloudflare, secrets are available in the runtime environment
+        const runtime = (locals as any).runtime;
+        const apiKey = runtime?.env?.OPENAI_API_KEY || import.meta.env.OPENAI_API_KEY;
 
         if (!apiKey) {
             console.error('OPENAI_API_KEY not found');

@@ -1,6 +1,6 @@
 ---
 const title = Astro.props.title || "Txchya | Cyberpunk Ambient Artist";
-const siteUrl = "https://txchya.com"; // Update to your actual domain
+const siteUrl = "https://txchya.com";
 const defaultDescription = "Txchya - Cyberpunk Ambient AI Music Artist. Dark synthwave, dystopian soundscapes. Stream 'Vibe Coding' album on all platforms.";
 const description = Astro.props.description || defaultDescription;
 const ogImage = Astro.props.ogImage || `${siteUrl}/og-image.jpg`;
@@ -13,89 +13,61 @@ const ogImage = Astro.props.ogImage || `${siteUrl}/og-image.jpg`;
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
   
+  <!-- CDN Tailwind - RESTORING TO WHAT WORKED -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            primary: ['Orbitron', 'sans-serif'],
+            mono: ['Courier New', 'monospace'],
+          },
+          colors: {
+            cyber: {
+              pink: '#ff00ff',
+              purple: '#9d00ff',
+              cyan: '#00ffff'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <!-- Theme & Description -->
   <meta name="theme-color" content="#000000">
   <meta name="description" content={description}>
   
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content={siteUrl} />
-  <meta property="og:title" content={title} />
-  <meta property="og:description" content={description} />
-  <meta property="og:image" content={ogImage} />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="TXCHYA Cyberpunk Ambient Visual" />
-  <meta property="og:site_name" content="TXCHYA" />
-  
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content={siteUrl} />
-  <meta name="twitter:title" content={title} />
-  <meta name="twitter:description" content={description} />
-  <meta name="twitter:image" content={ogImage} />
-  <meta name="twitter:creator" content="@txchya" /> <!-- Update with your Twitter handle -->
-  <meta name="twitter:site" content="@txchya" /> <!-- Update with your Twitter handle -->
-  
-  <!-- Additional Social Tags -->
-  <meta property="og:locale" content="en_US" />
-  <meta property="og:audio:artist" content="TXCHYA" />
-  <meta property="og:audio:album" content="Vibe Coding" />
-  <meta property="music:musician" content="TXCHYA" />
-  
-  <!-- Favicon & App Icons -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="manifest" href="/site.webmanifest">
-  
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Courier+New:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
   
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1WS5X9XSPM"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-1WS5X9XSPM');
-  </script>
-  
-  <!-- Simple inline styles - NO Tailwind conflicts -->
   <style>
-    /* RESET: Make everything transparent by default */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     
     html, body {
-      background: transparent !important;
+      background: #000 !important;
       color: white;
       font-family: 'Courier New', monospace;
       min-height: 100vh;
       overflow-x: hidden;
     }
     
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(to bottom, #ff00ff, #9d00ff, #00ffff);
+      border-radius: 4px;
+    }
+
     /* Cyberpunk colors */
     .cyber-pink { color: #ff00ff; }
     .cyber-purple { color: #9d00ff; }
     .cyber-cyan { color: #00ffff; }
     .cyber-green { color: #00ff00; }
-    
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.2);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(to bottom, #ff00ff, #9d00ff, #00ffff);
-      border-radius: 4px;
-    }
     
     /* Selection */
     ::selection {
@@ -116,11 +88,6 @@ const ogImage = Astro.props.ogImage || `${siteUrl}/og-image.jpg`;
       50% { opacity: 0.5; }
     }
     
-    @keyframes scanline {
-      0% { transform: translateY(-100%); }
-      100% { transform: translateY(100vh); }
-    }
-    
     @keyframes glitch {
       0% { transform: translate(0); }
       20% { transform: translate(-2px, 2px); }
@@ -133,7 +100,12 @@ const ogImage = Astro.props.ogImage || `${siteUrl}/og-image.jpg`;
     .pulse {
       animation: pulse 1s infinite;
     }
-    
+
+    .glitch {
+      animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+    }
+
+    /* Scanline effect */
     .scanline {
       position: fixed;
       top: 0;
@@ -146,13 +118,15 @@ const ogImage = Astro.props.ogImage || `${siteUrl}/og-image.jpg`;
       z-index: 1000;
       opacity: 0.3;
     }
+
+    @keyframes scanline {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(100vh); }
+    }
   </style>
 </head>
-<body>
-  <!-- Scanline effect -->
+<body class="bg-black text-white">
   <div class="scanline"></div>
-  
-  <!-- Page content goes here -->
   <slot />
 </body>
 </html>
