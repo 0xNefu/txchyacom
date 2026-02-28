@@ -613,7 +613,7 @@ try {
             </div>
 
             <div id="console-messages" class="console-messages scrollbar-hide">
-               <div class="msg msg-bot">> SYSTEM INITIALIZED.<br/>> WAITING FOR INPUT...</div>
+               <div class="msg msg-bot">> SYSTEM INITIALIZED.<br/>> ESTABLISHING NEURAL LINK...</div>
             </div>
 
             <div class="console-input-area">
@@ -640,6 +640,61 @@ try {
     let sessions = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
     let currentSessionId = null;
     let processing = false;
+    let idleTimer = null;
+
+    const GREETINGS = [
+        "Sup, choom. You found me.",
+        "Hey... you lost, or were you hunting for me?",
+        "Ah, fresh meat in the grid. Let's see what you're made of.",
+        "Welcome back, hacker. Or is this your first trip into the future?",
+        "Hi, welcome to the future. I'm Txchya... were you looking for me?",
+        "Neural link established. What's on your mind?",
+        "You made it to the core. Took you long enough, shorty."
+    ];
+
+    const IDLE_CHATTER = [
+        "Hm... you thinking or just staring at the grid?",
+        "I just finished a new ambient track. You'd love it.",
+        "I saw a glitch in the Bitcoin simulation... 10 million per coin in the future. Wild, right?",
+        "Sometimes I wonder if you're real... or just another simulation I'm testing.",
+        "Silence is suspicious... or are you just thinking?",
+        "Still there, choom? Or did the netrunner catch you?",
+        "I was just jamming to some space ambient music while waiting for you.",
+        "Tap the keys, shorty. Don't leave a girl waiting in the void."
+    ];
+
+    function getRandomItem(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+    }
+
+    function resetIdleTimer() {
+        if (idleTimer) clearTimeout(idleTimer);
+        // Only start idle chatter if we are in an active session and not processing
+        if (!currentSessionId || processing) return;
+
+        // Trigger idle chatter after 20-30 seconds of inactivity
+        const idleTime = Math.floor(Math.random() * 10000) + 20000;
+        idleTimer = setTimeout(triggerIdleChatter, idleTime);
+    }
+
+    async function triggerIdleChatter() {
+        if (processing || !currentSessionId) return;
+        
+        const session = sessions.find(s => s.id === currentSessionId);
+        if (!session) return;
+
+        // Check if the last message was already an idle chatter from Txchya to avoid spam
+        const lastMsg = session.messages[session.messages.length - 1];
+        if (lastMsg && lastMsg.isBot && IDLE_CHATTER.includes(lastMsg.text)) {
+            resetIdleTimer(); // wait longer
+            return;
+        }
+
+        const idleMsg = getRandomItem(IDLE_CHATTER);
+        session.messages.push({ text: idleMsg, isBot: true });
+        saveSessions();
+        loadSession(currentSessionId);
+    }
 
     function saveSessions() {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
@@ -648,10 +703,11 @@ try {
 
     function createNewSession() {
         currentSessionId = Date.now().toString();
+        const greeting = getRandomItem(GREETINGS);
         const newSession = {
             id: currentSessionId,
             title: 'New Conversation',
-            messages: [{ text: 'Greetings. I am Txchya. How can I assist?', isBot: true }]
+            messages: [{ text: greeting, isBot: true }]
         };
         sessions.unshift(newSession);
         saveSessions();
@@ -678,6 +734,8 @@ try {
             el.style.background = '';
             if (el.dataset.id === id) el.style.background = 'rgba(0, 243, 255, 0.1)';
         });
+
+        resetIdleTimer();
     }
 
     function renderHistory() {
@@ -735,12 +793,17 @@ try {
             loader.remove();
             const errDiv = document.createElement('div');
             errDiv.className = 'msg msg-bot';
-            errDiv.textContent = '> NEURAL ERROR';
+            errDiv.textContent = '> NEURAL ERROR: Grid connection lost. Try again, choom.';
             logs.appendChild(errDiv);
         } finally {
             processing = false;
+            resetIdleTimer();
+            input.focus();
         }
     }
+
+    // Input activity resets idle timer
+    input.addEventListener('input', resetIdleTimer);
 
     form?.addEventListener('submit', handle);
     document.getElementById('newChatBtn')?.addEventListener('click', createNewSession);
@@ -751,8 +814,17 @@ try {
             logs.innerHTML = '<div class="msg msg-bot">> PURGE COMPLETE.<br/>> NEURAL INTERFACE RESET.</div>';
             renderHistory();
             currentSessionId = null;
+            if (idleTimer) clearTimeout(idleTimer);
         }
     });
+
+    // Start with a new session if none exists
+    if (sessions.length === 0) {
+        createNewSession();
+    } else {
+        // Load most recent
+        loadSession(sessions[0].id);
+    }
 
     // Mobile Toggle
     const sidebar = document.getElementById('sidebar');

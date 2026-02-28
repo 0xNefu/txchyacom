@@ -2,9 +2,10 @@
 import type { APIRoute } from 'astro';
 import OpenAI from 'openai';
 
-// Import prompts using Vite's raw import feature for compatibility with Cloudflare Workers
 import systemPrompt from '../../prompts/txchya-system-prompt.txt?raw';
 import restrictions from '../../prompts/txchya-restrictions.txt?raw';
+import txchyonPrompt from '../../prompts/txchya-txchyon-prompt.txt?raw';
+import txchyonRestrictions from '../../prompts/txchya-txchyon-restrictions.txt?raw';
 import everrankPrompt from '../../prompts/txchya-everrank-prompt.txt?raw';
 import everrankRestrictions from '../../prompts/txchya-everrank-restrictions.txt?raw';
 
@@ -48,23 +49,28 @@ export const POST: APIRoute = async ({ request, locals }) => {
         const openai = new OpenAI({ apiKey });
 
         // --- Context Logic ---
-        let finalSystemPrompt = systemPrompt; // Default fallback
-        let activeRestrictions = restrictions;
+        let finalSystemPrompt = txchyonPrompt; // Default fallback
+        let activeRestrictions = txchyonRestrictions;
         let brandRestrictions = "";
         let currentBrand = "Txchyon";
 
         // Determine Brand Context
         const lowerSite = site.toLowerCase();
 
-        if (lowerSite.includes('everrank')) {
+        if (lowerSite.includes('txchya') && !lowerSite.includes('txchyon')) {
+            currentBrand = "Txchya";
+            finalSystemPrompt = systemPrompt;
+            activeRestrictions = restrictions;
+        } else if (lowerSite.includes('everrank')) {
             currentBrand = "EverRank";
             finalSystemPrompt = everrankPrompt;
+            activeRestrictions = "";
             brandRestrictions = everrankRestrictions;
         } else if (lowerSite.includes('next-scanner') || lowerSite.includes('nextscanner')) {
             currentBrand = "Next Scanner";
         } else if (lowerSite.includes('renterrate')) {
             currentBrand = "RenterRate";
-            // Uses default prompts for now, but context is set
+            // Uses default txchyon prompts for now, but context is set
         }
 
         // Construct the enhanced prompt

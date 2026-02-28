@@ -26,21 +26,22 @@ const socialLinks = [
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -100;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      overflow: hidden;
     }
     
     .bg-image {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: -10%;
+      left: -10%;
+      width: 120%;
+      height: 120%;
       background-image: url('/super-punk.jpg');
       background-size: cover;
       background-position: center;
-      background-attachment: fixed;
+      /* removed background-attachment: fixed which breaks on iOS mobile */
     }
     
     .bg-overlay {
@@ -49,7 +50,7 @@ const socialLinks = [
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.1);
+      background: rgba(0, 0, 0, 0.4); /* Darkened slightly to ensure text legibility */
     }
     
     /* Content */
